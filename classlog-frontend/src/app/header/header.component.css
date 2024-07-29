@@ -1,0 +1,19 @@
+.app-logo {
+  height: 60px; /* Reduced height for smaller logo */
+  vertical-align: middle;
+}
+
+.app-header {
+  background-color: #17252A;  /* Sets the background color of the header */
+  height: 80px;              /* Sets the height of the header to 200px */
+  color: white;               /* Sets the text color inside the header to white */
+  text-align: left;           /* Aligns text to the left */
+  padding: 10px;              /* Adds 10px padding inside the header */
+  display: flex;              /* Uses Flexbox layout for the header */
+  align-items: center;        /* Centers items vertically */
+  justify-content: flex-start; /* Aligns items to the left horizontally */
+}
+
+.app-title {
+  margin-left: 20px; /* Space between logo and text */
+}
