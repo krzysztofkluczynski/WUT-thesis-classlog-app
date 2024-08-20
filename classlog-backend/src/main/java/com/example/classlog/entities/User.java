@@ -26,6 +26,10 @@ public class User {
     private String lastName;
     @Column(name = "login", nullable = false)
     private String login;
+    @Column(name = "password")
     private String password;
 
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "role_id", referencedColumnName = "id")
+    private Role role;
 }

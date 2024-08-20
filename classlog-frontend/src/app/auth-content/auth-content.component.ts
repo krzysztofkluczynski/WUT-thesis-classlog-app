@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AxiosService } from "../axios.service";
+import { AxiosService } from "../service/axios/axios.service";
 import { NgForOf } from "@angular/common";
 
 interface UserResponse {

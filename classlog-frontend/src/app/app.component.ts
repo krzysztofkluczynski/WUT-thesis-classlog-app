@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {FormsModule } from "@angular/forms";
 
-import {HeaderComponent} from "./header/header.component";
+import {HeaderComponent} from "./components/shared/header/header.component";
 import { AuthContentComponent } from './auth-content/auth-content.component';
-import {ContentComponent} from "./content/content.component";
-import {LoginFormComponent} from "./login-form/login-form.component";
-import {StartingPageComponent} from "./starting-page/starting-page.component";
+import {LoginFormComponent} from "./components/pages/starting-page/login-form/login-form.component";
+import {AxiosService} from "./service/axios/axios.service";
+import {StartingPageComponent} from "./components/pages/starting-page/starting-page.component";
 
 @Component({
   selector: 'app-root',
@@ -15,13 +15,13 @@ import {StartingPageComponent} from "./starting-page/starting-page.component";
     FormsModule,
     HeaderComponent,
     AuthContentComponent,
-    ContentComponent,
-    LoginFormComponent,
-    StartingPageComponent
+    LoginFormComponent, StartingPageComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'classlog-frontend';
+
+
 }
