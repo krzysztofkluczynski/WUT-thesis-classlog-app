@@ -62,7 +62,8 @@ export class LoginFormComponent {
     });
   }
 
-  navigateToRegister(): void {
+  navigateToRegister(event: Event): void {
+    event.preventDefault();
     this.router.navigate(['/register']);
   }
 }

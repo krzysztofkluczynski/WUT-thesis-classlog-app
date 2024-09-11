@@ -5,7 +5,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import {HeaderComponent} from "./components/shared/header/header.component";
-import { AuthContentComponent } from './auth-content/auth-content.component';
 import {LoginFormComponent} from "./components/pages/login-form/login-form.component";
 import {AxiosService} from "./service/axios/axios.service";
 import {RegisterFormComponent} from "./components/pages/register-form/register-form.component";
@@ -18,7 +17,6 @@ import {RegisterFormComponent} from "./components/pages/register-form/register-f
     FormsModule,
     ReactiveFormsModule,
     HeaderComponent,
-    AuthContentComponent,
     LoginFormComponent,
     RegisterFormComponent,
   ],

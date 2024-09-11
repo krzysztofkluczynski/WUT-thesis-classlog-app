@@ -27,7 +27,8 @@ export class RegisterFormComponent {
     this.router.navigate(['/login']);
   }
 
-  navigateToLogin(): void {
+  navigateToLogin(event: Event): void {
+    event.preventDefault();
     this.router.navigate(['/login']);
   }
 }

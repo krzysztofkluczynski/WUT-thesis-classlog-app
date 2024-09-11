@@ -23,16 +23,16 @@ export class AuthService {
 
   getUser(): UserDto | null {
     if (this.user) {
-      return this.user;  // Return cached user data
+      return this.user;
     }
 
     const userData = window.localStorage.getItem("user_data");
 
     if (userData) {
-      return JSON.parse(userData);  // Return parsed user data from local storage
+      return JSON.parse(userData);
     }
 
-    return null;  // Return null if no user data is found
+    return null;
   }
 
   getAuthToken(): string | null {
