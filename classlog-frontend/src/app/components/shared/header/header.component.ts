@@ -13,9 +13,9 @@ import {Router} from "@angular/router";
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
-  @Input() pageTitle: string = ''; // Initialize with default value
-  @Input() logoPath: string = '';  // Initialize with default value
-  @Input() ifShowMenu: boolean = false;  // Initialize with default value
+  @Input() pageTitle: string = '';
+  @Input() logoPath: string = '';
+  @Input() ifShowMenu: boolean = false;
 
   constructor(
     public authService: AuthService,
@@ -23,8 +23,7 @@ export class HeaderComponent {
   ) {}
 
   logout(): void {
-    this.authService.setAuthToken(null);
-    this.authService.setUserRole(null);
+    this.authService.logout();
     this.router.navigate(['/login']);
   }
 }

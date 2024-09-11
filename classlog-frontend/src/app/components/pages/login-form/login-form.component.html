@@ -1,3 +1,4 @@
+<app-header [pageTitle]="'Classlog platform'" [logoPath]="'assets/images/logo.png'" [ifShowMenu]="false"/>
 <div class="row justify-content-center mt-5">
   <div class="col-4">
     <div class="card">
@@ -7,17 +8,18 @@
       <div class="card-body">
         <form (ngSubmit)="onSubmitLogin()" #loginForm="ngForm">
           <div class="form-outline mb-4">
-            <input type="text" id="loginName" name="login" class="form-control" [(ngModel)]="login" />
+            <input type="text" id="loginName" name="login" class="form-control" [(ngModel)]="login" required />
             <label class="form-label" for="loginName">Username</label>
           </div>
 
           <div class="form-outline mb-4">
-            <input type="password" id="loginPassword" name="password" class="form-control" [(ngModel)]="password" />
+            <input type="password" id="loginPassword" name="password" class="form-control" [(ngModel)]="password" required />
             <label class="form-label" for="loginPassword">Password</label>
           </div>
 
           <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
         </form>
+        <button (click)="navigateToRegister()" class="btn btn-secondary btn-block">Register</button>
       </div>
     </div>
   </div>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AxiosService } from "../service/axios/axios.service";
 import { NgForOf } from "@angular/common";
-
+//DEPRECATED
 interface UserResponse {
   data: string[];
 }

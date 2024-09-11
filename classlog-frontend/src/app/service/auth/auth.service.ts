@@ -1,46 +1,72 @@
 import { Injectable } from '@angular/core';
+import { UserDto } from '../../model/user-dto.model'; // Import UserDto
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private token: string | null = null;
-  private userRole: string | null = null;
+  private user: UserDto | null = null;
 
   constructor() {}
 
-  setAuthToken(token: string | null): void {
-    this.token = token;
-    if (token !== null) {
-      window.localStorage.setItem("auth_token", token);
+  setUser(user: UserDto | null): void {
+    this.user = user;
+
+    if (user !== null) {
+      window.localStorage.setItem("user_data", JSON.stringify(user));
+      return;  // Explicit return for non-null case
     } else {
-      window.localStorage.removeItem("auth_token");
+      window.localStorage.removeItem("user_data");
+      return;  // Explicit return for null case
     }
+  }
+
+  getUser(): UserDto | null {
+    if (this.user) {
+      return this.user;  // Return cached user data
+    }
+
+    const userData = window.localStorage.getItem("user_data");
+
+    if (userData) {
+      return JSON.parse(userData);  // Return parsed user data from local storage
+    }
+
+    return null;  // Return null if no user data is found
   }
 
   getAuthToken(): string | null {
-    return this.token || window.localStorage.getItem("auth_token");
-  }
+    const user = this.getUser();
 
-  setUserRole(role: string | null): void {
-    this.userRole = role;
-    if (typeof role === "string") {
-      window.localStorage.setItem('user_role', role);
-    } else {
-      window.localStorage.removeItem("user_role");
+    if (user && user.token) {
+      return user.token;  // Return user token if available
     }
+
+    return null;  // Return null if no token is available
   }
 
   getUserRole(): string | null {
-    return this.userRole || window.localStorage.getItem("user_role");
+    const user = this.getUser();
+
+    if (user && user.role) {
+      return user.role.roleName;  // Return user role name if available
+    }
+
+    return null;  // Return null if no role is available
   }
 
   isAuthenticated(): boolean {
-    return !!this.getAuthToken();
+    const token = this.getAuthToken();
+
+    if (token) {
+      return true;  // Return true if token exists
+    }
+
+    return false;  // Return false if no token exists
   }
 
   logout(): void {
-    this.setAuthToken(null);
-    this.setUserRole(null);
+    this.setUser(null);  // Clear user data
+    return;  // Explicit return to indicate end of the function
   }
 }
