@@ -44,7 +44,7 @@ export class StartingPageComponent {
       } else if (this.authService.getUserRole() === 'student') {
         this.router.navigate(['/user-dashboard']);
       } else if (this.authService.getUserRole() === 'teacher') {
-        this.router.navigate(['/user-dashboard']);
+        this.router.navigate(['/teacher-dashboard']);
       } else {
         console.error('Unknown role:', user.role.roleName);
         this.router.navigate(['/login']);

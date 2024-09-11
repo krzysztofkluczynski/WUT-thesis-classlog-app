@@ -1,19 +1,61 @@
-.app-logo {
-  height: 60px; /* Reduced height for smaller logo */
-  vertical-align: middle;
+.app-header {
+  background-color: #17252A;
+  height: 80px;
+  color: white;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box; /* Ensure padding is included in the element's total width and height */
+  width: 100%; /* Ensure the header takes the full width of the viewport */
+  overflow: visible; /* Prevent overflow issues */
 }
 
-.app-header {
-  background-color: #17252A;  /* Sets the background color of the header */
-  height: 80px;              /* Sets the height of the header to 200px */
-  color: white;               /* Sets the text color inside the header to white */
-  text-align: left;           /* Aligns text to the left */
-  padding: 10px;              /* Adds 10px padding inside the header */
-  display: flex;              /* Uses Flexbox layout for the header */
-  align-items: center;        /* Centers items vertically */
-  justify-content: flex-start; /* Aligns items to the left horizontally */
+.logo-title-container {
+  display: flex;
+  align-items: center;
+}
+
+.app-logo {
+  height: 60px; /* Adjust height as needed */
+  vertical-align: middle;
 }
 
 .app-title {
   margin-left: 20px; /* Space between logo and text */
+}
+
+.dropdown-container {
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-menu-right {
+  right: 0;
+  left: auto;
+}
+
+.dropdown-menu {
+  background-color: #2B7A78; /* Custom background color for the dropdown */
+  border: none; /* Remove border */
+}
+
+.dropdown-item {
+  color: white; /* White text color for dropdown items */
+}
+
+.dropdown-item:hover {
+  background-color: #3Aafa9; /* Darker background on hover */
+  color: #ffffff; /* Ensure the text remains white on hover */
+}
+
+.btn-secondary.dropdown-toggle {
+  background-color: #2B7A78; /* Custom background color for the dropdown button */
+  border-color: #3Aafa9; /* Matching border color */
+}
+
+.btn-secondary.dropdown-toggle:focus,
+.btn-secondary.dropdown-toggle:hover {
+  background-color: #3Aafa9; /* Darker background on hover */
+  border-color: #3Aafa9;
 }

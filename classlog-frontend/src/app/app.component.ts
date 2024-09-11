@@ -23,5 +23,4 @@ import {StartingPageComponent} from "./components/pages/starting-page/starting-p
 export class AppComponent {
   title = 'classlog-frontend';
 
-
 }
