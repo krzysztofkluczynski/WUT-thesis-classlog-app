@@ -8,6 +8,7 @@ services:
     ports:
       - "4200:4200"
     depends_on:
+      - classlog-backend
       - classlog-db
 
   classlog-backend:
@@ -29,6 +30,14 @@ services:
       - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
+
+  flyway:
+    image: flyway/flyway
+    depends_on:
+      - classlog-db
+    command: -url=jdbc:postgresql://classlog-db:5432/classlog -user=classlog -password=classlog migrate
+    volumes:
+      - ./db_scripts:/flyway/sql
 
 volumes:
   postgres-data:
