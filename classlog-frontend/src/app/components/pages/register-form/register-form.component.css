@@ -1,0 +1,35 @@
+.register-card {
+  border: 4px solid #FFD900; /* Slightly thinner border */
+  border-radius: 30px; /* Smaller corner radius */
+  background-color: #FFFFFF;
+  /*padding: 8px; /* Reduced padding inside the card */
+}
+
+.app-logo {
+  max-width: 30%; /* Reduce the logo size */
+  height: auto;
+  margin:  auto; /* Slightly less space around the logo */
+  display: block;
+}
+
+.signup-link {
+  color: #FFD900;
+  font-weight: bold;
+  font-size: 1.1rem; /* Slightly smaller font for the link */
+}
+
+.custom-btn {
+  border-radius: 15px; /* Smaller radius for the button */
+  font-size: 0.9rem; /* Slightly smaller button text */
+  padding: 8px 12px; /* Reduce the padding inside the button */
+}
+
+.bold-label {
+  font-weight: bold;
+  font-size: 0.7rem; /* Make the label text smaller */
+}
+
+.form-control {
+  font-size: 0.9rem; /* Reduce the size of input fields text */
+  padding: 4px; /* Reduce padding inside input fields */
+}

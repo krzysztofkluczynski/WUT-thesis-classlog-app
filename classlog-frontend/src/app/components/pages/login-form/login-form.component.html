@@ -1,27 +1,29 @@
-<app-header [pageTitle]="'Classlog platform'" [logoPath]="'assets/images/logo.png'" [ifShowMenu]="false"/>
+<app-header [pageTitle]="'Classlog platform'" [ifShowMenu]="false"></app-header>
 <div class="row justify-content-center mt-5">
-  <div class="col-4">
-    <div class="card">
+  <div class="col-3">
+    <div class="card login-card">
       <div class="text-center mt-3">
-        <h3>LOGIN</h3>
+        <h4>Sign in</h4>
+        <img src="assets/images/classlog_logo_yellow.png" class="app-logo" alt="logo" />
       </div>
       <div class="card-body">
         <form (ngSubmit)="onSubmitLogin()" #loginForm="ngForm">
           <div class="form-outline mb-4">
-            <input type="text" id="loginName" name="login" class="form-control" [(ngModel)]="login" required />
-            <label class="form-label" for="loginName">Username</label>
+            <label class="form-label bold-label" for="loginEmail">E-mail</label>
+            <input type="text" id="loginEmail" name="login" class="form-control" [(ngModel)]="email" required />
           </div>
 
           <div class="form-outline mb-4">
+            <label class="form-label bold-label" for="loginPassword">Password</label>
             <input type="password" id="loginPassword" name="password" class="form-control" [(ngModel)]="password" required />
-            <label class="form-label" for="loginPassword">Password</label>
           </div>
 
-          <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+          <button type="submit" class="btn btn-primary btn-block mb-4 custom-btn">Sign in</button>
         </form>
       </div>
     </div>
     <div class="text-center mt-3">
-      <p>Do not have an account? <a href="#" (click)="navigateToRegister($event)">Sign up</a></p>    </div>
+      <p>Do not have an account? <a href="#" (click)="navigateToRegister($event)" class="signup-link">Sign up</a></p>
+    </div>
   </div>
 </div>

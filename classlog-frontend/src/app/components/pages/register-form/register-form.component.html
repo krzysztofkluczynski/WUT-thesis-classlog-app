@@ -1,35 +1,73 @@
 <div>
-  <app-header [pageTitle]="'Classlog platform'" [logoPath]="'assets/images/logo.png'" [ifShowMenu]="false"/>
+  <app-header [pageTitle]="'Classlog platform'" [ifShowMenu]="false"></app-header>
   <div class="row justify-content-center mt-5">
-    <div class="col-4">
-      <div class="card">
+    <div class="col-3">
+      <div class="card register-card">
         <div class="text-center mt-3">
-          <h3>REGISTER</h3>
+          <h5>Sign up</h5>
+          <img src="assets/images/classlog_logo_yellow.png" class="app-logo" alt="logo" />
         </div>
         <div class="card-body">
           <form (ngSubmit)="onSubmitRegister()" #registerForm="ngForm">
-            <div class="form-outline mb-4">
-              <input type="text" id="registerName" name="username" class="form-control" [(ngModel)]="username" />
-              <label class="form-label" for="registerName">Username</label>
+            <!-- Email field -->
+            <div class="form-outline mb-3">
+              <label class="form-label bold-label" for="registerEmail">Email</label>
+              <input type="email" id="registerEmail" name="email" class="form-control" [(ngModel)]="email" required />
             </div>
 
-            <div class="form-outline mb-4">
-              <input type="password" id="registerPassword" name="password" class="form-control" [(ngModel)]="password" />
-              <label class="form-label" for="registerPassword">Password</label>
+            <!-- Name field -->
+            <div class="form-outline mb-3">
+              <label class="form-label bold-label" for="registerName">Name</label>
+              <input type="text" id="registerName" name="name" class="form-control" [(ngModel)]="name" required />
             </div>
 
-            <div class="form-outline mb-4">
-              <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" [(ngModel)]="confirmPassword" />
-              <label class="form-label" for="confirmPassword">Confirm Password</label>
+            <!-- Surname field -->
+            <div class="form-outline mb-3">
+              <label class="form-label bold-label" for="registerSurname">Surname</label>
+              <input type="text" id="registerSurname" name="surname" class="form-control" [(ngModel)]="surname" required />
             </div>
 
-            <button type="submit" class="btn btn-primary btn-block mb-4">Register</button>
+            <!-- Password field -->
+            <div class="form-outline mb-3">
+              <label class="form-label bold-label" for="registerPassword">Password</label>
+              <input
+                type="password"
+                id="registerPassword"
+                name="password"
+                class="form-control"
+                [(ngModel)]="password"
+                (input)="checkPasswordMatch()"
+                required
+              />
+            </div>
+
+            <!-- Confirm Password field -->
+            <div class="form-outline mb-3">
+              <label class="form-label bold-label" for="confirmPassword">Confirm Password</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                class="form-control"
+                [(ngModel)]="confirmPassword"
+                (input)="checkPasswordMatch()"
+                required
+              />
+            </div>
+
+            <!-- Password mismatch message -->
+            <div *ngIf="passwordMismatch" class="text-danger mb-4">
+              Passwords do not match.
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary btn-block mb-3 custom-btn">Sign up</button>
           </form>
         </div>
       </div>
     </div>
     <div class="text-center mt-3">
-      <p>Already have an account? <a href="#" (click)="navigateToLogin($event)">Login</a></p>
+      <p>Already have an account? <a href="#" (click)="navigateToLogin($event)" class="signup-link">Login</a></p>
     </div>
   </div>
 </div>

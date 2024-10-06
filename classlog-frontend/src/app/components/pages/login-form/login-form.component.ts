@@ -20,7 +20,7 @@ import {HeaderComponent} from "../../shared/header/header.component";
   styleUrls: ['./login-form.component.css'] // Corrected from styleUrl to styleUrls
 })
 export class LoginFormComponent {
-  login: string = "";
+  email: string = "";
   password: string = "";
 
   constructor(
@@ -31,7 +31,7 @@ export class LoginFormComponent {
 
   onSubmitLogin(): void {
     this.axiosService.request('POST', '/login', {
-      login: this.login,
+      email: this.email,
       password: this.password
     }).then((response: { data: UserDto }) => {
       const user: UserDto = response.data;

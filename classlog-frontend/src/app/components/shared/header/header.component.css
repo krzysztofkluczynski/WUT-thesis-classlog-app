@@ -1,5 +1,5 @@
 .app-header {
-  background-color: #17252A;
+  background-color: #FBFBD2;
   height: 80px;
   color: white;
   padding: 0 20px;
@@ -17,7 +17,7 @@
 }
 
 .app-logo {
-  height: 60px; /* Adjust height as needed */
+  height: 120px; /* Adjust height as needed */
   vertical-align: middle;
 }
 

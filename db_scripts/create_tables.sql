@@ -1,23 +1,23 @@
 -- Creating the ROLE table
 CREATE TABLE role (
-    role_id SERIAL PRIMARY KEY,
+    role_id BIGSERIAL PRIMARY KEY,
     role_name VARCHAR(255) NOT NULL
 );
 
 -- Creating the CLASSLOG_USER table
 CREATE TABLE classlog_user (
-    user_id SERIAL PRIMARY KEY,
+    user_id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     surname VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-    role_id INT REFERENCES role(role_id)
+    role_id BIGINT REFERENCES role(role_id)
 );
 
 -- Creating the CLASS table
 CREATE TABLE class (
-    class_id SERIAL PRIMARY KEY,
+    class_id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description TEXT,
     code VARCHAR(255) UNIQUE,  -- Will be generated later
@@ -33,7 +33,7 @@ CREATE TABLE user_class (
 
 -- Creating the GRADE table
 CREATE TABLE grade (
-    grade_id SERIAL PRIMARY KEY,
+    grade_id BIGSERIAL PRIMARY KEY,
     class_id INT REFERENCES class(class_id),
     student_id INT REFERENCES classlog_user(user_id),
     teacher_id INT REFERENCES classlog_user(user_id),
@@ -45,7 +45,7 @@ CREATE TABLE grade (
 
 -- Creating the FILE table
 CREATE TABLE file (
-    file_id SERIAL PRIMARY KEY,
+    file_id BIGSERIAL PRIMARY KEY,
     class_id INT REFERENCES class(class_id),
     user_id INT REFERENCES classlog_user(user_id),
     filename VARCHAR(255),
@@ -54,7 +54,7 @@ CREATE TABLE file (
 
 -- Creating the POST table
 CREATE TABLE post (
-    post_id SERIAL PRIMARY KEY,
+    post_id BIGSERIAL PRIMARY KEY,
     class_id INT REFERENCES class(class_id),
     user_id INT REFERENCES classlog_user(user_id),
     title VARCHAR(255),
@@ -64,7 +64,7 @@ CREATE TABLE post (
 
 -- Creating the COMMENT table
 CREATE TABLE comment (
-    comment_id SERIAL PRIMARY KEY,
+    comment_id BIGSERIAL PRIMARY KEY,
     post_id INT REFERENCES post(post_id),
     user_id INT REFERENCES classlog_user(user_id),
     content TEXT,
@@ -73,13 +73,13 @@ CREATE TABLE comment (
 
 -- Creating the QUESTION_TYPE table
 CREATE TABLE question_type (
-    question_type_id SERIAL PRIMARY KEY,
+    question_type_id BIGSERIAL PRIMARY KEY,
     type_name VARCHAR(255) NOT NULL
 );
 
 -- Creating the LESSON table
 CREATE TABLE lesson (
-    lesson_id SERIAL PRIMARY KEY,
+    lesson_id BIGSERIAL PRIMARY KEY,
     created_by INT REFERENCES classlog_user(user_id),
     class_id INT REFERENCES class(class_id),
     lesson_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -90,7 +90,7 @@ CREATE TABLE lesson (
 
 -- Creating the TASK table
 CREATE TABLE task (
-    task_id SERIAL PRIMARY KEY,
+    task_id BIGSERIAL PRIMARY KEY,
     created_by INT REFERENCES classlog_user(user_id),
     lesson_id INT REFERENCES lesson(lesson_id),
     task_name VARCHAR(255),
@@ -101,7 +101,7 @@ CREATE TABLE task (
 
 -- Creating the QUESTION table
 CREATE TABLE question (
-    question_id SERIAL PRIMARY KEY,
+    question_id BIGSERIAL PRIMARY KEY,
     task_id INT REFERENCES task(task_id),
     question_type_id INT REFERENCES question_type(question_type_id),
     edited_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -112,7 +112,7 @@ CREATE TABLE question (
 
 -- Creating the ANSWER table
 CREATE TABLE answer (
-    answer_id SERIAL PRIMARY KEY,
+    answer_id BIGSERIAL PRIMARY KEY,
     question_id INT REFERENCES question(question_id),
     is_correct BOOLEAN,
     content TEXT
@@ -120,7 +120,7 @@ CREATE TABLE answer (
 
 -- Creating the SUBMITTED_ANSWER table
 CREATE TABLE submitted_answer (
-    submitted_answer_id SERIAL PRIMARY KEY,
+    submitted_answer_id BIGSERIAL PRIMARY KEY,
     answer_id INT REFERENCES answer(answer_id),
     user_id INT REFERENCES classlog_user(user_id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -137,7 +137,7 @@ CREATE TABLE task_user (
 
 -- Creating the PRESENCE table
 CREATE TABLE presence (
-    presence_id SERIAL PRIMARY KEY,
+    presence_id BIGSERIAL PRIMARY KEY,
     student_id INT REFERENCES classlog_user(user_id),
     lesson_id INT REFERENCES lesson(lesson_id)
 );

@@ -1,4 +1,4 @@
 package com.example.classlog.dto;
 
-public record SignUpDto(String firstName, String lastName, String login, String password){
+public record SignUpDto(String name, String surname, String email, String password){
 }

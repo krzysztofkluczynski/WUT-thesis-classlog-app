@@ -14,8 +14,8 @@ import {Router} from "@angular/router";
 })
 export class HeaderComponent {
   @Input() pageTitle: string = '';
-  @Input() logoPath: string = '';
   @Input() ifShowMenu: boolean = false;
+  logoPath: string = 'assets/images/classlog_logo_yellow.png';
 
   constructor(
     public authService: AuthService,
