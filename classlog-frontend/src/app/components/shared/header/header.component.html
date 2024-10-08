@@ -1,14 +1,43 @@
-<header class="app-header">
+<header class="app-header" [ngClass]="{'menu-active': ifShowMenu}">
+
   <div class="logo-title-container">
     <img src="{{logoPath}}" class="app-logo" alt="logo" />
   </div>
-  <div *ngIf="authService.getAuthToken() && ifShowMenu" class="dropdown-container">
-    <div class="dropdown">
-      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="bi bi-person"></i> <!-- User icon -->
-      </button>
-      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-        <button class="dropdown-item" (click)="logout()">Logout</button>
+
+  <div *ngIf="authService.getAuthToken() && ifShowMenu" class="content-container">
+
+    <!-- Links container based on user_id -->
+    <div class="nav-links-container">
+      <ng-container *ngIf="userId === 1">
+        <a href="/students" class="nav-link">Students</a>
+        <a href="/teacher" class="nav-link">Teacher</a>
+        <a href="/unassigned" class="nav-link">Unassigned</a>
+      </ng-container>
+
+      <ng-container *ngIf="userId === 2">
+        <a href="/students" class="nav-link">Students</a>
+        <a href="/teacher" class="nav-link">Teacher</a>
+        <a href="/unassigned" class="nav-link">Unassigned</a>
+      </ng-container>
+
+      <ng-container *ngIf="userId === 3">
+        <a href="/students" class="nav-link">Students</a>
+        <a href="/teacher" class="nav-link">Teacher</a>
+        <a href="/unassigned" class="nav-link">Unassigned</a>
+      </ng-container>
+    </div>
+
+    </div>
+
+  <div *ngIf="ifShowMenu">
+    <div class="dropdown-container">
+      <div class="dropdown">
+        <button class="profile-btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="bi bi-person"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+          <button class="dropdown-item" (click)="logout()">Logout</button>
+        </div>
       </div>
     </div>
   </div>

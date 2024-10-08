@@ -1,6 +1,6 @@
 .register-card {
   border: 4px solid #FFD900; /* Slightly thinner border */
-  border-radius: 30px; /* Smaller corner radius */
+  border-radius: 50px; /* Smaller corner radius */
   background-color: #FFFFFF;
   /*padding: 8px; /* Reduced padding inside the card */
 }

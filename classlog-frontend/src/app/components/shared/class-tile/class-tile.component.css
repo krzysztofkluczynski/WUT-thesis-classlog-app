@@ -1,0 +1,35 @@
+.class-tile {
+  background-color: white;
+  border: 3px solid #F5C000; /* Yellow border around the tile */
+  border-radius: 10px;
+  padding: 10px;
+  /*flex: 1 1 calc(33% - 40px); !* Default to 3 tiles per row if enough space *!*/
+  /*width: 40%;*/
+  box-sizing: border-box;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds shadow for depth */
+  transition: all 0.3s ease-in-out;
+}
+
+.class-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.class-description {
+  font-size: 10px;
+  margin-bottom: 10px;
+}
+
+.teacher-text {
+  font-size: 12px;
+  margin-bottom: 2px;
+}
+.class-teacher {
+  background-color: #F5C000; /* Yellow background for teacher */
+  padding: 10px;
+  border-radius: 5px;
+  color: black;
+  font-size: 12px;
+  text-align: center;
+}

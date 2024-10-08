@@ -1,0 +1,95 @@
+/* Ensure the HTML and body are taking full height */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Full-screen container to cover the remaining screen */
+.full-screen-container {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 120px); /* Assuming the header is about 100px high */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Tile container with big tile on the left and small tiles on the right */
+.tiles-container {
+  display: flex;
+  gap: 20px; /* Space between the big and small tiles */
+  width: 100%;
+  height: 100%; /* Allow the tiles to fill the remaining space */
+}
+
+/* Big tile on the left */
+.big-tile {
+  background-color: #FFFDE0;
+  flex: 2; /* Big tile takes more space */
+  position: relative; /* Enable positioning of child elements */
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds shadow for depth */
+  padding: 20px; /* Add padding to create space inside the big-tile */
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  gap: 20px; /* Adds space between elements */
+  justify-content: flex-start; /* Ensures items align at the top */
+}
+
+
+/* Button container positioned at the top-left */
+.button-container {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  gap: 40px; /* Adjust this value to change the gap between buttons */
+}
+
+/* Styling for yellow buttons */
+.yellow-button {
+  background-color: #F5C000;
+  border: none;
+  color: black;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 20px;
+}
+
+/* Grid layout for class tiles */
+.big-tile-content {
+  display: flex;
+  flex-wrap: wrap; /* Allows wrapping of tiles in the row */
+  gap: 10px;
+  padding: 20px;
+  margin-top: 80px; /* Adjust this value to create space below buttons */
+  justify-content: space-around; /* Distribute tiles with even spacing */
+  align-items: flex-start;
+}
+
+/* Container for small tiles (stacked vertically) */
+.small-tiles-container {
+  display: flex;
+  flex-direction: column; /* Stacks the small tiles vertically */
+  justify-content: space-between; /* Adds equal space between the tiles */
+  flex: 1; /* Smaller tiles take less space */
+  gap: 20px;
+  height: 100%;
+}
+
+/* Styling for individual small tiles */
+.small-tile {
+  background-color: #FFFDE0; /* Yellow tile color */
+  flex: 1; /* Each small tile takes equal vertical space */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds shadow for depth */
+}

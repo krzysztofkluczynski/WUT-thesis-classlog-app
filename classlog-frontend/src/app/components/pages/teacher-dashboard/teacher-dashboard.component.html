@@ -1,2 +1,28 @@
-<app-header [pageTitle]="'Classlog platform'" [ifShowMenu]="true"/>
-<p>teacher-dashboard works!  - Hello {{user?.name}}</p>
+<app-header [pageTitle]="'Classlog platform'" [ifShowMenu]="true"></app-header>
+
+<div class="full-screen-container">
+
+  <div class="tiles-container">
+
+    <div class="big-tile">
+      <div class="button-container">
+        <button class="yellow-button">Create class</button>
+        <button class="yellow-button">Join class</button>
+      </div>
+
+      <div class="big-tile-content">
+        <app-class-tile [title]="'Beginners Group'" [description]="'A class for beginners'" [teacher]="'John Doe'"></app-class-tile>
+        <app-class-tile [title]="'Intermediate Group'" [description]="'A class for intermediate learnersaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa       aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'" [teacher]="'Emily Clark'"></app-class-tile>
+        <app-class-tile [title]="'Advanced Group'" [description]="'A class for advanced learners'" [teacher]="'Jane Smith'"></app-class-tile>
+      </div>
+    </div>
+
+
+    <div class="small-tiles-container">
+      <div class="small-tile">Tile 2</div>
+      <div class="small-tile">Tile 3</div>
+    </div>
+
+  </div>
+
+</div>

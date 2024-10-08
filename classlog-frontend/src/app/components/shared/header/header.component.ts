@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {NgIf, NgOptimizedImage} from "@angular/common";
+import {NgClass, NgIf, NgOptimizedImage} from "@angular/common";
 import {AuthService} from "../../../service/auth/auth.service";
 import {Router} from "@angular/router";
 
@@ -7,7 +7,8 @@ import {Router} from "@angular/router";
   selector: 'app-header',
   standalone: true,
   imports: [
-    NgIf
+    NgIf,
+    NgClass
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
@@ -15,12 +16,16 @@ import {Router} from "@angular/router";
 export class HeaderComponent {
   @Input() pageTitle: string = '';
   @Input() ifShowMenu: boolean = false;
-  logoPath: string = 'assets/images/classlog_logo_yellow.png';
+  userId: number | undefined;
+
+  logoPath: string = 'assets/images/classlog_logo_yellow_cut.png';
 
   constructor(
     public authService: AuthService,
     private router: Router
-  ) {}
+  ) {
+    this.userId = this.authService.getUser()?.id;
+  }
 
   logout(): void {
     this.authService.logout();

@@ -2,7 +2,8 @@
 INSERT INTO role (role_name) VALUES
     ('teacher'),
     ('student'),
-    ('admin');
+    ('admin'),
+    ('unknown');
 
 -- Inserting data into the CLASSLOG_USER table
 INSERT INTO classlog_user (name, surname, email, password, role_id) VALUES

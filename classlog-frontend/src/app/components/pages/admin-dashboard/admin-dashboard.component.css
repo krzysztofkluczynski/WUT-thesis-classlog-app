@@ -1,0 +1,29 @@
+/* Full-screen container to cover the remaining screen */
+.full-screen-container {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 100px); /* Assuming the header is about 100px high */
+  padding: 20px;
+}
+
+/* Container for the three tiles */
+.tiles-container {
+  display: flex;
+  gap: 20px; /* Space between the tiles */
+}
+
+/* Styling for each individual tile */
+.tile {
+  background-color: #FFFDE0; /* Yellow tile color */
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 10px; /* Optional: Adds rounded corners to tiles */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Adds shadow for some depth */
+}

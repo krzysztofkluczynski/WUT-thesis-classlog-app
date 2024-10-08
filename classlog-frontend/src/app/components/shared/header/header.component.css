@@ -1,14 +1,14 @@
 .app-header {
-  background-color: #FBFBD2;
-  height: 80px;
-  color: white;
-  padding: 0 20px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  box-sizing: border-box; /* Ensure padding is included in the element's total width and height */
-  width: 100%; /* Ensure the header takes the full width of the viewport */
-  overflow: visible; /* Prevent overflow issues */
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #FBFBD2;
+  border-bottom: 2px solid #eaeaea;
+}
+
+.menu-active {
+  background-color: white;
 }
 
 .logo-title-container {
@@ -17,45 +17,64 @@
 }
 
 .app-logo {
-  height: 120px; /* Adjust height as needed */
-  vertical-align: middle;
+  width: 80px;
+  height: auto;
+  margin-right: 100px;
 }
 
-.app-title {
-  margin-left: 20px; /* Space between logo and text */
+.content-container {
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.nav-links-container {
+  display: flex;
+  justify-content: flex-start; /* Aligns links to the left */
+  flex-grow: 1;
+  font-weight: bold;
+  gap: 80px;
+  margin-top: 10px;
+  margin-left: 100px;
+}
+
+.nav-link {
+  font-size: 18px;
+  color: black;
+  text-decoration: none;
+  font-size: 1.6rem;
 }
 
 .dropdown-container {
-  display: flex;
-  align-items: center;
+  position: relative;
 }
 
-.dropdown-menu-right {
-  right: 0;
-  left: auto;
+.dropdown {
+  position: relative;
 }
 
 .dropdown-menu {
-  background-color: #2B7A78; /* Custom background color for the dropdown */
-  border: none; /* Remove border */
+  width: 200px; /* Increase the width of the dropdown menu */
+  padding: 8px 12px; /* Increase padding for a bigger look */
+  font-size: 16px; /* Increase font size for larger text */
+  background-color: #f8f9fa; /* Optional: Set background color */
 }
 
 .dropdown-item {
-  color: white; /* White text color for dropdown items */
+  font-size: 16px; /* Increase the size of dropdown items */
+  padding: 10px 15px; /* Increase padding to make items bigger */
 }
 
-.dropdown-item:hover {
-  background-color: #3Aafa9; /* Darker background on hover */
-  color: #ffffff; /* Ensure the text remains white on hover */
+.profile-btn {
+  background: #FFD900;
+  border-radius: 30px;
+  border: black;
+  cursor: pointer;
+  font-size: 32px;
 }
 
-.btn-secondary.dropdown-toggle {
-  background-color: #2B7A78; /* Custom background color for the dropdown button */
-  border-color: #3Aafa9; /* Matching border color */
+.profile-btn i {
+  color: black;
 }
 
-.btn-secondary.dropdown-toggle:focus,
-.btn-secondary.dropdown-toggle:hover {
-  background-color: #3Aafa9; /* Darker background on hover */
-  border-color: #3Aafa9;
-}
+

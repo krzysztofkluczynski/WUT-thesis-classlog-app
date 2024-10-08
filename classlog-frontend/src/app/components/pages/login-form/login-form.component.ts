@@ -51,6 +51,9 @@ export class LoginFormComponent {
         case 'teacher':
           this.router.navigate(['/teacher-dashboard']);
           break;
+        case 'unknown':
+          this.router.navigate(['/unknown-dashboard']);
+          break;
         default:
           console.error('Unknown role:', userRole);
           this.router.navigate(['/login']);
