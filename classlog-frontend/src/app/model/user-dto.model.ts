@@ -6,5 +6,6 @@ export interface UserDto {
   surname: string;
   email: string;
   role: Role;  // Use the Role interface here
+  createdAt: Date;
   token: string;
 }

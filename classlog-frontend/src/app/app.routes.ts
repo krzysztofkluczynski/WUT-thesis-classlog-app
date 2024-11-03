@@ -6,11 +6,13 @@ import {TeacherDashboardComponent} from "./components/pages/teacher-dashboard/te
 import {authGuard} from "./guard/auth.guard";
 import {RegisterFormComponent} from "./components/pages/register-form/register-form.component";
 import {UnknownDashboardComponent} from "./components/pages/unknown-dashboard/unknown-dashboard.component";
+import {UserProfileComponent} from "./components/pages/user-profile/user-profile.component";
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginFormComponent },
   { path: 'register', component: RegisterFormComponent },
   { path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [authGuard], data: { role: 'admin' } },
+  { path: 'user-profile/:id', component: UserProfileComponent, canActivate: [authGuard] },
   { path: 'user-dashboard', component: StudentDashboardComponent, canActivate: [authGuard], data: { role: 'student' } },
   { path: 'teacher-dashboard', component: TeacherDashboardComponent, canActivate: [authGuard], data: { role: 'teacher' } },
   {path: 'unknown-dashboard', component: UnknownDashboardComponent, canActivate: [authGuard], data: { role: 'unknown'} }

@@ -78,4 +78,16 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
+    public void deleteUser(Long userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new AppException("User not found", HttpStatus.NOT_FOUND);
+        }
+        userRepository.deleteById(userId);
+    }
+
+    public UserDto findUserById(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new AppException("User not found", HttpStatus.NOT_FOUND));
+        return userMapper.toUserDto(user);
+    }
 }

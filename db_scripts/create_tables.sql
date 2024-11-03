@@ -11,8 +11,8 @@ CREATE TABLE classlog_user (
     surname VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-    role_id BIGINT REFERENCES role(role_id)
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    role_id BIGINT REFERENCES role(role_id) ON DELETE RESTRICT
 );
 
 -- Creating the CLASS table

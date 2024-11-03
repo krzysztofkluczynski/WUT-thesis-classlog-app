@@ -6,28 +6,27 @@
 
   <div *ngIf="authService.getAuthToken() && ifShowMenu" class="content-container">
 
-    <!-- Links container based on user_id -->
     <div class="nav-links-container">
-      <ng-container *ngIf="userId === 1">
-        <a href="/students" class="nav-link">Students</a>
-        <a href="/teacher" class="nav-link">Teacher</a>
-        <a href="/unassigned" class="nav-link">Unassigned</a>
+      <ng-container *ngIf="authService.getUser()?.role?.id === 1">
+        <a href="/students" class="nav-link" [ngClass]="{'selected': selectedOption === 'ClassesTeacher'}" (click)="setSelectedOption('ClassesTeacher')">Classes</a>
+        <a href="/teacher" class="nav-link" [ngClass]="{'selected': selectedOption === 'TasksTeacher'}" (click)="setSelectedOption('TasksTeacher')">Tasks</a>
+        <a href="/unassigned" class="nav-link" [ngClass]="{'selected': selectedOption === 'GradesTeacher'}" (click)="setSelectedOption('GradesTeacher')">Grades</a>
       </ng-container>
 
-      <ng-container *ngIf="userId === 2">
-        <a href="/students" class="nav-link">Students</a>
-        <a href="/teacher" class="nav-link">Teacher</a>
-        <a href="/unassigned" class="nav-link">Unassigned</a>
+      <ng-container *ngIf="authService.getUser()?.role?.id === 2">
+        <a href="/students" class="nav-link" [ngClass]="{'selected': selectedOption === 'ClassesStudent'}" (click)="setSelectedOption('ClassesStudent')">Classes</a>
+        <a href="/teacher" class="nav-link" [ngClass]="{'selected': selectedOption === 'TasksStudent'}" (click)="setSelectedOption('TasksStudent')">Tasks</a>
+        <a href="/unassigned" class="nav-link" [ngClass]="{'selected': selectedOption === 'GradesStudent'}" (click)="setSelectedOption('GradesStudent')">Grades</a>
       </ng-container>
 
-      <ng-container *ngIf="userId === 3">
-        <a href="/students" class="nav-link">Students</a>
-        <a href="/teacher" class="nav-link">Teacher</a>
-        <a href="/unassigned" class="nav-link">Unassigned</a>
+      <ng-container *ngIf="authService.getUser()?.role?.id === 3">
+        <button class="nav-link" [ngClass]="{'selected': selectedOption === 'Students'}" (click)="setSelectedOption('Students')">Students</button>
+        <button class="nav-link" [ngClass]="{'selected': selectedOption === 'Teachers'}" (click)="setSelectedOption('Teachers')">Teachers</button>
+        <button class="nav-link" [ngClass]="{'selected': selectedOption === 'Admins'}" (click)="setSelectedOption('Admins')">Admins</button>
+        <button class="nav-link" [ngClass]="{'selected': selectedOption === 'Unassigned'}" (click)="setSelectedOption('Unassigned')">Unassigned</button>
       </ng-container>
     </div>
-
-    </div>
+  </div>
 
   <div *ngIf="ifShowMenu">
     <div class="dropdown-container">

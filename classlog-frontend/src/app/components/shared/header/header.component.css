@@ -77,4 +77,7 @@
   color: black;
 }
 
+.nav-link.selected {
+  color: #FFC300;
+}
 

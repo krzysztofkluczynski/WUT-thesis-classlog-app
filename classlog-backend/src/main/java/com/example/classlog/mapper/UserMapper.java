@@ -10,6 +10,7 @@ import org.mapstruct.Mapping;
 public interface UserMapper {
 
     @Mapping(target = "role", source = "role")
+    @Mapping(target = "createdAt", source = "createdAt")
     UserDto toUserDto(User user);
 
     @Mapping(target = "password", ignore = true)

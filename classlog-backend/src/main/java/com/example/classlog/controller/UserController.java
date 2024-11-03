@@ -6,6 +6,7 @@ import com.example.classlog.entities.User;
 import com.example.classlog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,9 +26,21 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-    @GetMapping("/users/role/{role}")
+    @GetMapping("/users/role/{roleId}")
     public ResponseEntity<List<UserDto>> getUsersByRole(@PathVariable Long roleId) {
-        List<UserDto> usersWithRole = userService.findByRole(roleId); // Assume findUsersByRole(role) is implemented in UserService
+        List<UserDto> usersWithRole = userService.findByRole(roleId);
         return ResponseEntity.ok(usersWithRole);
+    }
+
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<UserDto> getUser(@PathVariable Long userId) {
+        UserDto userDto = userService.findUserById(userId);
+        return ResponseEntity.ok(userDto);
+    }
+
+    @DeleteMapping("/users/{userId}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {
+        userService.deleteUser(userId);
+        return ResponseEntity.noContent().build();
     }
 }
