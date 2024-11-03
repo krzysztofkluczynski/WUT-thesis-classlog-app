@@ -27,3 +27,9 @@
     </div>
   </div>
 </div>
+
+<app-error-dialog
+  *ngIf="showErrorDialog"
+  [errorMessage]="errorMessage"
+  (closeDialog)="closeErrorDialog()">
+</app-error-dialog>

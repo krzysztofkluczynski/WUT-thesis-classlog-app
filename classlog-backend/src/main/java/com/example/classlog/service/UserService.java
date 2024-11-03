@@ -1,6 +1,8 @@
 package com.example.classlog.service;
 
 import com.example.classlog.Repository.UserRepository;
+import com.example.classlog.Repository.RoleRepository;
+import com.example.classlog.entities.Role;
 import com.example.classlog.mapper.UserMapper;
 import com.example.classlog.dto.CredentialsDto;
 import com.example.classlog.dto.SignUpDto;
@@ -13,13 +15,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.nio.CharBuffer;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+
 
     private final PasswordEncoder passwordEncoder;
 
@@ -39,21 +45,37 @@ public class UserService {
         Optional<User> optionalUser = userRepository.findByEmail(userDto.email());
 
         if (optionalUser.isPresent()) {
-            throw new AppException("Login already exists", HttpStatus.BAD_REQUEST);
+            throw new AppException("Email already exists", HttpStatus.BAD_REQUEST);
         }
 
         User user = userMapper.signUpToUser(userDto);
         user.setPassword(passwordEncoder.encode(CharBuffer.wrap(userDto.password())));
+
+        Role role = roleRepository.findById(4L)
+                .orElseThrow(() -> new RuntimeException("Role with ID 4 not found"));
+        user.setRole(role);
 
         User savedUser = userRepository.save(user);
 
         return userMapper.toUserDto(savedUser);
     }
 
+    public List<UserDto> findAllUsers() {
+        return userRepository.findAll().stream()
+                .map(userMapper::toUserDto)
+                .collect(Collectors.toList());
+    }
+
     public UserDto findByEmail(String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new AppException("Unknown user", HttpStatus.NOT_FOUND));
         return userMapper.toUserDto(user);
+    }
+
+    public List<UserDto> findByRole(Long roleId) {
+        return userRepository.findByRoleId(roleId).stream()
+                .map(userMapper::toUserDto)
+                .collect(Collectors.toList());
     }
 
 }

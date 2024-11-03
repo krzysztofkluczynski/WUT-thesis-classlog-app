@@ -12,13 +12,13 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
-  flyway:
-    image: flyway/flyway
-    depends_on:
-      - classlog-db
-    command: -url=jdbc:postgresql://classlog-db:5432/classlog -user=classlog -password=classlog migrate
-    volumes:
-      - ./db_scripts:/flyway/sql
+  # flyway:
+  #   image: flyway/flyway
+  #   depends_on:
+  #     - classlog-db
+  #   command: -url=jdbc:postgresql://classlog-db:5432/classlog -user=classlog -password=classlog migrate
+  #   volumes:
+  #     - ./db_scripts:/flyway/sql
 
 volumes:
   postgres-data:
