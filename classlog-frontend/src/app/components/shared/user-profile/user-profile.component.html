@@ -1,0 +1,48 @@
+<app-header [pageTitle]="'Classlog platform'" [ifShowMenu]="true"></app-header>
+<div class="full-screen-container">
+  <div class="tiles-container">
+    <div class="user-profile-container">
+      <div class="profile-header">
+        <div class="name-icons">
+          <h1>{{ userDto.name }} {{ userDto.surname }}</h1>
+          <div class="actions">
+            <button *ngIf="editMode" (click)="deleteUser()" class="btn btn-icon me-2">
+              <i class="bi bi-trash"></i>
+            </button>
+            <button *ngIf="editMode" (click)="editUser()" class="btn btn-icon me-2">
+              <i class="bi bi-pencil"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="profile-details">
+        <p><strong>Name: </strong>
+          <span *ngIf="!editButtonClicked">{{ userDto!.name }}</span>
+          <input *ngIf="editButtonClicked" [(ngModel)]="userDto!.name" class="form-control" />
+        </p>
+        <p><strong>Surname: </strong>
+          <span *ngIf="!editButtonClicked">{{ userDto!.surname }}</span>
+          <input *ngIf="editButtonClicked" [(ngModel)]="userDto!.surname" class="form-control" />
+        </p>
+        <p><strong>E-mail: </strong>
+          <span *ngIf="!editButtonClicked">{{ userDto!.email }}</span>
+          <input *ngIf="editButtonClicked" [(ngModel)]="userDto!.email" class="form-control" />
+        </p>
+        <p><strong>Role: </strong>
+          <span *ngIf="!editButtonClicked">{{ userDto!.role.roleName }}</span>
+          <select *ngIf="editButtonClicked" [(ngModel)]="userDto!.role.roleName" class="form-control form-select">
+            <option value="Student">Student</option>
+            <option value="Teacher">Teacher</option>
+            <option value="Admin">Admin</option>
+            <option value="Unknown">Unknown</option>
+          </select>
+        </p>
+        <p><strong>Created at: </strong> {{ userDto!.createdAt | date:'dd.MM.yyyy HH:mm' }}</p>
+        <div class="button-group">
+          <button *ngIf="editButtonClicked" (click)="saveChanges()" class="btn custom-button btn-save">Save</button>
+          <button *ngIf="editButtonClicked" (click)="cancelChanges()" class="btn custom-button btn-cancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

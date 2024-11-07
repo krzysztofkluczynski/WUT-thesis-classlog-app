@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { HeaderComponent } from "../../shared/header/header.component";
-import { AuthService } from "../../../service/auth/auth.service";
-import { AxiosService } from "../../../service/axios/axios.service";
-import { UserDto } from "../../../model/user-dto.model";
+import { HeaderComponent } from "../../../shared/header/header.component";
+import { AuthService } from "../../../../service/auth/auth.service";
+import { AxiosService } from "../../../../service/axios/axios.service";
+import { UserDto } from "../../../../model/user-dto.model";
 import {NgForOf} from "@angular/common";
 
 interface UserResponse {

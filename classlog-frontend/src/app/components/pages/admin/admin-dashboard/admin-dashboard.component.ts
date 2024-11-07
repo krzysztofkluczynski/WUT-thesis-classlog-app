@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {HeaderComponent} from "../../shared/header/header.component";
-import {LoginFormComponent} from "../login-form/login-form.component";
-import {UserDto} from "../../../model/user-dto.model";
-import {AuthService} from "../../../service/auth/auth.service";
-import {AxiosService} from "../../../service/axios/axios.service";
+import {HeaderComponent} from "../../../shared/header/header.component";
+import {LoginFormComponent} from "../../login-form/login-form.component";
+import {UserDto} from "../../../../model/user-dto.model";
+import {AuthService} from "../../../../service/auth/auth.service";
+import {AxiosService} from "../../../../service/axios/axios.service";
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { parseDate } from '../../../utils/date-utils';
+import { parseDate } from '../../../../utils/date-utils';
 
 
 @Component({

@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import {HeaderComponent} from "../../shared/header/header.component";
-import {UserDto} from "../../../model/user-dto.model";
-import {AuthService} from "../../../service/auth/auth.service";
-import {AxiosService} from "../../../service/axios/axios.service";
-import {ClassTileComponent} from "../../shared/class-tile/class-tile.component";
+import {HeaderComponent} from "../../../shared/header/header.component";
+import {UserDto} from "../../../../model/user-dto.model";
+import {AuthService} from "../../../../service/auth/auth.service";
+import {AxiosService} from "../../../../service/axios/axios.service";
+import {ClassTileComponent} from "../../../shared/class-tile/class-tile.component";
 
 @Component({
   selector: 'app-teacher-components',

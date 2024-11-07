@@ -9,7 +9,7 @@ import {LoginFormComponent} from "./components/pages/login-form/login-form.compo
 import {AxiosService} from "./service/axios/axios.service";
 import {RegisterFormComponent} from "./components/pages/register-form/register-form.component";
 import {ErrorDialogComponent} from "./components/shared/error-dialog/error-dialog.component";
-import {UserProfileComponent} from "./components/pages/user-profile/user-profile.component";
+import {UserProfileComponent} from "./components/shared/user-profile/user-profile.component";
 
 @Component({
   selector: 'app-root',

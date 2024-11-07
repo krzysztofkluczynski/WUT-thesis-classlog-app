@@ -36,6 +36,7 @@ export class HeaderComponent implements OnInit {
   setSelectedOption(option: string): void {
     this.selectedOption = option;
     this.optionSelected.emit(option);
+    this.router.navigate(['/admin-dashboard']);
   }
 
   ngOnInit(): void {

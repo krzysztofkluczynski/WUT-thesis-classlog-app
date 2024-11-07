@@ -43,21 +43,21 @@ export class LoginFormComponent {
       const user: UserDto = response.data;
       console.log(user);
 
-      // Store the entire user in AuthService
       this.authService.setUser(user);
 
       const userRole = this.authService.getUserRole();
       switch (userRole) {
-        case 'admin':
+        case 'Admin':
+          console.log('Admin');
           this.router.navigate(['/admin-dashboard']);
           break;
-        case 'student':
+        case 'Student':
           this.router.navigate(['/user-dashboard']);
           break;
-        case 'teacher':
+        case 'Teacher':
           this.router.navigate(['/teacher-dashboard']);
           break;
-        case 'unknown':
+        case 'Unknown':
           this.router.navigate(['/unknown-dashboard']);
           break;
         default:
