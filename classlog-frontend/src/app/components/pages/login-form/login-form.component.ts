@@ -5,9 +5,8 @@ import { Router } from '@angular/router';
 import { UserDto } from "../../../model/user-dto.model";
 import { AxiosService } from "../../../service/axios/axios.service";
 import { AuthService } from "../../../service/auth/auth.service";
-import { ErrorResponse } from "../../../model/error-response.model";
 import { HeaderComponent } from "../../shared/header/header.component";
-import {ErrorDialogComponent} from "../../shared/error-dialog/error-dialog.component";
+import {GlobalErrorHandler} from "../../../service/error/global-error-handler.service";
 
 @Component({
   selector: 'app-login-form',
@@ -16,9 +15,7 @@ import {ErrorDialogComponent} from "../../shared/error-dialog/error-dialog.compo
     FormsModule,
     NgClass,
     HeaderComponent,
-    ErrorDialogComponent,
     NgIf,
-    // Include ErrorDialogComponent in imports
   ],
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.css']
@@ -26,15 +23,13 @@ import {ErrorDialogComponent} from "../../shared/error-dialog/error-dialog.compo
 export class LoginFormComponent {
   email: string = "";
   password: string = "";
-  showErrorDialog: boolean = false;  // Control visibility of the ErrorDialog
-  errorMessage: string = '';
 
   constructor(
     private axiosService: AxiosService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private globalErrorHandler: GlobalErrorHandler
   ) {}
-
   onSubmitLogin(): void {
     this.axiosService.request('POST', '/login', {
       email: this.email,
@@ -66,27 +61,7 @@ export class LoginFormComponent {
           break;
       }
     }).catch((error: any) => {
-      let errorResponse: ErrorResponse;
-
-      if (error.response) {
-        const statusCode = error.response.status;
-        const message = error.response.data.message || 'An error occurred';
-        const details = error.response.data.details || null;
-
-        errorResponse = new ErrorResponse(statusCode, message, details);
-
-        this.errorMessage = errorResponse.getMessage();
-        this.showErrorDialog = true;
-
-        console.error(`Error details:`, errorResponse.getDetails());
-      } else {
-        // Handle errors without a response (e.g., network issues)
-        errorResponse = new ErrorResponse(0, error.message);  // 0 as default for non-HTTP errors
-        this.errorMessage = errorResponse.getMessage();
-        this.showErrorDialog = true;  // Open the custom error dialog
-      }
-
-      // Clear any stored user data on error
+      this.globalErrorHandler.handleError(error);
       this.authService.setUser(null);
     });
   }
@@ -94,9 +69,5 @@ export class LoginFormComponent {
   navigateToRegister(event: Event): void {
     event.preventDefault();
     this.router.navigate(['/register']);
-  }
-
-  closeErrorDialog(): void {
-    this.showErrorDialog = false;  // Method to close the error dialog
   }
 }

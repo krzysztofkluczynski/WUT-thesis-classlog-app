@@ -10,6 +10,7 @@ import {AxiosService} from "./service/axios/axios.service";
 import {RegisterFormComponent} from "./components/pages/register-form/register-form.component";
 import {ErrorDialogComponent} from "./components/shared/error-dialog/error-dialog.component";
 import {UserProfileComponent} from "./components/shared/user-profile/user-profile.component";
+import {GlobalErrorHandler} from "./service/error/global-error-handler.service";
 
 @Component({
   selector: 'app-root',
@@ -21,7 +22,6 @@ import {UserProfileComponent} from "./components/shared/user-profile/user-profil
     HeaderComponent,
     LoginFormComponent,
     RegisterFormComponent,
-    ErrorDialogComponent,
     UserProfileComponent
   ],
   templateUrl: './app.component.html',

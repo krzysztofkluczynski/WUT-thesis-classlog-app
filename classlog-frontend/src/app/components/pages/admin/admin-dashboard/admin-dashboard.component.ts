@@ -7,6 +7,7 @@ import {AxiosService} from "../../../../service/axios/axios.service";
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { parseDate } from '../../../../utils/date-utils';
+import {GlobalErrorHandler} from "../../../../service/error/global-error-handler.service";
 
 
 @Component({
@@ -15,8 +16,7 @@ import { parseDate } from '../../../../utils/date-utils';
     imports: [
         HeaderComponent,
         LoginFormComponent,
-      CommonModule
-    ],
+      CommonModule],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.css'
 })
@@ -28,7 +28,8 @@ export class AdminDashboardComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private axiosService: AxiosService,
-    private router: Router
+    private router: Router,
+    private globalErrorHandler: GlobalErrorHandler
   ) {}
 
   goToUserProfile(userId: number): void {
@@ -52,7 +53,10 @@ export class AdminDashboardComponent implements OnInit {
           createdAt: parseDate(user.createdAt)  // Ensure createdAt is a Date
         }));
       }
-    ).catch((error: any) => console.error('Failed to fetch users:', error));
+    ).catch((error: any) => {
+      this.globalErrorHandler.handleError(error);
+      console.error('Failed to fetch users:', error);
+    });
   }
 
   onOptionSelected(option: string): void {
@@ -73,8 +77,10 @@ export class AdminDashboardComponent implements OnInit {
         this.UsersList = this.UsersList.filter(user => user.id !== userId);
         console.log(`User with ID ${userId} deleted successfully. Response:`, response);
       }
-    ).catch((error: any) => console.error('Failed to delete user:', error));
-  }
+    ).catch((error: any) => {
+      this.globalErrorHandler.handleError(error);
+      console.error('Failed to delete user:', error);
+    });  }
 
   ngOnInit(): void {
     this.user = this.authService.getUser();

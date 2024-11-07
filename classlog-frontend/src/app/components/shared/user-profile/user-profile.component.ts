@@ -8,6 +8,7 @@ import {parseDate} from "../../../utils/date-utils";
 import {HeaderComponent} from "../header/header.component";
 import {FormsModule} from '@angular/forms';
 import {Role} from "../../../model/role.model";
+import {GlobalErrorHandler} from "../../../service/error/global-error-handler.service";
 
 @Component({
   selector: 'app-user-profile',
@@ -16,8 +17,7 @@ import {Role} from "../../../model/role.model";
     NgIf,
     HeaderComponent,
     DatePipe,
-    FormsModule
-  ],
+    FormsModule],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.css'
 })
@@ -39,7 +39,8 @@ export class UserProfileComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private authService: AuthService,
               private axiosService: AxiosService,
-              private router: Router) {}
+              private router: Router,
+              private globalErrorHandler: GlobalErrorHandler) {}
 
   ngOnInit(): void {
     this.userId = +this.route.snapshot.paramMap.get('id')!;
@@ -55,7 +56,10 @@ export class UserProfileComponent implements OnInit {
           createdAt: parseDate(response.data.createdAt), // Ensure createdAt is a Date
         };
       })
-      .catch((error: any) => console.error('Failed to fetch user data:', error));
+      .catch((error: any) => {
+        this.globalErrorHandler.handleError(error);
+        console.error('Failed to fetch user data:', error)
+      });
   }
 
   editUser(): void {
@@ -84,6 +88,7 @@ export class UserProfileComponent implements OnInit {
         this.ngOnInit();
       })
       .catch((error: any) => {
+        this.globalErrorHandler.handleError(error);
         console.error('Failed to update user data:', error);
         this.ngOnInit();
       });
@@ -94,7 +99,10 @@ export class UserProfileComponent implements OnInit {
       (response: any) => {
         console.log(`User with ID ${this.userId} deleted successfully. Response:`, response);
       }
-    ).catch((error: any) => console.error('Failed to delete user:', error));
+    ).catch((error: any) => {
+      this.globalErrorHandler.handleError(error);
+      console.error('Failed to delete user:', error)
+    });
   }
 
   cancelChanges() {
