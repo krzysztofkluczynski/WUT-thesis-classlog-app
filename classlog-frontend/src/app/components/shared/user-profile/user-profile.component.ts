@@ -1,14 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {DatePipe, NgIf} from "@angular/common";
-import {UserDto} from "../../../model/user-dto.model";
-import {AuthService} from "../../../service/auth/auth.service";
-import {AxiosService} from "../../../service/axios/axios.service";
-import {parseDate} from "../../../utils/date-utils";
-import {HeaderComponent} from "../header/header.component";
-import {FormsModule} from '@angular/forms';
-import {Role} from "../../../model/role.model";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from "@angular/router";
+import { DatePipe, NgIf } from "@angular/common";
+import { UserDto } from "../../../model/user-dto.model";
+import { AuthService } from "../../../service/auth/auth.service";
+import { AxiosService } from "../../../service/axios/axios.service";
+import { parseDate } from "../../../utils/date-utils";
+import { HeaderComponent } from "../header/header.component";
+import { FormsModule } from '@angular/forms';
 import {GlobalErrorHandler} from "../../../service/error/global-error-handler.service";
+import {Role} from "../../../model/role.model";
+import {ChangePasswordDto} from "../../../model/change-password-dto";
 
 @Component({
   selector: 'app-user-profile',
@@ -17,30 +18,36 @@ import {GlobalErrorHandler} from "../../../service/error/global-error-handler.se
     NgIf,
     HeaderComponent,
     DatePipe,
-    FormsModule],
+    FormsModule
+  ],
   templateUrl: './user-profile.component.html',
-  styleUrl: './user-profile.component.css'
+  styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit {
   userId!: number;
   editMode = false;
   editButtonClicked = false;
+  changePasswordClicked = false;
+  currentPassword = '';
+  newPassword = '';
+  confirmNewPassword = '';
   userDto: UserDto = {
     id: 0,
     name: '',
     surname: '',
     email: '',
-    role: { id: 0, roleName: 'Unknown' }, // Matches Role interface
+    role: { id: 0, roleName: 'Unknown' },
     createdAt: new Date(),
     token: '',
   };
 
-
-  constructor(private route: ActivatedRoute,
-              private authService: AuthService,
-              private axiosService: AxiosService,
-              private router: Router,
-              private globalErrorHandler: GlobalErrorHandler) {}
+  constructor(
+    private route: ActivatedRoute,
+    public authService: AuthService,
+    private axiosService: AxiosService,
+    private router: Router,
+    private globalErrorHandler: GlobalErrorHandler
+  ) {}
 
   ngOnInit(): void {
     this.userId = +this.route.snapshot.paramMap.get('id')!;
@@ -53,12 +60,12 @@ export class UserProfileComponent implements OnInit {
       .then((response: { data: UserDto }) => {
         this.userDto = {
           ...response.data,
-          createdAt: parseDate(response.data.createdAt), // Ensure createdAt is a Date
+          createdAt: parseDate(response.data.createdAt),
         };
       })
       .catch((error: any) => {
         this.globalErrorHandler.handleError(error);
-        console.error('Failed to fetch user data:', error)
+        console.error('Failed to fetch user data:', error);
       });
   }
 
@@ -74,17 +81,40 @@ export class UserProfileComponent implements OnInit {
       Unknown: { id: 4, roleName: 'Unknown' },
     };
 
-    const selectedRole = roleMapping[this.userDto.role.roleName] || { id: 4, roleName: 'Unknown' };
+    const selectedRole = roleMapping[this.userDto.role.roleName];
 
     const updatedUser: UserDto = {
       ...this.userDto,
       role: selectedRole,
     };
 
+    if (this.changePasswordClicked && this.currentPassword !== '' && this.newPassword !== '' && this.confirmNewPassword !== '') {
+      if (this.newPassword !== this.confirmNewPassword) {
+        this.globalErrorHandler.handleError('Passwords do not match.');
+        this.cancelChanges()
+        return;
+      }
+
+      const changePasswordDto: ChangePasswordDto = {
+        userId: this.userDto.id,
+        oldPassword: this.currentPassword,
+        newPassword: this.newPassword,
+      }
+
+      this.axiosService.request('POST', `/users/change-password`, changePasswordDto)
+        .then((response: any) => {
+          console.log(`User with ID ${this.userId} changed password. Response:`, response);
+        })
+        .catch((error: any) => {
+          this.globalErrorHandler.handleError(error);
+        });
+    }
+
     this.axiosService.request('PUT', `/users/${this.userId}`, updatedUser)
       .then((response: any) => {
         console.log(`User with ID ${this.userId} updated successfully. Response:`, response);
         this.editButtonClicked = false;
+        this.changePasswordClicked = false;
         this.ngOnInit();
       })
       .catch((error: any) => {
@@ -101,12 +131,20 @@ export class UserProfileComponent implements OnInit {
       }
     ).catch((error: any) => {
       this.globalErrorHandler.handleError(error);
-      console.error('Failed to delete user:', error)
+      console.error('Failed to delete user:', error);
     });
   }
 
   cancelChanges() {
     this.editButtonClicked = false;
-    this.ngOnInit(); //
+    this.changePasswordClicked = false;
+    this.currentPassword = '';
+    this.newPassword = '';
+    this.confirmNewPassword = '';
+    this.ngOnInit();
+  }
+
+  toggleChangePassword() {
+    this.changePasswordClicked = !this.changePasswordClicked;
   }
 }

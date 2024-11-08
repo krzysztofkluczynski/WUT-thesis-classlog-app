@@ -1,6 +1,7 @@
 package com.example.classlog.controller;
 
 import com.example.classlog.Repository.UserRepository;
+import com.example.classlog.dto.ChangePasswordDto;
 import com.example.classlog.dto.UserDto;
 import com.example.classlog.entities.User;
 import com.example.classlog.service.UserService;
@@ -44,6 +45,12 @@ public class UserController {
     @PutMapping("/users/{userId}")
     public ResponseEntity<UserDto> updateUser(@PathVariable Long userId, @RequestBody UserDto userDto) {
         UserDto updatedUser = userService.updateUser(userId, userDto);
+        return ResponseEntity.ok(updatedUser);
+    }
+
+    @PostMapping("/users/change-password")
+    public ResponseEntity<UserDto> changePassword(@RequestBody ChangePasswordDto changePasswordDto) {
+        UserDto updatedUser = userService.changePassword(changePasswordDto);
         return ResponseEntity.ok(updatedUser);
     }
 }

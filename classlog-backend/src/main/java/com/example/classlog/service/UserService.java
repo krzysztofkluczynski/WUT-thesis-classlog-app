@@ -2,6 +2,7 @@ package com.example.classlog.service;
 
 import com.example.classlog.Repository.UserRepository;
 import com.example.classlog.Repository.RoleRepository;
+import com.example.classlog.dto.ChangePasswordDto;
 import com.example.classlog.entities.Role;
 import com.example.classlog.mapper.UserMapper;
 import com.example.classlog.dto.CredentialsDto;
@@ -101,6 +102,20 @@ public class UserService {
         user.setRole(userDto.getRole());
 
         User updatedUser = userRepository.save(user);
+        return userMapper.toUserDto(updatedUser);
+    }
+
+    public UserDto changePassword(ChangePasswordDto changePasswordDto) {
+        User user = userRepository.findById(changePasswordDto.getUserId())
+                .orElseThrow(() -> new AppException("Unknown user", HttpStatus.NOT_FOUND));
+
+        if (!passwordEncoder.matches(CharBuffer.wrap(changePasswordDto.getOldPassword()), user.getPassword())) {
+            throw new AppException("Invalid old password", HttpStatus.BAD_REQUEST);
+        }
+
+        user.setPassword(passwordEncoder.encode(CharBuffer.wrap(changePasswordDto.getNewPassword())));
+        User updatedUser = userRepository.save(user);
+
         return userMapper.toUserDto(updatedUser);
     }
 }

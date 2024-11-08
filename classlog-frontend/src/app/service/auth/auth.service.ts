@@ -55,6 +55,16 @@ export class AuthService {
     return null;  // Return null if no role is available
   }
 
+  getUserRoleId(): number | null {
+    const user = this.getUser();
+
+    if (user && user.role) {
+      return user.role.id;  // Return user role name if available
+    }
+
+    return null;  // Return null if no role is available
+  }
+
   isAuthenticated(): boolean {
     const token = this.getAuthToken();
 
