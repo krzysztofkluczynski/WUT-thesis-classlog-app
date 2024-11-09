@@ -50,7 +50,7 @@ export class RegisterFormComponent {
       const user: UserDto = response.data;
       console.log('Registration successful:', user);
 
-      this.router.navigate(['/unknown-dashboard']);
+      this.router.navigate(['/unknown']);
     }).catch((error: any) => {
       console.error('Registration failed:', error);
       alert('Registration failed. Please try again.');

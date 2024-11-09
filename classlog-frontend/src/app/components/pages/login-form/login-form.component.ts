@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import {NgClass, NgIf} from "@angular/common";
 import { Router } from '@angular/router';
@@ -6,7 +6,7 @@ import { UserDto } from "../../../model/user-dto.model";
 import { AxiosService } from "../../../service/axios/axios.service";
 import { AuthService } from "../../../service/auth/auth.service";
 import { HeaderComponent } from "../../shared/header/header.component";
-import {GlobalErrorHandler} from "../../../service/error/global-error-handler.service";
+import {GlobalNotificationHandler} from "../../../service/notification/global-notification-handler.service";
 
 @Component({
   selector: 'app-login-form',
@@ -20,7 +20,7 @@ import {GlobalErrorHandler} from "../../../service/error/global-error-handler.se
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.css']
 })
-export class LoginFormComponent {
+export class LoginFormComponent implements OnInit{
   email: string = "";
   password: string = "";
 
@@ -28,7 +28,7 @@ export class LoginFormComponent {
     private axiosService: AxiosService,
     private authService: AuthService,
     private router: Router,
-    private globalErrorHandler: GlobalErrorHandler
+    private globalErrorHandler: GlobalNotificationHandler
   ) {}
   onSubmitLogin(): void {
     this.axiosService.request('POST', '/login', {
@@ -44,16 +44,16 @@ export class LoginFormComponent {
       switch (userRole) {
         case 'Admin':
           console.log('Admin');
-          this.router.navigate(['/admin-dashboard']);
+          this.router.navigate(['/admin/students']);
           break;
         case 'Student':
-          this.router.navigate(['/user-dashboard']);
+          this.router.navigate(['/student/dashboard']);
           break;
         case 'Teacher':
-          this.router.navigate(['/teacher-dashboard']);
+          this.router.navigate(['/teacher/dashboard']);
           break;
         case 'Unknown':
-          this.router.navigate(['/unknown-dashboard']);
+          this.router.navigate(['/unknown']);
           break;
         default:
           console.error('Unknown role:', userRole);
@@ -69,5 +69,9 @@ export class LoginFormComponent {
   navigateToRegister(event: Event): void {
     event.preventDefault();
     this.router.navigate(['/register']);
+  }
+
+  ngOnInit(): void {
+    this.authService.logout()
   }
 }

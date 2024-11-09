@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ErrorDialogComponent } from './error-dialog.component';
+import { StudentTasksComponent } from './student-tasks.component';
 
-describe('ErrorDialogComponent', () => {
-  let component: ErrorDialogComponent;
-  let fixture: ComponentFixture<ErrorDialogComponent>;
+describe('StudentTasksComponent', () => {
+  let component: StudentTasksComponent;
+  let fixture: ComponentFixture<StudentTasksComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ErrorDialogComponent]
+      imports: [StudentTasksComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ErrorDialogComponent);
+    fixture = TestBed.createComponent(StudentTasksComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

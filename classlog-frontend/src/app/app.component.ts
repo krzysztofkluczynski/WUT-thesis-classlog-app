@@ -8,9 +8,9 @@ import {HeaderComponent} from "./components/shared/header/header.component";
 import {LoginFormComponent} from "./components/pages/login-form/login-form.component";
 import {AxiosService} from "./service/axios/axios.service";
 import {RegisterFormComponent} from "./components/pages/register-form/register-form.component";
-import {ErrorDialogComponent} from "./components/shared/error-dialog/error-dialog.component";
 import {UserProfileComponent} from "./components/shared/user-profile/user-profile.component";
-import {GlobalErrorHandler} from "./service/error/global-error-handler.service";
+import {GlobalNotificationHandler} from "./service/notification/global-notification-handler.service";
+import {AdminDashboardComponent} from "./components/pages/admin/admin-dashboard/admin-dashboard.component";
 
 @Component({
   selector: 'app-root',
@@ -22,7 +22,7 @@ import {GlobalErrorHandler} from "./service/error/global-error-handler.service";
     HeaderComponent,
     LoginFormComponent,
     RegisterFormComponent,
-    UserProfileComponent
+    UserProfileComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

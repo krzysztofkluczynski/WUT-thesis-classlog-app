@@ -8,22 +8,22 @@
 
     <div class="nav-links-container">
       <ng-container *ngIf="authService.getUser()?.role?.id === 1">
-        <a href="/students" class="nav-link" [ngClass]="{'selected': selectedOption === 'ClassesTeacher'}" (click)="setSelectedOption('ClassesTeacher')">Classes</a>
-        <a href="/teacher" class="nav-link" [ngClass]="{'selected': selectedOption === 'TasksTeacher'}" (click)="setSelectedOption('TasksTeacher')">Tasks</a>
-        <a href="/unassigned" class="nav-link" [ngClass]="{'selected': selectedOption === 'GradesTeacher'}" (click)="setSelectedOption('GradesTeacher')">Grades</a>
+        <button class="nav-link" [ngClass]="{'selected': selectedOption === HeaderOptions.ClassesTeacher}" (click)="setSelectedOption(HeaderOptions.ClassesTeacher)">Classes</button>
+        <button class="nav-link" [ngClass]="{'selected': selectedOption === HeaderOptions.TasksTeacher}" (click)="setSelectedOption(HeaderOptions.TasksTeacher)">Tasks</button>
+        <button class="nav-link" [ngClass]="{'selected': selectedOption === HeaderOptions.GradesTeacher}" (click)="setSelectedOption(HeaderOptions.GradesTeacher)">Grades</button>
       </ng-container>
 
       <ng-container *ngIf="authService.getUser()?.role?.id === 2">
-        <a href="/students" class="nav-link" [ngClass]="{'selected': selectedOption === 'ClassesStudent'}" (click)="setSelectedOption('ClassesStudent')">Classes</a>
-        <a href="/teacher" class="nav-link" [ngClass]="{'selected': selectedOption === 'TasksStudent'}" (click)="setSelectedOption('TasksStudent')">Tasks</a>
-        <a href="/unassigned" class="nav-link" [ngClass]="{'selected': selectedOption === 'GradesStudent'}" (click)="setSelectedOption('GradesStudent')">Grades</a>
+        <button class="nav-link" [ngClass]="{'selected': selectedOption === HeaderOptions.ClassesStudent}" (click)="setSelectedOption(HeaderOptions.ClassesStudent)">Classes</button>
+        <button class="nav-link" [ngClass]="{'selected': selectedOption === HeaderOptions.TasksStudent}" (click)="setSelectedOption(HeaderOptions.TasksStudent)">Tasks</button>
+        <button class="nav-link" [ngClass]="{'selected': selectedOption === HeaderOptions.GradesStudent}" (click)="setSelectedOption(HeaderOptions.GradesStudent)">Grades</button>
       </ng-container>
 
       <ng-container *ngIf="authService.getUser()?.role?.id === 3">
-        <button class="nav-link" [ngClass]="{'selected': selectedOption === 'Students'}" (click)="setSelectedOption('Students')">Students</button>
-        <button class="nav-link" [ngClass]="{'selected': selectedOption === 'Teachers'}" (click)="setSelectedOption('Teachers')">Teachers</button>
-        <button class="nav-link" [ngClass]="{'selected': selectedOption === 'Admins'}" (click)="setSelectedOption('Admins')">Admins</button>
-        <button class="nav-link" [ngClass]="{'selected': selectedOption === 'Unassigned'}" (click)="setSelectedOption('Unassigned')">Unassigned</button>
+        <button class="nav-link" [ngClass]="{'selected': selectedOption === HeaderOptions.Students}" (click)="setSelectedOption(HeaderOptions.Students)">Students</button>
+        <button class="nav-link" [ngClass]="{'selected': selectedOption === HeaderOptions.Teachers}" (click)="setSelectedOption(HeaderOptions.Teachers)">Teachers</button>
+        <button class="nav-link" [ngClass]="{'selected': selectedOption === HeaderOptions.Admins}" (click)="setSelectedOption(HeaderOptions.Admins)">Admins</button>
+        <button class="nav-link" [ngClass]="{'selected': selectedOption === HeaderOptions.Unassigned}" (click)="setSelectedOption(HeaderOptions.Unassigned)">Unassigned</button>
       </ng-container>
     </div>
   </div>
@@ -36,6 +36,7 @@
         </button>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
           <button class="dropdown-item" (click)="logout()">Logout</button>
+          <button class="dropdown-item" (click)="goToProfile()">Profile</button>
         </div>
       </div>
     </div>

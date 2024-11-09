@@ -7,7 +7,7 @@ import { AxiosService } from "../../../service/axios/axios.service";
 import { parseDate } from "../../../utils/date-utils";
 import { HeaderComponent } from "../header/header.component";
 import { FormsModule } from '@angular/forms';
-import {GlobalErrorHandler} from "../../../service/error/global-error-handler.service";
+import {GlobalNotificationHandler} from "../../../service/notification/global-notification-handler.service";
 import {Role} from "../../../model/role.model";
 import {ChangePasswordDto} from "../../../model/change-password-dto";
 
@@ -46,7 +46,7 @@ export class UserProfileComponent implements OnInit {
     public authService: AuthService,
     private axiosService: AxiosService,
     private router: Router,
-    private globalErrorHandler: GlobalErrorHandler
+    private globalNotificationHandler: GlobalNotificationHandler
   ) {}
 
   ngOnInit(): void {
@@ -64,7 +64,7 @@ export class UserProfileComponent implements OnInit {
         };
       })
       .catch((error: any) => {
-        this.globalErrorHandler.handleError(error);
+        this.globalNotificationHandler.handleError(error);
         console.error('Failed to fetch user data:', error);
       });
   }
@@ -90,7 +90,7 @@ export class UserProfileComponent implements OnInit {
 
     if (this.changePasswordClicked && this.currentPassword !== '' && this.newPassword !== '' && this.confirmNewPassword !== '') {
       if (this.newPassword !== this.confirmNewPassword) {
-        this.globalErrorHandler.handleError('Passwords do not match.');
+        this.globalNotificationHandler.handleError('Passwords do not match.');
         this.cancelChanges()
         return;
       }
@@ -103,22 +103,23 @@ export class UserProfileComponent implements OnInit {
 
       this.axiosService.request('POST', `/users/change-password`, changePasswordDto)
         .then((response: any) => {
-          console.log(`User with ID ${this.userId} changed password. Response:`, response);
+          this.globalNotificationHandler.handleMessage(`User changed password`);
         })
         .catch((error: any) => {
-          this.globalErrorHandler.handleError(error);
+          this.globalNotificationHandler.handleError(error);
         });
     }
 
     this.axiosService.request('PUT', `/users/${this.userId}`, updatedUser)
       .then((response: any) => {
+        this.globalNotificationHandler.handleMessage(`User updated successfully`);
         console.log(`User with ID ${this.userId} updated successfully. Response:`, response);
         this.editButtonClicked = false;
         this.changePasswordClicked = false;
         this.ngOnInit();
       })
       .catch((error: any) => {
-        this.globalErrorHandler.handleError(error);
+        this.globalNotificationHandler.handleError(error);
         console.error('Failed to update user data:', error);
         this.ngOnInit();
       });
@@ -127,10 +128,11 @@ export class UserProfileComponent implements OnInit {
   deleteUser() {
     this.axiosService.request('DELETE', `/users/${this.userId}`, {}).then(
       (response: any) => {
+        this.globalNotificationHandler.handleMessage(`User deleted successfully`);
         console.log(`User with ID ${this.userId} deleted successfully. Response:`, response);
       }
     ).catch((error: any) => {
-      this.globalErrorHandler.handleError(error);
+      this.globalNotificationHandler.handleError(error);
       console.error('Failed to delete user:', error);
     });
   }
