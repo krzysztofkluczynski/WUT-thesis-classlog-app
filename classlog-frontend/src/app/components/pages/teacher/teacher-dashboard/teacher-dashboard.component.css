@@ -47,14 +47,27 @@ html, body {
 }
 
 .yellow-button {
-  background-color: #F5C000;
+  background-color: #F5C000; /* Match the yellow button color */
   border: none;
   color: black;
   padding: 10px 20px;
   font-size: 16px;
   font-weight: bold;
+  border-radius: 20px; /* Rounded corners */
   cursor: pointer;
-  border-radius: 20px;
+  transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+}
+
+/* Hover effect for New Grade button */
+.yellow-button:hover {
+  background-color: #FFD54F; /* Lighter yellow on hover */
+  transform: scale(1.05); /* Slightly enlarge the button */
+}
+
+/* Active effect for New Grade button */
+.yellow-button:active {
+  background-color: #FBC02D; /* Slightly darker yellow on click */
+  transform: scale(0.95); /* Slightly shrink on click */
 }
 
 /* Scrollable content inside big tile */

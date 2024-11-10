@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HeaderComponent} from "../../../shared/header/header.component";
 import {ClassDto} from "../../../../model/entities/class-dto";
 import {UserDto} from "../../../../model/entities/user-dto";
@@ -8,7 +8,8 @@ import {Router} from "@angular/router";
 import {GlobalNotificationHandler} from "../../../../service/notification/global-notification-handler.service";
 import {parseDate} from "../../../../utils/date-utils";
 import {ClassTileComponent} from "../../../shared/class-tile/class-tile.component";
-import {DatePipe, NgForOf, FormsModule} from "@angular/common";
+import {DatePipe, NgForOf} from "@angular/common";
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-teacher-grades',
@@ -23,7 +24,7 @@ import {DatePipe, NgForOf, FormsModule} from "@angular/common";
   templateUrl: './teacher-grades.component.html',
   styleUrl: './teacher-grades.component.css'
 })
-export class TeacherGradesComponent {
+export class TeacherGradesComponent implements OnInit {
   classList: ClassDto[] = [];
   studentList: UserDto[] = [];
   selectedClassId: string | null = null;
@@ -51,7 +52,7 @@ export class TeacherGradesComponent {
 
   loadStudents(): void {
     if (this.selectedClassId) {
-      this.axiosService.request('GET', `/students/class/${this.selectedClassId}`, {}).then(
+      this.axiosService.request('GET', `/users/class/${this.selectedClassId}/role/${2}`, {}).then(
         (response: { data: UserDto[] }) => {
           this.studentList = response.data.map(student => ({
             ...student,
@@ -63,5 +64,9 @@ export class TeacherGradesComponent {
         console.error('Failed to fetch students:', error);
       });
     }
+  }
+
+  addNewGrade() {
+
   }
 }

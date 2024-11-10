@@ -1,4 +1,4 @@
-/* Ensure the HTML and body occupy the full height */
+/* General styles */
 html, body {
   height: 100%;
   margin: 0;
@@ -14,12 +14,12 @@ html, body {
   overflow: hidden; /* Prevent scrolling */
 }
 
-/* Content container below header */
+/* Tiles container */
 .tiles-container {
   display: flex;
   gap: 20px;
   flex: 1; /* Take the remaining space below the header */
-  padding: 20px 20px 20px; /* Remove top padding to avoid overflow */
+  padding: 20px;
   box-sizing: border-box;
   overflow: hidden; /* Prevent scrolling for the container */
 }
@@ -38,30 +38,108 @@ html, body {
   box-sizing: border-box;
 }
 
-/* Buttons inside big tile */
+/* Button container with spacing for select and button */
 .button-container {
   display: flex;
-  gap: 30px;
+  align-items: center;
+  justify-content: space-between; /* Space between select and button */
+  gap: 20px;
   flex-shrink: 0;
   padding-bottom: 20px;
 }
 
-.yellow-button {
-  background-color: #F5C000;
+.new-grade-button {
+  background-color: #F5C000; /* Match the yellow button color */
   border: none;
   color: black;
   padding: 10px 20px;
   font-size: 16px;
   font-weight: bold;
+  border-radius: 20px; /* Rounded corners */
   cursor: pointer;
-  border-radius: 20px;
+  transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
 }
 
-/* Scrollable content inside big tile */
+/* Hover effect for New Grade button */
+.new-grade-button:hover {
+  background-color: #FFD54F; /* Lighter yellow on hover */
+  transform: scale(1.05); /* Slightly enlarge the button */
+}
+
+/* Active effect for New Grade button */
+.new-grade-button:active {
+  background-color: #FBC02D; /* Slightly darker yellow on click */
+  transform: scale(0.95); /* Slightly shrink on click */
+}
+
+/* Select container */
+.select-container {
+  display: flex;
+  flex-direction: column; /* Stack label and select */
+  align-items: flex-start; /* Align to the left */
+  margin-right: 20px; /* Add space between the select and other buttons */
+}
+
+/* Label for select */
+.select-label {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+/* Style for the select element */
+.form-select {
+  width: 200px; /* Set a fixed width */
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  appearance: none; /* Remove default styling for consistency */
+}
+
+/* Big tile content */
 .big-tile-content {
   padding-right: 10px; /* Add space for scrollbar */
   box-sizing: border-box;
 }
+
+.table-responsive {
+  max-height: 400px; /* Set the max height for scrolling */
+  overflow-y: auto; /* Enable vertical scrolling */
+  border-radius: 8px;
+  background-color: #FFFDE0; /* Match the background of the tile */
+  border: 1px solid #ccc;
+}
+
+.table {
+  margin: 0;
+  text-align: center; /* Center-align table text */
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f5f5f5; /* Add hover effect on rows */
+}
+
+.table thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.table-dark {
+  background-color: #333;
+  color: white;
+  border-radius: 8px;
+}
+
+.table-bordered th,
+.table-bordered td {
+  border: 1px solid #ddd;
+}
+
 
 /* Right section: Small tiles container */
 .small-tiles-container {
@@ -84,4 +162,16 @@ html, body {
   flex-direction: column;
   overflow-y: auto; /* Allow scrolling for overflow content */
   box-sizing: border-box;
+}
+
+/* General button styles */
+.yellow-button {
+  background-color: #F5C000;
+  border: none;
+  color: black;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 20px;
 }
