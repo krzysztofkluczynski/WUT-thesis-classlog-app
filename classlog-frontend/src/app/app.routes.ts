@@ -12,6 +12,7 @@ import { StudentGradesComponent } from './components/pages/student/student-grade
 import { StudentTasksComponent } from './components/pages/student/student-tasks/student-tasks.component';
 import { TeacherClassComponent } from './components/pages/teacher/teacher-class/teacher-class.component';
 import { TeacherTasksComponent } from './components/pages/teacher/teacher-tasks/teacher-tasks.component';
+import {TeacherGradesComponent} from "./components/pages/teacher/teacher-grades/teacher-grades.component";
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -31,7 +32,7 @@ export const routes: Routes = [
     data: { role: 'Student' },
     children: [
       { path: 'dashboard', component: StudentDashboardComponent },
-      { path: 'classes', component: StudentClassComponent },
+      { path: 'class/:id', component: StudentClassComponent },
       { path: 'grades', component: StudentGradesComponent },
       { path: 'tasks', component: StudentTasksComponent },
     ],
@@ -42,8 +43,8 @@ export const routes: Routes = [
     data: { role: 'Teacher' },
     children: [
       { path: 'dashboard', component: TeacherDashboardComponent },
-      { path: 'class', component: TeacherClassComponent },
-      { path: 'grades', component: TeacherClassComponent }, // Same component for now, can be changed later
+      { path: 'class/:id', component: TeacherClassComponent },
+      { path: 'grades', component: TeacherGradesComponent },
       { path: 'tasks', component: TeacherTasksComponent },
     ],
   },

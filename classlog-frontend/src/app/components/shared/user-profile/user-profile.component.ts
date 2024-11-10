@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { DatePipe, NgIf } from "@angular/common";
-import { UserDto } from "../../../model/user-dto.model";
+import { UserDto } from "../../../model/entities/user-dto";
 import { AuthService } from "../../../service/auth/auth.service";
 import { AxiosService } from "../../../service/axios/axios.service";
 import { parseDate } from "../../../utils/date-utils";
 import { HeaderComponent } from "../header/header.component";
 import { FormsModule } from '@angular/forms';
 import {GlobalNotificationHandler} from "../../../service/notification/global-notification-handler.service";
-import {Role} from "../../../model/role.model";
+import {Role} from "../../../model/entities/role";
 import {ChangePasswordDto} from "../../../model/change-password-dto";
 
 @Component({

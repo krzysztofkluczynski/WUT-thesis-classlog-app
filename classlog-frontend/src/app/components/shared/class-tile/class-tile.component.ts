@@ -1,14 +1,18 @@
-import {Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
+import {UserDto} from "../../../model/entities/user-dto";
+import {NgForOf} from "@angular/common";
 
 @Component({
   selector: 'app-class-tile',
   standalone: true,
-  imports: [],
+  imports: [
+    NgForOf
+  ],
   templateUrl: './class-tile.component.html',
-  styleUrl: './class-tile.component.css'
+  styleUrls: ['./class-tile.component.css'] // Corrected to "styleUrls"
 })
 export class ClassTileComponent {
-  @Input() title: string = 'Class Title';
-  @Input() description: string = 'Class Description';
-  @Input() teacher: string = 'Teacher Name';
+  @Input() title: string | undefined = 'Class Title';
+  @Input() description: string | undefined = 'Class Description';
+  @Input() teachers: UserDto[] = [];
 }

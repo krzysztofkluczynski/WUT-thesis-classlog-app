@@ -1,6 +1,6 @@
 import { ErrorHandler, Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
-import { ErrorResponse } from '../../model/error-response.model';
+import { ErrorResponse } from '../../model/error-response';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {HttpErrorResponse} from "@angular/common/http";
 

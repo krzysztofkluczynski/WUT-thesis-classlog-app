@@ -1,28 +1,41 @@
 <app-header [pageTitle]="'Classlog platform'" [ifShowMenu]="true"></app-header>
 
 <div class="full-screen-container">
-
   <div class="tiles-container">
 
+    <!-- Big tile on the left -->
     <div class="big-tile">
+      <!-- Buttons at the top -->
       <div class="button-container">
         <button class="yellow-button">Create class</button>
         <button class="yellow-button">Join class</button>
       </div>
 
+      <!-- Class tiles below buttons -->
       <div class="big-tile-content">
-        <app-class-tile [title]="'Beginners Group'" [description]="'A class for beginners'" [teacher]="'John Doe'"></app-class-tile>
-        <app-class-tile [title]="'Intermediate Group'" [description]="'A class for intermediate learnersaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa       aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'" [teacher]="'Emily Clark'"></app-class-tile>
-        <app-class-tile [title]="'Advanced Group'" [description]="'A class for advanced learners'" [teacher]="'Jane Smith'"></app-class-tile>
+        <app-class-tile
+          *ngFor="let classItem of classList"
+          [title]="classItem.name"
+          [description]="classItem.description"
+          [teachers]="getTeachersForClass(classItem)"
+          (click)="onClassTileClick(classItem)">
+        </app-class-tile>
+      </div>
+    </div>
+
+    <div class="small-tiles-container">
+      <div class="small-tile">
+        <ul class="lessons-list">
+          <li *ngFor="let lesson of lessonList" class="lesson-item">
+            <div class="lesson-frame">
+              <div class="lesson-subject">{{ lesson.subject }}</div>
+              <div class="lesson-date">{{ lesson.lessonDate | date:'dd.MM.yyyy HH:mm'}}</div>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
 
 
-    <div class="small-tiles-container">
-      <div class="small-tile">Tile 2</div>
-      <div class="small-tile">Tile 3</div>
-    </div>
-
   </div>
-
 </div>

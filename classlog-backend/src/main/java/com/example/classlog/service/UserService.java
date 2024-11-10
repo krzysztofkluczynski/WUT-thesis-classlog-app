@@ -1,7 +1,7 @@
 package com.example.classlog.service;
 
-import com.example.classlog.Repository.UserRepository;
-import com.example.classlog.Repository.RoleRepository;
+import com.example.classlog.repository.UserRepository;
+import com.example.classlog.repository.RoleRepository;
 import com.example.classlog.dto.ChangePasswordDto;
 import com.example.classlog.entities.Role;
 import com.example.classlog.mapper.UserMapper;
@@ -117,5 +117,11 @@ public class UserService {
         User updatedUser = userRepository.save(user);
 
         return userMapper.toUserDto(updatedUser);
+    }
+
+    public List<UserDto> getUsersByClass(long classId) {
+        return userRepository.findByClassId(classId).stream()
+                .map(userMapper::toUserDto)
+                .collect(Collectors.toList());
     }
 }

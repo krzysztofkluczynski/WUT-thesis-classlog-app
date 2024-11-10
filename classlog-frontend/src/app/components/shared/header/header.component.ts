@@ -44,7 +44,7 @@ export class HeaderComponent implements OnInit {
         this.router.navigate(['/teacher/grades']);
         break;
       case HeaderOptions.ClassesStudent:
-        this.router.navigate(['/student/classes']);
+        this.router.navigate(['/student/dashboard']);
         break;
       case HeaderOptions.TasksStudent:
         this.router.navigate(['/student/tasks']);
@@ -89,7 +89,7 @@ export class HeaderComponent implements OnInit {
         ['/teacher/dashboard', HeaderOptions.ClassesTeacher],
         ['/teacher/tasks', HeaderOptions.TasksTeacher],
         ['/teacher/grades', HeaderOptions.GradesTeacher],
-        ['/student/classes', HeaderOptions.ClassesStudent],
+        ['/student/dashboard', HeaderOptions.ClassesStudent],
         ['/student/tasks', HeaderOptions.TasksStudent],
         ['/student/grades', HeaderOptions.GradesStudent],
         ['/admin/students', HeaderOptions.Students],

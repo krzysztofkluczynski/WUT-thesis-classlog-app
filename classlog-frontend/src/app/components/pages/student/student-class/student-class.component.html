@@ -1,1 +1,29 @@
-<p>student-class works!</p>
+<app-header [pageTitle]="'Classlog platform'" [ifShowMenu]="true"></app-header>
+
+<div class="content-container">
+  <div class="posts-container">
+    <h2>Posts</h2>
+    <div *ngFor="let post of posts" class="post-item">
+      <p>Title: {{ post.title }}</p>
+      <p>Content: {{ post.content }}</p>
+      <p>Date: {{ post.createdAt | date:'dd.MM.yyyy HH:mm' }}</p>
+    </div>
+  </div>
+
+  <div class="comments-container">
+    <h2>Comments</h2>
+    <div *ngFor="let comment of comments" class="comment-item">
+      <p>Author: {{ comment.user.name }}</p>
+      <p>Content: {{ comment.content }}</p>
+      <p>Date: {{ comment.createdAt | date:'dd.MM.yyyy HH:mm' }}</p>
+    </div>
+  </div>
+
+  <div class="lessons-container">
+    <h2>Lessons</h2>
+    <div *ngFor="let lesson of lessons" class="lesson-item">
+      <p>Title: {{ lesson.subject }}</p>
+      <p>Date: {{ lesson.lessonDate | date:'dd.MM.yyyy HH:mm' }}</p>
+    </div>
+  </div>
+</div>

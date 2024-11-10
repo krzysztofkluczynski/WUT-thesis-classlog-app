@@ -3,9 +3,10 @@ import {FormsModule} from "@angular/forms";
 import {NgClass, NgIf} from "@angular/common";
 import {Router} from '@angular/router';
 import {HeaderComponent} from "../../shared/header/header.component";
-import {UserDto} from "../../../model/user-dto.model";
+import {UserDto} from "../../../model/entities/user-dto";
 import {AxiosService} from "../../../service/axios/axios.service";
 import {AuthService} from "../../../service/auth/auth.service";
+import {GlobalNotificationHandler} from "../../../service/notification/global-notification-handler.service";
 
 @Component({
   selector: 'app-register-form',
@@ -32,8 +33,9 @@ export class RegisterFormComponent {
   constructor(
     private axiosService: AxiosService,
     private authService: AuthService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private globalNotificationHandler: GlobalNotificationHandler,
+) {}
 
   onSubmitRegister(): void {
     if (this.passwordMismatch) {
@@ -48,13 +50,21 @@ export class RegisterFormComponent {
       password: this.password
     }).then((response: { data: UserDto }) => {
       const user: UserDto = response.data;
-      console.log('Registration successful:', user);
+      this.globalNotificationHandler.handleMessage('Registration successful');
 
-      this.router.navigate(['/unknown']);
+      this.axiosService.request('POST', '/login', {
+        email: this.email,
+        password: this.password
+      }).then((response: { data: UserDto }) => {
+        const user: UserDto = response.data;
+        this.authService.setUser(user);
+        this.router.navigate(['/unknown']);
+
     }).catch((error: any) => {
       console.error('Registration failed:', error);
-      alert('Registration failed. Please try again.');
+        this.globalNotificationHandler.handleError('Registration failed. Please try again.');
     });
+  });
   }
 
   navigateToLogin(event: Event): void {

@@ -3,7 +3,7 @@
 <div class="container-fluid full-screen-container">
   <div class="col-lg-10 big-tile">
     <div class="big-tile-content">
-      <h2>{{pickedUser}} List</h2>
+      <h2>{{pickedRole}} List</h2>
       <table class="table table-hover user-table">
         <thead class="table-dark">
         <tr>
@@ -16,7 +16,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let user of UsersList" class="user-row">
+        <tr *ngFor="let user of usersList" class="user-row">
           <td>{{ user.name }}</td>
           <td>{{ user.surname }}</td>
           <td>{{ user.email }}</td>

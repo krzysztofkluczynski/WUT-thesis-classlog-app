@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HeaderComponent } from "../../../shared/header/header.component";
 import { LoginFormComponent } from "../../login-form/login-form.component";
-import { UserDto } from "../../../../model/user-dto.model";
+import { UserDto } from "../../../../model/entities/user-dto";
 import { AuthService } from "../../../../service/auth/auth.service";
 import { AxiosService } from "../../../../service/axios/axios.service";
 import { Router } from '@angular/router';
@@ -24,8 +24,8 @@ import { HeaderOptions } from "../../../../utils/header-options";
 })
 export class AdminDashboardComponent implements OnInit {
   user: UserDto | null = null;
-  UsersList: UserDto[] = [];
-  pickedUser: string = 'Students';
+  usersList: UserDto[] = [];
+  pickedRole: string | null = null;
 
   constructor(
     private authService: AuthService,
@@ -40,18 +40,9 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   loadUsers(userId: number): void {
-    if (userId === 1) {
-      this.pickedUser = 'Teachers';
-    } else if (userId === 2) {
-      this.pickedUser = 'Students';
-    } else if (userId === 3) {
-      this.pickedUser = 'Admins';
-    } else if (userId === 4) {
-      this.pickedUser = 'Unassigned';
-    }
     this.axiosService.request('GET', `/users/role/${userId}`, {}).then(
       (response: { data: UserDto[] }) => {
-        this.UsersList = response.data.map(user => ({
+        this.usersList = response.data.map(user => ({
           ...user,
           createdAt: parseDate(user.createdAt)  // Ensure createdAt is a Date
         }));
@@ -69,15 +60,19 @@ export class AdminDashboardComponent implements OnInit {
       switch (section) {
         case 'teachers':
           this.loadUsers(1);
+          this.pickedRole = 'Teacher';
           break;
         case 'students':
           this.loadUsers(2);
+          this.pickedRole = 'Student';
           break;
         case 'admins':
           this.loadUsers(3);
+          this.pickedRole = 'Admin';
           break;
         case 'unassigned':
           this.loadUsers(4);
+          this.pickedRole = 'Unassigned';
           break;
         default:
           console.error('Unknown section:', section);
@@ -89,7 +84,7 @@ export class AdminDashboardComponent implements OnInit {
   deleteUser(userId: number): void {
     this.axiosService.request('DELETE', `/users/${userId}`, {}).then(
       (response: any) => {
-        this.UsersList = this.UsersList.filter(user => user.id !== userId);
+        this.usersList = this.usersList.filter(user => user.id !== userId);
         this.globalNotificationHandler.handleMessagewithType(`User with ID ${userId} deleted successfully.`, 'success');
         console.log(`User with ID ${userId} deleted successfully. Response:`, response);
       }

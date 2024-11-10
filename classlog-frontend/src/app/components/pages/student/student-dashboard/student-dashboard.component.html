@@ -1,6 +1,40 @@
-<app-header [pageTitle]="'Classlog platform'" [ifShowMenu]="true"/>
-<p>student-dashboard works! - Hello {{user?.name}}</p>
-<ul>
-  <li *ngFor="let item of data">{{item}}</li>
-</ul>
+<app-header [pageTitle]="'Classlog platform'" [ifShowMenu]="true"></app-header>
 
+<div class="full-screen-container">
+  <div class="tiles-container">
+
+    <!-- Big tile on the left -->
+    <div class="big-tile">
+      <!-- Buttons at the top -->
+      <div class="button-container">
+        <button class="yellow-button">Join class</button>
+      </div>
+
+      <!-- Class tiles below buttons -->
+      <div class="big-tile-content">
+        <app-class-tile
+          *ngFor="let classItem of classList"
+          [title]="classItem.name"
+          [description]="classItem.description"
+          [teachers]="getTeachersForClass(classItem)"
+          (click)="onClassTileClick(classItem)">
+        </app-class-tile>
+      </div>
+    </div>
+
+    <div class="small-tiles-container">
+      <div class="small-tile">
+        <ul class="lessons-list">
+          <li *ngFor="let lesson of lessonList" class="lesson-item">
+            <div class="lesson-frame">
+              <div class="lesson-subject">{{ lesson.subject }}</div>
+              <div class="lesson-date">{{ lesson.lessonDate | date:'dd.MM.yyyy HH:mm'}}</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+  </div>
+</div>

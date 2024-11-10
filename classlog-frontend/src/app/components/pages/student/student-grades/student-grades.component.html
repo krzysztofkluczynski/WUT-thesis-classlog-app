@@ -1,1 +1,9 @@
-<p>student-grades works!</p>
+<app-header [pageTitle]="'Classlog platform'" [ifShowMenu]="true"></app-header>
+
+<div class="grades-container">
+  <div *ngFor="let grade of gradesList" class="grade-item">
+    <p>Subject: {{ grade.student.email }}</p>
+    <p>Grade: {{ grade.grade }}</p>
+    <p>Date: {{ grade.createdAt | date:'dd.MM.yyyy HH:mm' }}</p>
+  </div>
+</div>

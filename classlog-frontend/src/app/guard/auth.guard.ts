@@ -1,11 +1,13 @@
 import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { AuthService } from '../service/auth/auth.service';
-import { ErrorResponse } from '../model/error-response.model';
+import { ErrorResponse } from '../model/error-response';
+import {GlobalNotificationHandler} from "../service/notification/global-notification-handler.service";
 
 export const authGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
+  const globalNotificationHandler = inject(GlobalNotificationHandler);
 
   if (!authService.isAuthenticated()) {
     router.navigate(['/login']);
@@ -16,6 +18,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   const userRole = authService.getUserRole();
 
   if (expectedRole && userRole !== expectedRole) {
+    globalNotificationHandler.handleError('Unauthorized access');
     throw new ErrorResponse(403, 'Unauthorized access', { requiredRole: expectedRole });
   }
 

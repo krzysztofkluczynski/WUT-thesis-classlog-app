@@ -26,18 +26,17 @@ CREATE TABLE class (
 
 -- Creating the USER_CLASS table
 CREATE TABLE user_class (
-    class_id INT REFERENCES class(class_id),
-    user_id INT REFERENCES classlog_user(user_id),
+    class_id BIGINT REFERENCES class(class_id),
+    user_id BIGINT REFERENCES classlog_user(user_id),
     PRIMARY KEY (class_id, user_id)
 );
 
--- Creating the GRADE table
-CREATE TABLE grade (
+ CREATE TABLE grade (
     grade_id BIGSERIAL PRIMARY KEY,
-    class_id INT REFERENCES class(class_id),
-    student_id INT REFERENCES classlog_user(user_id),
-    teacher_id INT REFERENCES classlog_user(user_id),
-    grade VARCHAR(10),
+    class_id BIGINT REFERENCES class(class_id),
+    student_id BIGINT REFERENCES classlog_user(user_id),
+    teacher_id BIGINT REFERENCES classlog_user(user_id),
+    grade INT,
     wage INT,
     description TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -55,8 +54,8 @@ CREATE TABLE file (
 -- Creating the POST table
 CREATE TABLE post (
     post_id BIGSERIAL PRIMARY KEY,
-    class_id INT REFERENCES class(class_id),
-    user_id INT REFERENCES classlog_user(user_id),
+    class_id BIGINT REFERENCES class(class_id),
+    user_id BIGINT REFERENCES classlog_user(user_id),
     title VARCHAR(255),
     content TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -65,8 +64,8 @@ CREATE TABLE post (
 -- Creating the COMMENT table
 CREATE TABLE comment (
     comment_id BIGSERIAL PRIMARY KEY,
-    post_id INT REFERENCES post(post_id),
-    user_id INT REFERENCES classlog_user(user_id),
+    post_id BIGINT REFERENCES post(post_id),
+    user_id BIGINT REFERENCES classlog_user(user_id),
     content TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -80,8 +79,8 @@ CREATE TABLE question_type (
 -- Creating the LESSON table
 CREATE TABLE lesson (
     lesson_id BIGSERIAL PRIMARY KEY,
-    created_by INT REFERENCES classlog_user(user_id),
-    class_id INT REFERENCES class(class_id),
+    created_by BIGINT REFERENCES classlog_user(user_id),
+    class_id BIGINT REFERENCES class(class_id),
     lesson_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     subject VARCHAR(255),
     content TEXT

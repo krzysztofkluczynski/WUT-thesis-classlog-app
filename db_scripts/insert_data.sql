@@ -1,9 +1,9 @@
 -- Inserting data into the ROLE table
 INSERT INTO role (role_name) VALUES
-    ('teacher'),
-    ('student'),
-    ('admin'),
-    ('unknown');
+    ('Teacher'),
+    ('Student'),
+    ('Admin'),
+    ('Unknown');
 
 -- Inserting data into the CLASSLOG_USER table
 INSERT INTO classlog_user (name, surname, email, password, role_id) VALUES
@@ -65,6 +65,9 @@ INSERT INTO post (class_id, user_id, title, content) VALUES
 INSERT INTO comment (post_id, user_id, content) VALUES
     (1, 2, 'Thank you! I’m excited to start Math 101.'),
     (2, 3, 'Looking forward to the lecture notes on ancient Rome.');
+
+INSERT INTO grade (class_id, student_id, teacher_id, grade, wage, description) VALUES
+    (2,3,2,95,3,'TEST GRADE');
 
 -- Inserting data into the QUESTION table
 -- INSERT INTO question (task_id, question_type_id, filename, points, content) VALUES

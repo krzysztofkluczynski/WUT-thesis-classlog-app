@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import {NgClass, NgIf} from "@angular/common";
 import { Router } from '@angular/router';
-import { UserDto } from "../../../model/user-dto.model";
+import { UserDto } from "../../../model/entities/user-dto";
 import { AxiosService } from "../../../service/axios/axios.service";
 import { AuthService } from "../../../service/auth/auth.service";
 import { HeaderComponent } from "../../shared/header/header.component";
@@ -28,7 +28,7 @@ export class LoginFormComponent implements OnInit{
     private axiosService: AxiosService,
     private authService: AuthService,
     private router: Router,
-    private globalErrorHandler: GlobalNotificationHandler
+    private globalNotificationHandler: GlobalNotificationHandler
   ) {}
   onSubmitLogin(): void {
     this.axiosService.request('POST', '/login', {
@@ -61,7 +61,7 @@ export class LoginFormComponent implements OnInit{
           break;
       }
     }).catch((error: any) => {
-      this.globalErrorHandler.handleError(error);
+      this.globalNotificationHandler.handleError(error);
       this.authService.setUser(null);
     });
   }

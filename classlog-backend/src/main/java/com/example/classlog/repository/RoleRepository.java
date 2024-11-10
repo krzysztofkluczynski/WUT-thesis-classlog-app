@@ -1,4 +1,4 @@
-package com.example.classlog.Repository;
+package com.example.classlog.repository;
 
 import com.example.classlog.entities.Role;
 import org.springframework.data.jpa.repository.JpaRepository;

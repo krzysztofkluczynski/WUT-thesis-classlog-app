@@ -1,8 +1,17 @@
 <div class="class-tile">
+  <!-- Class title -->
   <div class="class-title">{{ title }}</div>
-  <div class="class-description">{{ description }}</div>
-  <div class="teacher-text">Teacher:</div>
-  <div class="class-teacher">
-    <span>{{ teacher }}</span>
+
+  <!-- Description container -->
+  <div class="class-description-container">
+    <span class="class-description">{{ description }}</span>
+  </div>
+
+  <!-- Teacher section -->
+  <div class="teacher-text">Teachers:</div>
+  <div class="class-teachers">
+    <div class="class-teacher" *ngFor="let teacher of teachers">
+      <span>{{ teacher.name + ' ' + teacher.surname }}</span>
+    </div>
   </div>
 </div>

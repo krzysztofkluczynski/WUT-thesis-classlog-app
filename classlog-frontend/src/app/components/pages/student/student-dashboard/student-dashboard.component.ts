@@ -2,8 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from "../../../shared/header/header.component";
 import { AuthService } from "../../../../service/auth/auth.service";
 import { AxiosService } from "../../../../service/axios/axios.service";
-import { UserDto } from "../../../../model/user-dto.model";
-import {NgForOf} from "@angular/common";
+import { UserDto } from "../../../../model/entities/user-dto";
+import {DatePipe, NgForOf} from "@angular/common";
+import {LessonDto} from "../../../../model/entities/lesson.dto";
+import {parseDate} from "../../../../utils/date-utils";
+import {GlobalNotificationHandler} from "../../../../service/notification/global-notification-handler.service";
+import {ClassTileComponent} from "../../../shared/class-tile/class-tile.component";
+import {ClassDto} from "../../../../model/entities/class-dto";
+import {Router} from "@angular/router";
 
 interface UserResponse {
   data: string[];
@@ -13,7 +19,9 @@ interface UserResponse {
   standalone: true,
   imports: [
     HeaderComponent,
-    NgForOf
+    NgForOf,
+    ClassTileComponent,
+    DatePipe
   ],
   templateUrl: './student-dashboard.component.html',
   styleUrl: './student-dashboard.component.css'
@@ -21,17 +29,69 @@ interface UserResponse {
 
 
 export class StudentDashboardComponent implements OnInit {
-  user: UserDto | null = null;
-  data: string[] = [];
+  classList: ClassDto[] = [];
+  lessonList: LessonDto[] = [];
+  numberOfLessonsToLoad: number = 4;
 
+  teachersMap: Map<ClassDto, UserDto[]> = new Map();
   constructor(
-    private authService: AuthService,  // Inject AuthService
-    private axiosService: AxiosService // Inject AxiosService
+    private axiosService: AxiosService,
+    private authService: AuthService,
+    private router: Router,
+    private globalNotificationHandler: GlobalNotificationHandler
   ) {}
 
   ngOnInit(): void {
-    this.user = this.authService.getUser(); // Get the current user from AuthService
-    this.axiosService.request('GET', '/users', {}).then(
-      (response: UserResponse) => this.data = response.data);
+
+    // Fetch classes
+    this.axiosService.request('GET', `/classes/user/${this.authService.getUser()?.id}`, {}).then(
+      (response: { data: ClassDto[] }) => {
+        this.classList = response.data.map(classDto => ({
+          ...classDto,
+          createdAt: parseDate(classDto.createdAt)
+        }));
+
+        // Fetch users for each class with roleId = 1
+        this.classList.forEach(classDto => {
+          this.axiosService.request('GET', `/users/class/${classDto.id}/role/1`, {}).then(
+            (userResponse: { data: UserDto[] }) => {
+              const users = userResponse.data.map(user => ({
+                ...user,
+                createdAt: parseDate(user.createdAt)
+              }));
+              this.teachersMap.set(classDto, users);
+            }
+          ).catch((error: any) => {
+            this.globalNotificationHandler.handleError(error);
+            console.error(`Failed to fetch users for class ${classDto.id}:`, error);
+          });
+        });
+      }
+    ).catch((error: any) => {
+      this.globalNotificationHandler.handleError(error);
+      console.error('Failed to fetch classes:', error);
+    });
+
+    this.axiosService.request('GET', `/lessons/user/${this.authService.getUser()?.id}/recent/${this.numberOfLessonsToLoad}`, {}).then(
+      (response: { data: LessonDto[] }) => {
+        console.log(response.data);
+        this.lessonList = response.data.map(lesson => ({
+          ...lesson,
+          lessonDate: parseDate(lesson.lessonDate)
+        }));
+      }
+    ).catch((error: any) => {
+      this.globalNotificationHandler.handleError(error);
+      console.error('Failed to fetch lessons:', error);
+    });
+  }
+
+  getTeachersForClass(classItem: ClassDto) {
+    const teachers = this.teachersMap.get(classItem) || [];
+    return teachers;
+  }
+
+  onClassTileClick(classItem: ClassDto) {
+    this.router.navigate(['/student/class', classItem.id]);
   }
 }
