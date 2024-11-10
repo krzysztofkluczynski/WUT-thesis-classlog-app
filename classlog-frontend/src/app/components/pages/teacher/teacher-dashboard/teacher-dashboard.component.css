@@ -7,12 +7,11 @@ html, body {
   overflow: hidden; /* Prevent scrolling for the full page */
 }
 
-/* Main layout container */
 .full-screen-container {
   display: flex;
-  flex-direction: column; /* Stack header and content vertically */
-  height: calc(100vh - 120px); /* Assuming the header is about 100px high */
-  overflow: hidden; /* Prevent scrolling for the container */
+  flex-direction: column;
+  height: 90vh; /* Fill the remaining 90% of the viewport below the header */
+  overflow: hidden; /* Prevent scrolling */
 }
 
 /* Content container below header */
@@ -69,69 +68,50 @@ html, body {
   padding-right: 10px; /* Add space for scrollbar */
   box-sizing: border-box;
 }
-/* Small tile (right content) */
+
+/* Right section: Small tiles container */
 .small-tiles-container {
+  flex: 1; /* Occupy 1x the space of the left section */
   display: flex;
   flex-direction: column;
   gap: 20px;
-  flex: 1;
-  height: 100%; /* Match parent height */
+  height: 100%; /* Match the full height */
   box-sizing: border-box;
-}
-
-.small-tile {
-  background-color: #FFFDE0;
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 10px;
-  font-size: 18px;
-  font-weight: bold;
-  border-radius: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
 
-/* List of lessons */
-.lessons-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  width: 100%;
+.class-history {
+  background-color: #FFFDE0;
+  flex: 1; /* Fill the available space */
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  overflow-y: auto; /* Allow scrolling for overflow content */
+  box-sizing: border-box;
 }
 
-/* Individual lesson item */
-.lesson-item {
-  margin: 0;
-  padding: 0;
+.lesson-tile {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Frame around each lesson */
-.lesson-frame {
-  background-color: #E3F2FD; /* Light blue background */
-  padding: 10px;
-  border: 1px solid #90CAF9 ; /* Blue border */
-  border-radius: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 5px;
+.lesson-tile:hover {
+  transform: translateY(-5px); /* Slight elevation effect */
+  background-color: #f9f9f9; /* Slightly darker shade for contrast */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Increase shadow for a lifted look */
 }
-
-/* Lesson subject (bold) */
-.lesson-subject {
+.lesson-title {
   font-weight: bold;
-  font-size: 1rem;
-  color: #0D47A1; /* Dark blue text */
+  color: #333333;
 }
 
-/* Lesson date (not bold) */
 .lesson-date {
-  font-weight: normal;
   font-size: 0.9rem;
-  color: #424242; /* Gray text */
+  color: #666666;
 }

@@ -1,2 +1,64 @@
 <app-header [pageTitle]="'Classlog platform'" [ifShowMenu]="true"></app-header>
-<p>teacher-class works!</p>
+
+<div class="full-screen-container">
+  <div class="tiles-container">
+
+    <!-- Left section: Posts and comments -->
+    <div class="big-tile">
+      <!-- Group header and buttons container -->
+      <div class="group-header">
+        <div class="buttons-container">
+          <button class="yellow-button">Files</button>
+        </div>
+        <h2>Beginners group</h2>
+      </div>
+
+      <div class="posts-section">
+        <div *ngFor="let post of posts" class="post post-narrow">
+          <h5 class="post-title">{{ post.title }}</h5>
+          <div class="post-author">{{ post.user.name + ' ' + post.user.surname }}</div>
+          <p class="post-content">{{ post.content }}</p>
+
+          <hr>
+
+          <div class="comments-section">
+            <div *ngFor="let comment of postCommentsMap.get(post.id) || []" class="comment">
+              <strong>{{ getFullName(comment.user) }}</strong>: {{ comment.content }}
+            </div>
+          </div>
+
+          <div class="comment-input-container">
+            <input type="text" class="comment-input" placeholder="Write a comment...">
+            <button class="yellow-button send-button">
+              <i class="bi bi-send"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Message input area -->
+      <!-- Message input area -->
+      <div class="message-input">
+        <input type="text" class="topic-input" placeholder="Topic">
+        <div class="message-group">
+          <input type="text" class="message-box" placeholder="Message">
+          <button class="yellow-button send-button">
+            <i class="bi bi-send"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right section: Class history -->
+    <div class="small-tiles-container">
+      <div class="class-history">
+        <h3>Class History</h3>
+        <div *ngFor="let lesson of lessons" class="lesson-tile">
+          <div class="lesson-title">{{ lesson.subject }}</div>
+          <div class="lesson-date">{{ lesson.lessonDate | date: 'dd.MM.yyyy HH:mm' }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

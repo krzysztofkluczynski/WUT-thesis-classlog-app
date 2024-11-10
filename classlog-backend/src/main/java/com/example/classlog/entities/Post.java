@@ -23,7 +23,7 @@ public class Post {
 
     @ManyToOne
     @JoinColumn(name = "class_id", nullable = false)
-    private Class assignedClass;
+    private Class classEntity;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

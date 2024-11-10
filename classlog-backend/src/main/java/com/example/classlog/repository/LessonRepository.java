@@ -11,7 +11,7 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
     List<Lesson> findByCreatedBy_IdOrderByLessonDateDesc(Long userId);
 
 
-    List<Lesson> findByClassId(Long classId);
+    List<Lesson> findByClassEntity_Id(Long classId);
 
     @Query("""
            SELECT l

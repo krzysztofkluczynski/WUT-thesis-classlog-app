@@ -30,7 +30,7 @@ interface UserResponse {
 
 export class StudentDashboardComponent implements OnInit {
   classList: ClassDto[] = [];
-  lessonList: LessonDto[] = [];
+  lessons: LessonDto[] = [];
   numberOfLessonsToLoad: number = 4;
 
   teachersMap: Map<ClassDto, UserDto[]> = new Map();
@@ -75,7 +75,7 @@ export class StudentDashboardComponent implements OnInit {
     this.axiosService.request('GET', `/lessons/user/${this.authService.getUser()?.id}/recent/${this.numberOfLessonsToLoad}`, {}).then(
       (response: { data: LessonDto[] }) => {
         console.log(response.data);
-        this.lessonList = response.data.map(lesson => ({
+        this.lessons = response.data.map(lesson => ({
           ...lesson,
           lessonDate: parseDate(lesson.lessonDate)
         }));

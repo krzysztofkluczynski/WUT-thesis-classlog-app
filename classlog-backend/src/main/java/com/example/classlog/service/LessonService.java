@@ -66,13 +66,13 @@ public class LessonService {
     }
 
     public List<LessonDto> getLessonByClassId(Long classId) {
-        return lessonRepository.findByClassId(classId).stream()
+        return lessonRepository.findByClassEntity_Id(classId).stream()
                 .map(lessonMapper::toLessonDto)
                 .collect(Collectors.toList());
     }
 
     public List<LessonDto> getRecentLessonsByClassId(Long classId, int numbOfLessons) {
-        return lessonRepository.findByClassId(classId).stream()
+        return lessonRepository.findByClassEntity_Id(classId).stream()
                 .limit(numbOfLessons)
                 .map(lessonMapper::toLessonDto)
                 .collect(Collectors.toList());

@@ -1,0 +1,87 @@
+/* Ensure the HTML and body occupy the full height */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden; /* Prevent scrolling for the full page */
+}
+
+.full-screen-container {
+  display: flex;
+  flex-direction: column;
+  height: 90vh; /* Fill the remaining 90% of the viewport below the header */
+  overflow: hidden; /* Prevent scrolling */
+}
+
+/* Content container below header */
+.tiles-container {
+  display: flex;
+  gap: 20px;
+  flex: 1; /* Take the remaining space below the header */
+  padding: 20px 20px 20px; /* Remove top padding to avoid overflow */
+  box-sizing: border-box;
+  overflow: hidden; /* Prevent scrolling for the container */
+}
+
+/* Big tile (left content) */
+.big-tile {
+  background-color: #FFFDE0;
+  flex: 2.5;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  display: flex;
+  flex-direction: column; /* Stack buttons and content */
+  gap: 20px;
+  overflow: hidden; /* Prevent big tile overflow */
+  box-sizing: border-box;
+}
+
+/* Buttons inside big tile */
+.button-container {
+  display: flex;
+  gap: 30px;
+  flex-shrink: 0;
+  padding-bottom: 20px;
+}
+
+.yellow-button {
+  background-color: #F5C000;
+  border: none;
+  color: black;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 20px;
+}
+
+/* Scrollable content inside big tile */
+.big-tile-content {
+  padding-right: 10px; /* Add space for scrollbar */
+  box-sizing: border-box;
+}
+
+/* Right section: Small tiles container */
+.small-tiles-container {
+  flex: 1; /* Occupy 1x the space of the left section */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%; /* Match the full height */
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.search-bar {
+  background-color: #FFFDE0;
+  flex: 1; /* Fill the available space */
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto; /* Allow scrolling for overflow content */
+  box-sizing: border-box;
+}

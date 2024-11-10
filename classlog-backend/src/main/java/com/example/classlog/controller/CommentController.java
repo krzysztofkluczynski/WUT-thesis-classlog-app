@@ -1,10 +1,8 @@
 package com.example.classlog.controller;
 
 import com.example.classlog.dto.CommentDto;
-import com.example.classlog.dto.PostDto;
 import com.example.classlog.service.CommentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,18 +16,25 @@ import java.util.List;
 @RequestMapping("/comments")
 public class CommentController {
 
-    @Autowired
     private final CommentService commentService;
 
     @GetMapping
-    public ResponseEntity<List<CommentDto>> getAllPosts() {
+    public ResponseEntity<List<CommentDto>> getAllComments() {
         List<CommentDto> comments = commentService.findAllComments();
         return ResponseEntity.ok(comments);
     }
 
     @GetMapping("/{commentId}")
-    public ResponseEntity<CommentDto> getPostById(@PathVariable Long commentId) {
+    public ResponseEntity<CommentDto> getCommentById(@PathVariable Long commentId) {
         CommentDto comment = commentService.findCommentById(commentId);
         return ResponseEntity.ok(comment);
     }
+
+    @GetMapping("/post/{postId}")
+    public ResponseEntity<List<CommentDto>> getCommentsByPostId(@PathVariable Long postId) {
+        List<CommentDto> comments = commentService.findCommentsByPostId(postId);
+        return ResponseEntity.ok(comments);
+    }
+
+
 }

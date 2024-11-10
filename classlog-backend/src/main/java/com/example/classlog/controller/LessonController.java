@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -19,7 +20,7 @@ public class LessonController {
     public ResponseEntity<List<LessonDto>> getAllLessons() {
         List<LessonDto> lessons = lessonService.getAllLessons();
         if (lessons.isEmpty()) {
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok(Collections.emptyList());
         }
         return ResponseEntity.ok(lessons);
     }
@@ -27,9 +28,9 @@ public class LessonController {
     @GetMapping("/{id}")
     public ResponseEntity<LessonDto> getLessonById(@PathVariable Long id) {
         LessonDto lesson = lessonService.getLessonById(id);
-        if (lesson == null) {
-            return ResponseEntity.notFound().build();
-        }
+//        if (lesson == null) {
+//            return ResponseEntity.notFound().build();
+//        }
         return ResponseEntity.ok(lesson);
     }
 
@@ -51,7 +52,7 @@ public class LessonController {
             @PathVariable int numbOfLessons) {
         List<LessonDto> lessons = lessonService.getRecentLessonsCreatedBy(userId, numbOfLessons);
         if (lessons.isEmpty()) {
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok(Collections.emptyList());
         }
         return ResponseEntity.ok(lessons);
     }
@@ -60,7 +61,7 @@ public class LessonController {
     public ResponseEntity<List<LessonDto>> getAllLessonsCreatedBy(@PathVariable Long userId) {
         List<LessonDto> lessons = lessonService.getAllLessonsCreatedBy(userId);
         if (lessons.isEmpty()) {
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok(Collections.emptyList());
         }
         return ResponseEntity.ok(lessons);
     }
@@ -69,7 +70,7 @@ public class LessonController {
     public ResponseEntity<List<LessonDto>> getAllLessonsForUser(@PathVariable Long userId) {
         List<LessonDto> lessons = lessonService.getAllLessonsForUser(userId);
         if (lessons.isEmpty()) {
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok(Collections.emptyList());
         }
         return ResponseEntity.ok(lessons);
     }
@@ -80,7 +81,7 @@ public class LessonController {
             @PathVariable int numbOfLessons) {
         List<LessonDto> lessons = lessonService.getRecentLessonsForUser(userId, numbOfLessons);
         if (lessons.isEmpty()) {
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok(Collections.emptyList());
         }
         return ResponseEntity.ok(lessons);
     }
@@ -89,7 +90,7 @@ public class LessonController {
     public ResponseEntity<List<LessonDto>> GetLessonsByClassId(@PathVariable Long classId) {
         List<LessonDto> lessons = lessonService.getLessonByClassId(classId);
         if (lessons.isEmpty()) {
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok(Collections.emptyList());
         }
         return ResponseEntity.ok(lessons);
     }
@@ -100,7 +101,7 @@ public class LessonController {
             @PathVariable int numbOfLessons) {
         List<LessonDto> lessons = lessonService.getRecentLessonsByClassId(classId, numbOfLessons);
         if (lessons.isEmpty()) {
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok(Collections.emptyList());
         }
         return ResponseEntity.ok(lessons);
     }

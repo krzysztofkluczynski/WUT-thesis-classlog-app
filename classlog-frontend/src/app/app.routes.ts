@@ -33,7 +33,7 @@ export const routes: Routes = [
     children: [
       { path: 'dashboard', component: StudentDashboardComponent },
       { path: 'class/:id', component: StudentClassComponent },
-      { path: 'grades', component: StudentGradesComponent },
+      { path: 'grades/:studentId', component: StudentGradesComponent },
       { path: 'tasks', component: StudentTasksComponent },
     ],
   },
@@ -46,6 +46,7 @@ export const routes: Routes = [
       { path: 'class/:id', component: TeacherClassComponent },
       { path: 'grades', component: TeacherGradesComponent },
       { path: 'tasks', component: TeacherTasksComponent },
+      { path: 'grades/:studentId', component: StudentGradesComponent },
     ],
   },
   {

@@ -1,3 +1,27 @@
 <app-header [pageTitle]="'Classlog platform'" [ifShowMenu]="true"></app-header>
 
-<p>teacher-grades works!</p>
+<div class="full-screen-container">
+  <div class="tiles-container">
+
+    <div class="big-tile">
+      <div class="button-container">
+        <select class="form-select" [(ngModel)]="selectedClassId" (change)="loadStudents()">
+          <option *ngFor="let class of classList" [value]="class.id">{{ class.name }}</option>
+        </select>
+      </div>
+
+      <div class="big-tile-content">
+        Tabela z ocenami dla konkretnej klasy
+      </div>
+    </div>
+    <div class="small-tiles-container">
+      <div class="search-bar">
+        <h3>Search bar and students list</h3>
+        <ul>
+          <li *ngFor="let student of studentList">{{ student.name }} {{ student.surname }}</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>

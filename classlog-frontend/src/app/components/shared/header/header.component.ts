@@ -50,7 +50,7 @@ export class HeaderComponent implements OnInit {
         this.router.navigate(['/student/tasks']);
         break;
       case HeaderOptions.GradesStudent:
-        this.router.navigate(['/student/grades']);
+        this.router.navigate(['/student/grades', this.authService.getUser()?.id]);
         break;
       case HeaderOptions.Students:
         this.router.navigate(['/admin/students']);

@@ -2,11 +2,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 0 20px; /* Removed vertical padding to keep height consistent */
   background-color: #FBFBD2;
   border-bottom: 2px solid #eaeaea;
-}
 
+  height: 10vh; /* Header occupies 10% of the viewport height */
+  max-height: 100px; /* Optional: Limit header height on very large screens */
+  box-sizing: border-box;
+}
 .menu-active {
   background-color: white;
 }

@@ -23,15 +23,12 @@
     </div>
 
     <div class="small-tiles-container">
-      <div class="small-tile">
-        <ul class="lessons-list">
-          <li *ngFor="let lesson of lessonList" class="lesson-item">
-            <div class="lesson-frame">
-              <div class="lesson-subject">{{ lesson.subject }}</div>
-              <div class="lesson-date">{{ lesson.lessonDate | date:'dd.MM.yyyy HH:mm'}}</div>
-            </div>
-          </li>
-        </ul>
+      <div class="class-history">
+        <h3>Class History</h3>
+        <div *ngFor="let lesson of lessons" class="lesson-tile">
+          <div class="lesson-title">{{ lesson.subject }}</div>
+          <div class="lesson-date">{{ lesson.lessonDate | date: 'dd.MM.yyyy HH:mm' }}</div>
+        </div>
       </div>
     </div>
 

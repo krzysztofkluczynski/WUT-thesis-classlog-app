@@ -29,4 +29,10 @@ public class PostService {
                 .map(postMapper::toPostDto)
                 .orElse(null);
     }
+
+    public List<PostDto> findPostByClassId(Long classId) {
+        return postRepository.findByClassEntity_Id(classId).stream()
+                .map(postMapper::toPostDto)
+                .collect(Collectors.toList());
+    }
 }

@@ -7,7 +7,9 @@ import {AxiosService} from "../../../../service/axios/axios.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {GlobalNotificationHandler} from "../../../../service/notification/global-notification-handler.service";
 import {GradeDto} from "../../../../model/entities/grade-dto";
-import {DatePipe, NgForOf} from "@angular/common";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
+import {ReactiveFormsModule} from "@angular/forms";
+import {getFullName} from "../../../../utils/user-utils";
 
 @Component({
   selector: 'app-student-grades',
@@ -15,35 +17,66 @@ import {DatePipe, NgForOf} from "@angular/common";
   imports: [
     HeaderComponent,
     DatePipe,
-    NgForOf
+    NgForOf,
+    NgIf,
+    ReactiveFormsModule
   ],
   templateUrl: './student-grades.component.html',
   styleUrl: './student-grades.component.css'
 })
 export class StudentGradesComponent implements OnInit {
 
-  gradesList: GradeDto[] = [];
-
+  studentId: number = 0;
+  grades: GradeDto[] = [];
+  userDto: UserDto = {
+    id: 0, // Default empty ID
+    name: '', // Empty name
+    surname: '', // Empty surname
+    email: '', // Empty email
+    role: {id: 4, roleName: 'Unknown' }, // Empty role structure
+    token: '', // Empty token
+    createdAt: new Date(), // Default to current date
+  };
   constructor(
     private authService: AuthService,
     private axiosService: AxiosService,
     private router: Router,
-    private globalNotificationHandler: GlobalNotificationHandler,
-  ) {}
+    private activatedRoute: ActivatedRoute,
+  private globalNotificationHandler: GlobalNotificationHandler,
+  ) {
+  }
 
 
   ngOnInit(): void {
-    this.axiosService.request('GET', `/grades/user/${this.authService.getUser()?.id}`, {}).then(
+    this.activatedRoute.params.subscribe(params => {
+      this.studentId = params['studentId'];
+
+    this.axiosService.request('GET', `/users/${this.studentId}`, {})
+      .then((response: { data: UserDto }) => {
+        this.userDto = {
+          ...response.data,
+          createdAt: parseDate(response.data.createdAt),
+        };
+      })
+      .catch((error: any) => {
+        this.globalNotificationHandler.handleError(error);
+        console.error('Failed to fetch user data:', error);
+      });
+
+
+    this.axiosService.request('GET', `/grades/user/${this.studentId}`, {}).then(
       (response: { data: GradeDto[] }) => {
-        this.gradesList = response.data.map(grade => ({
+        this.grades = response.data.map(grade => ({
           ...grade,
           createdAt: parseDate(grade.createdAt)
         }));
       }
     ).catch((error: any) => {
       this.globalNotificationHandler.handleError(error);
-      console.error('Failed detch grades:', error);
+      console.error('Failed to fetch grades:', error);
     });
+  });
   }
 
+  protected readonly getFullName = getFullName;
 }

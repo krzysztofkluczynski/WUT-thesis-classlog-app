@@ -31,4 +31,11 @@ public class CommentService {
                 .map(commentMapper::toCommentDto)
                 .orElse(null);
     }
-}
+
+    public List<CommentDto> findCommentsByPostId(Long postId) {
+        return commentRepository.findByPost_Id(postId).stream()
+                .map(commentMapper::toCommentDto)
+                .collect(Collectors.toList());
+    }
+    }
+
