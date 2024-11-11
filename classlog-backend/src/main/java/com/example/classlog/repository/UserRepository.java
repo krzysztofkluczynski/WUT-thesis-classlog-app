@@ -17,4 +17,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT u FROM User u JOIN UserClass uc ON u.id = uc.id.userId WHERE uc.id.classId = :classId")
     List<User> findByClassId(@Param("classId") long classId);
+
+    @Query("SELECT u FROM User u WHERE u.id NOT IN " +
+            "(SELECT uc.id.userId FROM UserClass uc WHERE uc.id.classId = :classId)")
+    List<User> findUsersNotFromClass(@Param("classId") long classId);
 }

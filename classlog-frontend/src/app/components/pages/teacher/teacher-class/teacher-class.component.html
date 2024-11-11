@@ -8,7 +8,21 @@
       <!-- Group header and buttons container -->
       <div class="group-header">
         <div class="buttons-container">
-          <button class="yellow-button">Files</button>
+          <button class="yellow-button">Create a lesson</button>
+          <button class="yellow-button" (click)="toggleAddUserModal()">Add User</button>
+          <app-add-user-to-class-window
+            *ngIf="showAddUserModal"
+            [isOpen]="showAddUserModal"
+            (close)="toggleAddUserModal()">
+          </app-add-user-to-class-window>
+          <button class="yellow-button" (click)="toggleDeleteUserModal()">Delete User</button>
+          <app-delete-user-from-class-window
+            *ngIf="showDeleteUserModal"
+            [isOpen]="showDeleteUserModal"
+            (close)="toggleDeleteUserModal()">
+          </app-delete-user-from-class-window>
+          <button class="yellow-button" (click)="navigateToFiles()">Files</button>
+          <button class="yellow-button">Show class code</button>
         </div>
         <h2>Beginners group</h2>
       </div>

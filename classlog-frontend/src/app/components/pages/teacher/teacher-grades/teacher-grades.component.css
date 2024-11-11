@@ -152,17 +152,54 @@ html, body {
   overflow: hidden;
 }
 
+/* Search bar styles */
 .search-bar {
   background-color: #FFFDE0;
-  flex: 1; /* Fill the available space */
+  flex: 1;
   border-radius: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 20px;
   display: flex;
   flex-direction: column;
-  overflow-y: auto; /* Allow scrolling for overflow content */
+  overflow-y: auto;
   box-sizing: border-box;
 }
+
+/* Student list container */
+.student-list {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Spacing between student tiles */
+  overflow-y: auto;
+  max-height: 300px; /* Limit height for scrollable content */
+}
+
+/* Individual student tile */
+.student-tile {
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.student-tile:hover {
+  transform: translateY(-5px);
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Student name styling */
+.student-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
 
 /* General button styles */
 .yellow-button {

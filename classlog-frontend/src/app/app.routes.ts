@@ -13,6 +13,7 @@ import { StudentTasksComponent } from './components/pages/student/student-tasks/
 import { TeacherClassComponent } from './components/pages/teacher/teacher-class/teacher-class.component';
 import { TeacherTasksComponent } from './components/pages/teacher/teacher-tasks/teacher-tasks.component';
 import {TeacherGradesComponent} from "./components/pages/teacher/teacher-grades/teacher-grades.component";
+import {FilesComponent} from "./components/shared/files/files.component";
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -53,12 +54,17 @@ export const routes: Routes = [
     path: 'profile/:id',
     component: UserProfileComponent,
     canActivate: [authGuard]
-  }, // Only route with `id` in the path
+  },
+  {
+    path: 'files/:classId',
+    component: FilesComponent,
+    canActivate: [authGuard]
+  },
   {
     path: 'unknown',
     component: UnknownDashboardComponent,
     canActivate: [authGuard],
     data: { role: 'Unknown' }
-  }, // Role restriction added for Unknown
-  { path: '**', redirectTo: '/login' }, // Fallback for invalid routes
+  },
+  { path: '**', redirectTo: '/login' },
 ];

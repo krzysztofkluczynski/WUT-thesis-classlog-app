@@ -1,0 +1,35 @@
+<div class="modal-overlay" (click)="closeWindow()"></div>
+<div class="modal-container">
+  <div class="modal-header">
+    <h2>Delete User from Class</h2>
+    <button class="close-button" (click)="closeWindow()">✖</button>
+  </div>
+
+  <div class="search-bar">
+    <h3>Search for a user</h3>
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Search by name or surname"
+      [(ngModel)]="searchQuery"
+      (input)="filterUsers()"
+    />
+  </div>
+
+  <div class="user-list">
+    <div
+      *ngFor="let user of filteredUsers"
+      class="user-tile"
+      (click)="onUserClick(user)">
+      <span class="user-name">{{ user.name }} {{ user.surname }}</span>
+    </div>
+  </div>
+
+  <div class="selected-users">
+    <p>{{ getSelectedUsersAsString() }}</p>
+  </div>
+
+  <div class="modal-footer">
+    <button class="confirm-button" (click)="deleteUsers()">Delete</button>
+  </div>
+</div>

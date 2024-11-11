@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { HeaderComponent } from '../../../shared/header/header.component';
 import { PostDto } from '../../../../model/entities/post-dto';
 import { parseDate } from '../../../../utils/date-utils';
@@ -8,8 +8,12 @@ import { LessonDto } from '../../../../model/entities/lesson.dto';
 import { AuthService } from '../../../../service/auth/auth.service';
 import { AxiosService } from '../../../../service/axios/axios.service';
 import { GlobalNotificationHandler } from '../../../../service/notification/global-notification-handler.service';
-import { DatePipe, NgForOf } from "@angular/common";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
 import { getFullName } from "../../../../utils/user-utils";
+import {AddUserToClassWindowComponent} from "../add-user-to-class-window/add-user-to-class-window.component";
+import {
+  DeleteUserFromClassWindowComponent
+} from "../delete-user-from-class-window/delete-user-from-class-window.component";
 
 @Component({
   selector: 'app-teacher-class',
@@ -17,7 +21,10 @@ import { getFullName } from "../../../../utils/user-utils";
   imports: [
     HeaderComponent,
     DatePipe,
-    NgForOf
+    NgForOf,
+    AddUserToClassWindowComponent,
+    NgIf,
+    DeleteUserFromClassWindowComponent
   ],
   templateUrl: './teacher-class.component.html',
   styleUrl: './teacher-class.component.css'
@@ -27,10 +34,13 @@ export class TeacherClassComponent implements OnInit {
   postCommentsMap: Map<number, CommentDto[]> = new Map(); // Map of Post ID to Comments
   lessons: LessonDto[] = [];
   classId: number | null = null;
+  showAddUserModal: boolean = false;
+  showDeleteUserModal: boolean = false;
 
   constructor(
     private authService: AuthService,
     private axiosService: AxiosService,
+    private router: Router,
     private globalNotificationHandler: GlobalNotificationHandler,
     private route: ActivatedRoute
   ) {}
@@ -86,4 +96,16 @@ export class TeacherClassComponent implements OnInit {
   }
 
   protected readonly getFullName = getFullName;
+
+  navigateToFiles() {
+    this.router.navigate([`/files/${this.classId}`]);
+  }
+
+  toggleAddUserModal() {
+    this.showAddUserModal = !this.showAddUserModal;
+  }
+
+  toggleDeleteUserModal() {
+    this.showDeleteUserModal = !this.showDeleteUserModal;
+  }
 }

@@ -80,4 +80,8 @@ export class StudentClassComponent implements OnInit {
   }
 
   protected readonly getFullName = getFullName;
+
+  navigateToFiles() {
+    this.router.navigate([`/files/${this.classId}`]);
+  }
 }

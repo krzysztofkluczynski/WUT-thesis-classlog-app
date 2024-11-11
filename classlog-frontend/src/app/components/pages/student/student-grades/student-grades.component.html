@@ -24,7 +24,9 @@
         <div class="grades-grid">
           <div *ngFor="let grade of grades" class="grade-item">
             <p><strong>Grade: </strong>{{ grade.grade }}</p>
+            <p><strong>Wage: </strong>{{ grade.wage }}</p>
             <p><strong>Description: </strong>{{ grade.description }}</p>
+            <p><strong>Teacher: </strong>{{ getFullName(grade.teacher) }}</p>
             <p><strong>Date: </strong>{{ grade.createdAt | date:'dd.MM.yyyy HH:mm' }}</p>
           </div>
         </div>

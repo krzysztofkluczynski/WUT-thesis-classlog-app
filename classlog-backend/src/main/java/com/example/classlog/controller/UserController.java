@@ -58,6 +58,13 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
+    @GetMapping("/users/class/notIn/{classId}")
+    public ResponseEntity<List<UserDto>> getUsersNotFromClass(@PathVariable long classId) {
+        List<UserDto> users = userService.getUsersNotFromClass(classId);
+        return ResponseEntity.ok(users);
+    }
+
+
     @GetMapping("/users/class/{classId}/role/{roleId}")
     public ResponseEntity<List<UserDto>> getUsersByClassAndRole(
             @PathVariable long classId,

@@ -69,11 +69,27 @@
 }
 
 .profile-btn {
-  background: #FFD900;
-  border-radius: 30px;
-  border: black;
+  background-color: #F5C000; /* Match the yellow button color */
+  border: none;
+  color: black;
+  padding: 10px 20px;
+  font-size: 24px;
+  font-weight: bold;
+  border-radius: 20px; /* Rounded corners */
   cursor: pointer;
-  font-size: 32px;
+  transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+}
+
+/* Hover effect for New Grade button */
+.profile-btn:hover {
+  background-color: #FFD54F; /* Lighter yellow on hover */
+  transform: scale(1.05); /* Slightly enlarge the button */
+}
+
+/* Active effect for New Grade button */
+.profile-btn:active {
+  background-color: #FBC02D; /* Slightly darker yellow on click */
+  transform: scale(0.95); /* Slightly shrink on click */
 }
 
 .profile-btn i {

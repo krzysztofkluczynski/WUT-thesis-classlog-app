@@ -3,17 +3,22 @@
 <div class="full-screen-container">
   <div class="tiles-container">
 
+    <!-- Left Section -->
     <div class="big-tile">
       <div class="button-container">
+        <!-- Class Selector -->
         <div class="select-container">
           <label for="class-select" class="select-label">Pick a class:</label>
           <select id="class-select" class="form-select" [(ngModel)]="selectedClassId" (change)="loadStudents()">
             <option *ngFor="let class of classList" [value]="class.id">{{ class.name }}</option>
           </select>
         </div>
+
+        <!-- Add New Grade Button -->
         <button class="new-grade-button" (click)="addNewGrade()">New Grade</button>
       </div>
 
+      <!-- Scrollable Student Grades Table -->
       <div class="big-tile-content">
         <div class="table-responsive">
           <table class="table table-hover table-bordered">
@@ -26,11 +31,11 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let student of studentList">
+            <tr *ngFor="let student of studentListFromOneClass">
               <td>{{ student.name }}</td>
               <td>{{ student.surname }}</td>
-              <td>{{ 77}}</td>
-              <td>{{ 77 }}</td>
+              <td>{{ 77 }}</td> <!-- Replace 77 with actual avg value -->
+              <td>{{ 89.9 }}%</td> <!-- Replace 89.9% with actual attendance -->
             </tr>
             </tbody>
           </table>
@@ -38,13 +43,28 @@
       </div>
     </div>
 
+    <!-- Right Section -->
     <div class="small-tiles-container">
       <div class="search-bar">
         <h3>Search bar and students list</h3>
-        <ul>
-          <li *ngFor="let student of studentList">{{ student.name }} {{ student.surname }}</li>
-        </ul>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search by name or surname"
+          [(ngModel)]="searchQuery"
+          (input)="filterStudents()"
+        />
+        <div class="student-list">
+          <div
+            *ngFor="let student of filteredStudentList"
+            class="student-tile"
+            (click)="onStudentClick(student)"
+          >
+            <span class="student-name">{{ student.name }} {{ student.surname }}</span>
+          </div>
+        </div>
       </div>
+
     </div>
 
   </div>

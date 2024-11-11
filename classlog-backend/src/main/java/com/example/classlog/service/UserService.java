@@ -124,4 +124,11 @@ public class UserService {
                 .map(userMapper::toUserDto)
                 .collect(Collectors.toList());
     }
+
+    public List<UserDto> getUsersNotFromClass(long classId) {
+        return userRepository.findUsersNotFromClass(classId).stream()
+                .map(userMapper::toUserDto)
+                .collect(Collectors.toList());
+    }
+
 }
