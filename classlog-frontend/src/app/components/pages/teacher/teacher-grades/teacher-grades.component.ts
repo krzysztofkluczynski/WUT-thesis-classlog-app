@@ -8,8 +8,12 @@ import { Router } from "@angular/router";
 import { GlobalNotificationHandler } from "../../../../service/notification/global-notification-handler.service";
 import { parseDate } from "../../../../utils/date-utils";
 import { ClassTileComponent } from "../../../shared/class-tile/class-tile.component";
-import { DatePipe, NgForOf } from "@angular/common";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
 import { FormsModule } from '@angular/forms';
+import {
+    DeleteUserFromClassWindowComponent
+} from "../popup-window/delete-user-from-class-window/delete-user-from-class-window.component";
+import {NewGradeWindowComponent} from "../popup-window/new-grade-window/new-grade-window.component";
 
 @Component({
   selector: 'app-teacher-grades',
@@ -19,7 +23,10 @@ import { FormsModule } from '@angular/forms';
     ClassTileComponent,
     DatePipe,
     NgForOf,
-    FormsModule
+    FormsModule,
+    DeleteUserFromClassWindowComponent,
+    NgIf,
+    NewGradeWindowComponent
   ],
   templateUrl: './teacher-grades.component.html',
   styleUrls: ['./teacher-grades.component.css']
@@ -31,6 +38,9 @@ export class TeacherGradesComponent implements OnInit {
   filteredStudentList: UserDto[] = [];
   selectedClassId: string | null = null;
   searchQuery: string = '';
+
+  showNewGradeModal: boolean = false;
+
 
   constructor(
     private axiosService: AxiosService,
@@ -102,5 +112,9 @@ export class TeacherGradesComponent implements OnInit {
 
   onStudentClick(student: UserDto) {
     this.router.navigate(['/teacher/grades', student.id]);
+  }
+
+  toggleShowNewGradeModal() {
+    this.showNewGradeModal = !this.showNewGradeModal;
   }
 }

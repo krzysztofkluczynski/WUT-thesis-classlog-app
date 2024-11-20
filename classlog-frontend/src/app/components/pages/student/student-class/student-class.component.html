@@ -22,13 +22,33 @@
 
           <hr>
 
-          <div *ngFor="let comment of comments" class="comment">
-            <strong>{{ getFullName(comment.user) }}</strong>: {{ comment.content }}
+          <div class="comments-section">
+            <!-- Display visible comments -->
+            <div *ngFor="let comment of getVisibleComments(post.id)" class="comment">
+              <strong>{{ getFullName(comment.user) }}</strong>: {{ comment.content }}
+            </div>
+
+            <!-- Frameless toggle button -->
+            <button
+              *ngIf="(postCommentsMap.get(post.id) || []).length > 2"
+              class="btn btn-link toggle-comments"
+              (click)="toggleComments(post.id)"
+            >
+              <i class="bi" [ngClass]="expandedComments[post.id] ? 'bi-eye-slash' : 'bi-eye'"></i>
+              {{ expandedComments[post.id] ? 'Hide' : 'Show all' }}
+            </button>
           </div>
 
+
+
           <div class="comment-input-container">
-            <input type="text" class="comment-input" placeholder="Write a comment...">
-            <button class="yellow-button send-button">
+            <input
+              type="text"
+              class="comment-input"
+              placeholder="Write a comment..."
+              [(ngModel)]="commentDrafts[post.id]"
+            />
+            <button class="yellow-button send-button" (click)="sendComment(post)">
               <i class="bi bi-send"></i>
             </button>
           </div>

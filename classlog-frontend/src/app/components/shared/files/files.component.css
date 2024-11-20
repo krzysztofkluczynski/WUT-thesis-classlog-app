@@ -1,0 +1,38 @@
+/* Ensure the HTML and body are taking full height */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden; /* Prevent scrolling for the full page */
+}
+
+.full-screen-container {
+  display: flex;
+  flex-direction: column;
+  height: 90vh; /* Fill the remaining 90% of the viewport below the header */
+  overflow: hidden; /* Prevent scrolling */
+  padding-bottom: 20px;
+}
+
+.tiles-container {
+  display: flex;
+  gap: 20px;
+  flex: 1; /* Fill the remaining space below the header */
+  padding: 20px 20px 20px; /* Remove top padding to avoid overflow */
+  box-sizing: border-box;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.big-tile {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  align-items: flex-start;
+  padding: 20px;
+  background-color: #fffde6;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}

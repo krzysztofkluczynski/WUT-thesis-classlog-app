@@ -15,7 +15,12 @@
         </div>
 
         <!-- Add New Grade Button -->
-        <button class="new-grade-button" (click)="addNewGrade()">New Grade</button>
+        <button class="new-grade-button" (click)="toggleShowNewGradeModal()">New Grade</button>
+          <app-new-grade-window
+            *ngIf="showNewGradeModal"
+            [isOpen]="showNewGradeModal"
+            (close)="toggleShowNewGradeModal()">
+          </app-new-grade-window>
       </div>
 
       <!-- Scrollable Student Grades Table -->

@@ -1,0 +1,31 @@
+<div class="modal-overlay" (click)="closeWindow()"></div>
+<div class="modal-container">
+  <div class="modal-header">
+    <h2>Join Class</h2>
+    <button class="close-button" (click)="closeWindow()">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <!-- Class Code Input -->
+    <input
+      type="text"
+      class="form-control mb-3"
+      placeholder="Enter a name for your class"
+      [(ngModel)]="className"
+    />
+
+    <!-- User Name Input -->
+    <textarea
+      class="form-control"
+      rows="4"
+      placeholder="Enter a description for your class"
+      [(ngModel)]="classDescription"
+    ></textarea>
+  </div>
+
+  <div class="modal-footer">
+    <button class="confirm-button" (click)="confirmSelection()">Confirm</button>
+  </div>
+</div>

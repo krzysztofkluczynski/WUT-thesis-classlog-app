@@ -2,6 +2,7 @@ package com.example.classlog.controller;
 
 import com.example.classlog.dto.ClassDto;
 import com.example.classlog.dto.ManageUserClassRequestDto;
+import com.example.classlog.dto.ManageUserClassWithCodeDto;
 import com.example.classlog.service.ClassService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,12 @@ public class ClassController {
         return ResponseEntity.ok(classes);
     }
 
+    @PostMapping()
+    public ResponseEntity<ClassDto> addClass(@RequestBody ClassDto classDto) {
+        ClassDto savedClass = classService.addClass(classDto); // Ensure the service returns the saved class
+        return ResponseEntity.ok(savedClass);
+    }
+
     @PostMapping("/delete/users")
     public ResponseEntity<String> deleteUsersFromClass(@RequestBody ManageUserClassRequestDto request) {
         classService.removeUsersFromClass(request.getClassId(), request.getUsers());
@@ -40,4 +47,11 @@ public class ClassController {
         classService.addUsersToClass(request.getClassId(), request.getUsers());
         return ResponseEntity.ok("Users successfully added to the class.");
     }
+
+    @PostMapping("/add/code")
+    public ResponseEntity<String> addUsersToClass(@RequestBody ManageUserClassWithCodeDto request) {
+        classService.addUserToClassByCode(request.getClassCode(), request.getUser());
+        return ResponseEntity.ok("Users successfully added to the class.");
+    }
+
 }

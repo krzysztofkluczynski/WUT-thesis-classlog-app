@@ -7,6 +7,7 @@
     <div class="big-tile">
       <!-- Group header and buttons container -->
       <div class="group-header">
+        <h2>Beginners group</h2>
         <div class="buttons-container">
           <button class="yellow-button">Create a lesson</button>
           <button class="yellow-button" (click)="toggleAddUserModal()">Add User</button>
@@ -15,52 +16,54 @@
             [isOpen]="showAddUserModal"
             (close)="toggleAddUserModal()">
           </app-add-user-to-class-window>
+
           <button class="yellow-button" (click)="toggleDeleteUserModal()">Delete User</button>
           <app-delete-user-from-class-window
             *ngIf="showDeleteUserModal"
             [isOpen]="showDeleteUserModal"
             (close)="toggleDeleteUserModal()">
           </app-delete-user-from-class-window>
+
           <button class="yellow-button" (click)="navigateToFiles()">Files</button>
-          <button class="yellow-button">Show class code</button>
+          <button class="yellow-button" (click)="toggleShowClassCodeModal()">Show class code</button>
+          <app-show-class-code-window
+            *ngIf="showClassCodeModal"
+            [isOpen]="showClassCodeModal"
+            [classDto]="classDto"
+            (close)="toggleShowClassCodeModal()">
+          </app-show-class-code-window>
         </div>
-        <h2>Beginners group</h2>
       </div>
 
+      <!-- Posts section -->
       <div class="posts-section">
         <div *ngFor="let post of posts" class="post post-narrow">
           <h5 class="post-title">{{ post.title }}</h5>
           <div class="post-author">{{ post.user.name + ' ' + post.user.surname }}</div>
           <p class="post-content">{{ post.content }}</p>
+          <hr />
 
-          <hr>
-
+          <!-- Comments section -->
           <div class="comments-section">
-            <!-- Display visible comments -->
             <div *ngFor="let comment of getVisibleComments(post.id)" class="comment">
               <strong>{{ getFullName(comment.user) }}</strong>: {{ comment.content }}
             </div>
-
-            <!-- Frameless toggle button -->
             <button
               *ngIf="(postCommentsMap.get(post.id) || []).length > 2"
               class="btn btn-link toggle-comments"
-              (click)="toggleComments(post.id)"
-            >
+              (click)="toggleComments(post.id)">
               <i class="bi" [ngClass]="expandedComments[post.id] ? 'bi-eye-slash' : 'bi-eye'"></i>
               {{ expandedComments[post.id] ? 'Hide' : 'Show all' }}
             </button>
           </div>
 
-
-
+          <!-- Comment input -->
           <div class="comment-input-container">
             <input
               type="text"
               class="comment-input"
               placeholder="Write a comment..."
-              [(ngModel)]="commentDrafts[post.id]"
-            />
+              [(ngModel)]="commentDrafts[post.id]" />
             <button class="yellow-button send-button" (click)="sendComment(post)">
               <i class="bi bi-send"></i>
             </button>
@@ -68,19 +71,16 @@
         </div>
       </div>
 
-
       <!-- Message input area -->
       <div class="message-input">
-        <input type="text" [(ngModel)]="topic" class="topic-input" placeholder="Topic">
+        <input type="text" [(ngModel)]="topic" class="topic-input" placeholder="Topic" />
         <div class="message-group">
-          <input type="text" [(ngModel)]="message" class="message-box" placeholder="Message">
+          <input type="text" [(ngModel)]="message" class="message-box" placeholder="Message" />
           <button class="yellow-button send-button" (click)="sendPost()">
             <i class="bi bi-send"></i>
           </button>
         </div>
       </div>
-
-
     </div>
 
     <!-- Right section: Class history -->
@@ -93,5 +93,6 @@
         </div>
       </div>
     </div>
+
   </div>
 </div>

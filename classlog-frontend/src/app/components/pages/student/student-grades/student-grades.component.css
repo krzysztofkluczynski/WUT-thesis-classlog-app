@@ -148,7 +148,7 @@ html, body {
 
 /* Hover effect */
 .grade-item:hover {
-  background-color: #fff8cc; /* Subtle yellow background on hover */
+  background-color: #f5c000; /* Subtle yellow background on hover */
   transform: translateY(-1px); /* Lift the tile slightly */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15); /* Slightly deeper shadow */
 }

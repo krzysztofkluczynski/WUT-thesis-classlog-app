@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { HeaderComponent } from "../../../shared/header/header.component";
 import { AuthService } from "../../../../service/auth/auth.service";
 import { AxiosService } from "../../../../service/axios/axios.service";
 import { UserDto } from "../../../../model/entities/user-dto";
-import {DatePipe, NgForOf} from "@angular/common";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
 import {LessonDto} from "../../../../model/entities/lesson.dto";
 import {parseDate} from "../../../../utils/date-utils";
 import {GlobalNotificationHandler} from "../../../../service/notification/global-notification-handler.service";
 import {ClassTileComponent} from "../../../shared/class-tile/class-tile.component";
 import {ClassDto} from "../../../../model/entities/class-dto";
 import {Router} from "@angular/router";
+import {JoinClassWindowComponent} from "../../../shared/popup/join-class-window/join-class-window.component";
 
 interface UserResponse {
   data: string[];
@@ -17,32 +18,39 @@ interface UserResponse {
 @Component({
   selector: 'app-student-components',
   standalone: true,
-  imports: [
-    HeaderComponent,
-    NgForOf,
-    ClassTileComponent,
-    DatePipe
-  ],
+    imports: [
+        HeaderComponent,
+        NgForOf,
+        ClassTileComponent,
+        DatePipe,
+        JoinClassWindowComponent,
+        NgIf
+    ],
   templateUrl: './student-dashboard.component.html',
   styleUrl: './student-dashboard.component.css'
 })
 
 
 export class StudentDashboardComponent implements OnInit {
+
   classList: ClassDto[] = [];
   lessons: LessonDto[] = [];
   numberOfLessonsToLoad: number = 4;
 
   teachersMap: Map<ClassDto, UserDto[]> = new Map();
+  showJoinClassModal: boolean = false;
   constructor(
     private axiosService: AxiosService,
     private authService: AuthService,
     private router: Router,
-    private globalNotificationHandler: GlobalNotificationHandler
-  ) {}
+    private globalNotificationHandler: GlobalNotificationHandler,
+) {}
 
   ngOnInit(): void {
+    this.fetchData();
+  }
 
+  private fetchData() {
     // Fetch classes
     this.axiosService.request('GET', `/classes/user/${this.authService.getUser()?.id}`, {}).then(
       (response: { data: ClassDto[] }) => {
@@ -93,5 +101,13 @@ export class StudentDashboardComponent implements OnInit {
 
   onClassTileClick(classItem: ClassDto) {
     this.router.navigate(['/student/class', classItem.id]);
+  }
+
+  toggleJoinClassModal() {
+    this.showJoinClassModal = !this.showJoinClassModal;
+    if (!this.showJoinClassModal) {
+      this.fetchData();
+      window.location.reload(); //TODO, Think of the better way to refresh the page
+    }
   }
 }

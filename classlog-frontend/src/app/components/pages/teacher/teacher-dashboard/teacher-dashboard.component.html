@@ -7,8 +7,18 @@
     <div class="big-tile">
       <!-- Buttons at the top -->
       <div class="button-container">
-        <button class="yellow-button">Create class</button>
-        <button class="yellow-button">Join class</button>
+        <button class="yellow-button" (click)="toggleCreateClassModal()">Create class</button>
+        <app-create-class-window
+          *ngIf="showCreateClassModal"
+          [isOpen]="showCreateClassModal"
+          (close)="toggleCreateClassModal()">
+        </app-create-class-window>
+        <button class="yellow-button" (click)="toggleJoinClassModal()">Join class</button>
+        <app-join-class-window
+          *ngIf="showJoinClassModal"
+          [isOpen]="showJoinClassModal"
+          (close)="toggleJoinClassModal()">
+        </app-join-class-window>
       </div>
 
       <!-- Class tiles below buttons -->

@@ -8,8 +8,13 @@ import { parseDate } from "../../../../utils/date-utils";
 import { ClassDto } from "../../../../model/entities/class-dto";
 import { LessonDto } from "../../../../model/entities/lesson.dto";
 import { GlobalNotificationHandler } from "../../../../service/notification/global-notification-handler.service";
-import {DatePipe, NgForOf} from "@angular/common";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
 import {Router, withNavigationErrorHandler} from "@angular/router";
+import {
+    AddUserToClassWindowComponent
+} from "../popup-window/add-user-to-class-window/add-user-to-class-window.component";
+import {CreateClassWindowComponent} from "../popup-window/create-class-window/create-class-window.component";
+import {JoinClassWindowComponent} from "../../../shared/popup/join-class-window/join-class-window.component";
 
 @Component({
   selector: 'app-teacher-components',
@@ -18,7 +23,11 @@ import {Router, withNavigationErrorHandler} from "@angular/router";
     HeaderComponent,
     ClassTileComponent,
     NgForOf,
-    DatePipe
+    DatePipe,
+    AddUserToClassWindowComponent,
+    NgIf,
+    CreateClassWindowComponent,
+    JoinClassWindowComponent
   ],
   templateUrl: './teacher-dashboard.component.html',
   styleUrls: ['./teacher-dashboard.component.css']
@@ -28,6 +37,8 @@ export class TeacherDashboardComponent implements OnInit {
   classList: ClassDto[] = [];
   lessons: LessonDto[] = [];
   numberOfLessonsToLoad: number = 4;
+  showCreateClassModal: boolean = false;
+  showJoinClassModal: boolean = false;
 
   teachersMap: Map<ClassDto, UserDto[]> = new Map();
   constructor(
@@ -38,7 +49,35 @@ export class TeacherDashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.fetchData();
+  }
 
+  getTeachersForClass(classItem: ClassDto) {
+    const teachers = this.teachersMap.get(classItem) || [];
+    return teachers;
+  }
+
+  onClassTileClick(classItem: ClassDto) {
+    this.router.navigate(['/teacher/class', classItem.id]);
+  }
+
+  toggleCreateClassModal() {
+    this.showCreateClassModal = !this.showCreateClassModal;
+    if (!this.showCreateClassModal) {
+      this.fetchData();
+      window.location.reload(); //TODO, Think of the better way to refresh the page
+    }
+  }
+
+  toggleJoinClassModal() {
+    this.showJoinClassModal = !this.showJoinClassModal;
+    if (!this.showJoinClassModal) {
+      this.fetchData();
+      window.location.reload(); //TODO, Think of the better way to refresh the page
+    }
+  }
+
+  private fetchData() {
     // Fetch classes
     this.axiosService.request('GET', `/classes/user/${this.authService.getUser()?.id}`, {}).then(
       (response: { data: ClassDto[] }) => {
@@ -81,14 +120,5 @@ export class TeacherDashboardComponent implements OnInit {
       this.globalNotificationHandler.handleError(error);
       console.error('Failed to fetch lessons:', error);
     });
-  }
-
-  getTeachersForClass(classItem: ClassDto) {
-    const teachers = this.teachersMap.get(classItem) || [];
-    return teachers;
-  }
-
-  onClassTileClick(classItem: ClassDto) {
-    this.router.navigate(['/teacher/class', classItem.id]);
   }
 }

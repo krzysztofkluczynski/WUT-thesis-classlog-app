@@ -16,6 +16,8 @@ import {
 } from "../popup-window/delete-user-from-class-window/delete-user-from-class-window.component";
 import {FormsModule} from "@angular/forms";
 import {ClassDto} from "../../../../model/entities/class-dto";
+import {CreateClassWindowComponent} from "../popup-window/create-class-window/create-class-window.component";
+import {ShowClassCodeWindowComponent} from "../popup-window/show-class-code-window/show-class-code-window.component";
 
 @Component({
   selector: 'app-teacher-class',
@@ -28,7 +30,9 @@ import {ClassDto} from "../../../../model/entities/class-dto";
     NgIf,
     DeleteUserFromClassWindowComponent,
     FormsModule,
-    NgClass
+    NgClass,
+    CreateClassWindowComponent,
+    ShowClassCodeWindowComponent
   ],
   templateUrl: './teacher-class.component.html',
   styleUrl: './teacher-class.component.css'
@@ -42,6 +46,7 @@ export class TeacherClassComponent implements OnInit {
   classDto: ClassDto | null = null;
   showAddUserModal: boolean = false;
   showDeleteUserModal: boolean = false;
+  showClassCodeModal: boolean = false;
   topic: string = '';
   message: string = '';
 
@@ -130,6 +135,10 @@ export class TeacherClassComponent implements OnInit {
 
   toggleDeleteUserModal() {
     this.showDeleteUserModal = !this.showDeleteUserModal;
+  }
+
+  toggleShowClassCodeModal() {
+    this.showClassCodeModal = !this.showClassCodeModal;
   }
 
   sendPost(): void {

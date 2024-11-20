@@ -38,17 +38,17 @@ html, body {
   box-sizing: border-box;
 }
 
-/* Button container with spacing for select and button */
 .button-container {
   display: flex;
-  align-items: center;
-  justify-content: space-between; /* Space between select and button */
+  align-items: center; /* Center vertically */
+  justify-content: space-between; /* Push items to opposite sides */
   gap: 20px;
-  flex-shrink: 0;
+  width: 100%; /* Ensure it spans the full width of the parent */
   padding-bottom: 20px;
 }
 
 .new-grade-button {
+  flex-shrink: 0; /* Prevent the button from resizing */
   background-color: #F5C000; /* Match the yellow button color */
   border: none;
   color: black;
@@ -57,8 +57,11 @@ html, body {
   font-weight: bold;
   border-radius: 20px; /* Rounded corners */
   cursor: pointer;
+  width: auto; /* Allow dynamic width */
+  text-align: center; /* Center-align the button text */
   transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
 }
+
 
 /* Hover effect for New Grade button */
 .new-grade-button:hover {
@@ -72,12 +75,11 @@ html, body {
   transform: scale(0.95); /* Slightly shrink on click */
 }
 
-/* Select container */
 .select-container {
   display: flex;
-  flex-direction: column; /* Stack label and select */
-  align-items: flex-start; /* Align to the left */
-  margin-right: 20px; /* Add space between the select and other buttons */
+  flex-direction: column; /* Keep label above the select */
+  align-items: flex-start; /* Align content to the left */
+  flex: 1; /* Take up space on the left */
 }
 
 /* Label for select */

@@ -1,0 +1,13 @@
+<div class="modal-overlay" (click)="closeWindow()"></div>
+<div class="modal-container">
+  <div class="modal-header">
+    <!-- Close Button with Bootstrap Icon -->
+    <button class="close-button" (click)="closeWindow()">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+  <!-- Class Code Section -->
+  <div class="modal-body">
+    <h3>Class code: <span>{{ classDto?.code }}</span></h3>
+  </div>
+</div>
