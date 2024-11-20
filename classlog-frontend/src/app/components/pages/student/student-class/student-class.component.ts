@@ -11,15 +11,18 @@ import {HeaderComponent} from "../../../shared/header/header.component";
 import {DatePipe, NgForOf} from "@angular/common";
 import {ActivatedRoute, Router} from "@angular/router";
 import {getFullName} from "../../../../utils/user-utils";
+import {FormsModule} from "@angular/forms";
+import {ClassDto} from "../../../../model/entities/class-dto";
 
 @Component({
   selector: 'app-student-class',
   standalone: true,
-  imports: [
-    HeaderComponent,
-    NgForOf,
-    DatePipe
-  ],
+    imports: [
+        HeaderComponent,
+        NgForOf,
+        DatePipe,
+        FormsModule
+    ],
   templateUrl: './student-class.component.html',
   styleUrl: './student-class.component.css'
 })
@@ -28,6 +31,9 @@ export class StudentClassComponent implements OnInit {
   comments: CommentDto[] = [];
   lessons: LessonDto[] = [];
   classId: number | null = null;
+  classDto: ClassDto | null = null;
+  topic: string = '';
+  message: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -40,6 +46,20 @@ export class StudentClassComponent implements OnInit {
 
   ngOnInit(): void {
     this.classId = Number(this.route.snapshot.paramMap.get('id'));
+
+    // Fetch Class
+    this.axiosService.request('GET', `/classes/${this.classId}`, {}).then(
+      (response: { data: ClassDto }) => {
+        this.classDto = {
+          ...response.data,
+          createdAt: parseDate(response.data.createdAt), // Parse the createdAt field
+        };
+      }
+    ).catch((error: any) => {
+      this.globalNotificationHandler.handleError(error);
+      console.error('Failed to fetch class data:', error);
+    });
+
 
     this.axiosService.request('GET', `/posts`, {}).then(
       (response: { data: PostDto[] }) => {
@@ -83,5 +103,39 @@ export class StudentClassComponent implements OnInit {
 
   navigateToFiles() {
     this.router.navigate([`/files/${this.classId}`]);
+  }
+
+  sendPost(): void {
+    if (!this.topic.trim() || !this.message.trim()) {
+      console.log('Both fields are required!');
+      this.globalNotificationHandler.handleMessage('Both fields are required!');
+      return;
+    }
+
+    const postPayload = {
+      assignedClass: this.classDto,
+      user: this.authService.getUserWithoutToken(),
+      title: this.topic,
+      content: this.message,
+    };
+
+    this.axiosService
+      .request('POST', '/posts', postPayload)
+      .then((response: { data: PostDto }) => {
+        const createdPost: PostDto = response.data;
+
+        this.posts.unshift(createdPost);
+        console.log('Post created successfully:', createdPost);
+
+        this.topic = '';
+        this.message = '';
+      })
+      .catch((error: any) => {
+        this.globalNotificationHandler.handleError(error);
+        console.error('Failed to create post:', error.response?.data || error);
+      });
+
+    this.topic = '';
+    this.message = '';
   }
 }

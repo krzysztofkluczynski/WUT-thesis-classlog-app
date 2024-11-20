@@ -2,6 +2,7 @@ package com.example.classlog.service;
 
 import com.example.classlog.dto.CommentDto;
 import com.example.classlog.dto.PostDto;
+import com.example.classlog.entities.Comment;
 import com.example.classlog.mapper.CommentMapper;
 import com.example.classlog.mapper.PostMapper;
 import com.example.classlog.repository.CommentRepository;
@@ -37,5 +38,11 @@ public class CommentService {
                 .map(commentMapper::toCommentDto)
                 .collect(Collectors.toList());
     }
+
+    public CommentDto createComment(CommentDto commentDto) {
+        Comment comment = commentMapper.toEntity(commentDto);
+        Comment savedComment = commentRepository.save(comment);
+        return commentMapper.toCommentDto(savedComment);
     }
+}
 

@@ -1,13 +1,11 @@
 package com.example.classlog.controller;
 
 import com.example.classlog.dto.CommentDto;
+import com.example.classlog.dto.PostDto;
 import com.example.classlog.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,6 +32,12 @@ public class CommentController {
     public ResponseEntity<List<CommentDto>> getCommentsByPostId(@PathVariable Long postId) {
         List<CommentDto> comments = commentService.findCommentsByPostId(postId);
         return ResponseEntity.ok(comments);
+    }
+
+    @PostMapping
+    public ResponseEntity<CommentDto> createPost(@RequestBody CommentDto commentDto) {
+        CommentDto comment = commentService.createComment(commentDto);
+        return ResponseEntity.ok(comment);
     }
 
 

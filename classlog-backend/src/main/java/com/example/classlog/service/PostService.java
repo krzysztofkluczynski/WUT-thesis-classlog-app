@@ -5,7 +5,6 @@ import com.example.classlog.entities.Post;
 import com.example.classlog.mapper.PostMapper;
 import com.example.classlog.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,8 +30,14 @@ public class PostService {
     }
 
     public List<PostDto> findPostByClassId(Long classId) {
-        return postRepository.findByClassEntity_Id(classId).stream()
+        return postRepository.findByAssignedClass_Id(classId).stream()
                 .map(postMapper::toPostDto)
                 .collect(Collectors.toList());
+    }
+
+    public PostDto createPost(PostDto postDto) {
+        Post post = postMapper.toEntity(postDto);
+        Post savedPost = postRepository.save(post);
+        return postMapper.toPostDto(savedPost);
     }
 }

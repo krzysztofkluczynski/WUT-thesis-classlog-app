@@ -13,6 +13,10 @@ public interface UserMapper {
     @Mapping(target = "createdAt", source = "createdAt")
     UserDto toUserDto(User user);
 
+    @Mapping(target = "role", source = "role")
+    @Mapping(target = "createdAt", source = "createdAt")
+    User toUser(UserDto user);
+
     @Mapping(target = "password", ignore = true)
     User signUpToUser(SignUpDto signUpDto);
 }

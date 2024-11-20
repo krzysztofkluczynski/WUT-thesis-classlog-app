@@ -79,4 +79,17 @@ export class AuthService {
     this.setUser(null);  // Clear user data
     return;  // Explicit return to indicate end of the function
   }
+
+  getUserWithoutToken(): Omit<UserDto, 'token'> | null {
+    const user = this.getUser();
+
+    if (user) {
+      // Destructure to remove the token property
+      const { token, ...userWithoutToken } = user;
+      return userWithoutToken; // Return the user without the token
+    }
+
+    return null; // Return null if no user is available
+  }
+
 }

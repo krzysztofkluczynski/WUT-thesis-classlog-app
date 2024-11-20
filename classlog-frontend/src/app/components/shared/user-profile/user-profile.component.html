@@ -31,7 +31,8 @@
         </p>
         <p><strong>Role: </strong>
           <span *ngIf="!editButtonClicked">{{ userDto!.role.roleName }}</span>
-          <select *ngIf="editButtonClicked" [(ngModel)]="userDto!.role.roleName" class="form-control form-select">
+          <span *ngIf="editButtonClicked && authService.getUserRoleId() != 3">{{ userDto!.role.roleName }}</span>
+          <select *ngIf="editButtonClicked && authService.getUserRoleId() === 3" [(ngModel)]="userDto!.role.roleName" class="form-control form-select">
             <option value="Student">Student</option>
             <option value="Teacher">Teacher</option>
             <option value="Admin">Admin</option>

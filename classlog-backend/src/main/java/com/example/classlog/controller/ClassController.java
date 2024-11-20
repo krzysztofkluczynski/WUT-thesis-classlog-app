@@ -17,7 +17,11 @@ public class ClassController {
 
     @Autowired
     private final ClassService classService;
-
+    @GetMapping("/{classId}")
+    public ResponseEntity<ClassDto> getClassById(@PathVariable Long classId) {
+        ClassDto classDto = classService.findClassById(classId);
+        return ResponseEntity.ok(classDto);
+    }
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<ClassDto>> getClassesByUserId(@PathVariable Long userId) {

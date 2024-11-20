@@ -240,3 +240,22 @@ html, body {
   font-size: 0.9rem;
   color: #666666;
 }
+
+
+.comments-section .toggle-comments {
+  color: #555;
+  text-decoration: none;
+  font-size: 0.8rem;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.comments-section .toggle-comments:hover {
+  color: #333;
+}
+

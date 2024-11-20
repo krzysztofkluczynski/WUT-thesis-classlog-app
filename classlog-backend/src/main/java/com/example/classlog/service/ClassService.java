@@ -43,4 +43,10 @@ public class ClassService {
             }
         }
     }
+
+    public ClassDto findClassById(Long classId) {
+        return classRepository.findById(classId)
+                .map(classMapper::toClassDto)
+                .orElse(null);
+    }
 }
