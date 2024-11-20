@@ -1,6 +1,7 @@
 package com.example.classlog.controller;
 
 import com.example.classlog.dto.ClassDto;
+import com.example.classlog.dto.CreateClassDto;
 import com.example.classlog.dto.ManageUserClassRequestDto;
 import com.example.classlog.dto.ManageUserClassWithCodeDto;
 import com.example.classlog.service.ClassService;
@@ -31,8 +32,8 @@ public class ClassController {
     }
 
     @PostMapping()
-    public ResponseEntity<ClassDto> addClass(@RequestBody ClassDto classDto) {
-        ClassDto savedClass = classService.addClass(classDto); // Ensure the service returns the saved class
+    public ResponseEntity<ClassDto> addClass(@RequestBody CreateClassDto CreateClassDto) {
+        ClassDto savedClass = classService.addClass(CreateClassDto); // Ensure the service returns the saved class
         return ResponseEntity.ok(savedClass);
     }
 

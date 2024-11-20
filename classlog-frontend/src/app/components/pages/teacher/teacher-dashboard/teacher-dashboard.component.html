@@ -11,7 +11,8 @@
         <app-create-class-window
           *ngIf="showCreateClassModal"
           [isOpen]="showCreateClassModal"
-          (close)="toggleCreateClassModal()">
+          (close)="toggleCreateClassModal()"
+          (classCreated)="onClassCreated($event)">
         </app-create-class-window>
         <button class="yellow-button" (click)="toggleJoinClassModal()">Join class</button>
         <app-join-class-window

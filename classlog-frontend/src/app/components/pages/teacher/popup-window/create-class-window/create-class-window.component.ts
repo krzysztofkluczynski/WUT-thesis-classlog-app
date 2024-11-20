@@ -21,6 +21,7 @@ import {ClassDto} from "../../../../../model/entities/class-dto";
 export class CreateClassWindowComponent {
   @Input() isOpen = false;
   @Output() close = new EventEmitter<void>();
+  @Output() classCreated = new EventEmitter<ClassDto>();
   className: string = '';
   classDescription: string = '';
 
@@ -38,18 +39,42 @@ export class CreateClassWindowComponent {
 
 
   confirmSelection() {
+    // Validation for name and description lengths
+    if (this.className.length > 250) {
+      this.globalNotificationHandler.handleError("Class name must not exceed 250 characters.");
+      return;
+    }
+
+    if (this.classDescription.length > 800) {
+      this.globalNotificationHandler.handleError("Class description must not exceed 800 characters.");
+      return;
+    }
     const classPayload = {
         name: this.className,
         description: this.classDescription
       };
 
-    this.axiosService.request('POST', '/classes', classPayload)
+
+    const requestPayload = {
+      createdBy: this.authService.getUserWithoutToken(),
+      classDto: classPayload
+    }
+    this.axiosService.request('POST', '/classes', requestPayload)
       .then((response: { data: ClassDto }) => {
-      this.globalNotificationHandler.handleMessage("Class created successfully");
-    }).catch((error: any) => {
-      console.error('Failed to add user to class');
-      this.globalNotificationHandler.handleError(error);
-    });
-    this.closeWindow();
+        const createdClass = response.data; // Retrieve the created class object
+        console.log('Class created:', createdClass);
+
+        this.classCreated.emit(createdClass); // Assuming you have a classList array
+
+        // Notify the user of success
+        this.globalNotificationHandler.handleMessage("Class created successfully");
+      })
+      .catch((error: any) => {
+        console.error('Failed to create class:', error);
+        this.globalNotificationHandler.handleError(error);
+      })
+      .finally(() => {
+        this.closeWindow(); // Close the modal regardless of success or failure
+      });
   }
 }

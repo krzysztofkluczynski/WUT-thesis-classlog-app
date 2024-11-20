@@ -63,10 +63,6 @@ export class TeacherDashboardComponent implements OnInit {
 
   toggleCreateClassModal() {
     this.showCreateClassModal = !this.showCreateClassModal;
-    if (!this.showCreateClassModal) {
-      this.fetchData();
-      window.location.reload(); //TODO, Think of the better way to refresh the page
-    }
   }
 
   toggleJoinClassModal() {
@@ -120,5 +116,10 @@ export class TeacherDashboardComponent implements OnInit {
       this.globalNotificationHandler.handleError(error);
       console.error('Failed to fetch lessons:', error);
     });
+  }
+
+  onClassCreated(createdClass: ClassDto) {
+    this.classList.push(createdClass);
+    this.fetchData();
   }
 }

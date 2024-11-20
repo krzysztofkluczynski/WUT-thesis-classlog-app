@@ -26,7 +26,7 @@ CREATE TABLE class (
 
 -- Creating the USER_CLASS table
 CREATE TABLE user_class (
-    class_id BIGINT REFERENCES class(class_id),
+    class_id BIGINT REFERENCES class(class_id) ON DELETE CASCADE, -- Cascade delete
     user_id BIGINT REFERENCES classlog_user(user_id),
     PRIMARY KEY (class_id, user_id)
 );
@@ -54,18 +54,19 @@ CREATE TABLE file (
 -- Creating the POST table
 CREATE TABLE post (
     post_id BIGSERIAL PRIMARY KEY,
-    class_id BIGINT REFERENCES class(class_id),
-    user_id BIGINT REFERENCES classlog_user(user_id),
+    class_id BIGINT REFERENCES class(class_id) ON DELETE CASCADE, -- Cascade delete for class
+    user_id BIGINT REFERENCES classlog_user(user_id) ON DELETE CASCADE, -- Cascade delete for user
     title VARCHAR(255),
     content TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+
 -- Creating the COMMENT table
 CREATE TABLE comment (
     comment_id BIGSERIAL PRIMARY KEY,
-    post_id BIGINT REFERENCES post(post_id),
-    user_id BIGINT REFERENCES classlog_user(user_id),
+    post_id BIGINT REFERENCES post(post_id) ON DELETE CASCADE, -- Cascade delete for post
+    user_id BIGINT REFERENCES classlog_user(user_id) ON DELETE CASCADE, -- Cascade delete for user
     content TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

@@ -29,13 +29,13 @@ export class StudentGradesComponent implements OnInit {
   studentId: number = 0;
   grades: GradeDto[] = [];
   userDto: UserDto = {
-    id: 0, // Default empty ID
-    name: '', // Empty name
-    surname: '', // Empty surname
-    email: '', // Empty email
-    role: {id: 4, roleName: 'Unknown' }, // Empty role structure
+    id: 0,
+    name: '',
+    surname: '',
+    email: '',
+    role: {id: 4, roleName: 'Unknown' },
     token: '', // Empty token
-    createdAt: new Date(), // Default to current date
+    createdAt: new Date(),
   };
   constructor(
     private authService: AuthService,

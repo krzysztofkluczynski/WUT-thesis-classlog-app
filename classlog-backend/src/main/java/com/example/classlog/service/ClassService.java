@@ -1,13 +1,17 @@
 package com.example.classlog.service;
 
+import com.example.classlog.dto.CreateClassDto;
 import com.example.classlog.dto.UserDto;
 import com.example.classlog.entities.Class;
+import com.example.classlog.entities.User;
 import com.example.classlog.exception.AppException;
 import com.example.classlog.repository.ClassRepository;
 import com.example.classlog.dto.ClassDto;
 import com.example.classlog.mapper.ClassMapper;
 import com.example.classlog.repository.UserClassRepository;
+import com.example.classlog.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +25,7 @@ import java.util.stream.Collectors;
 public class ClassService {
 
     private final ClassRepository classRepository;
+    private final UserRepository userRepository;
     private final ClassMapper classMapper;
 
     private final UserClassRepository userClassRepository;
@@ -68,9 +73,16 @@ public class ClassService {
         userClassRepository.insertUserIntoClass(classEntity.get().getId(), user.getId());
     }
 
-    public ClassDto addClass(ClassDto classDto) {
-        Class classEntity = classMapper.toEntity(classDto);
+    @Transactional
+    public ClassDto addClass(CreateClassDto createClassDto) {
+        Class classEntity = classMapper.toEntity(createClassDto.getClassDto());
         Class savedClass = classRepository.save(classEntity);
+
+        User user = userRepository.findById(createClassDto.getCreatedBy().getId())
+                .orElseThrow(() -> new AppException("User not found", HttpStatus.NOT_FOUND));
+
+        userClassRepository.insertUserIntoClass(classEntity.getId(), user.getId());
+
         return classMapper.toClassDto(savedClass);
     }
 }
