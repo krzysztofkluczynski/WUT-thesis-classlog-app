@@ -10,15 +10,18 @@
         <div class="select-container">
           <label for="class-select" class="select-label">Pick a class:</label>
           <select id="class-select" class="form-select" [(ngModel)]="selectedClassId" (change)="loadStudents()">
-            <option *ngFor="let class of classList" [value]="class.id">{{ class.name }}</option>
+            <option [ngValue]="null" selected></option>
+            <option *ngFor="let class of classList" [ngValue]="class.id">{{ class.name }}</option>
           </select>
         </div>
 
         <!-- Add New Grade Button -->
-        <button class="new-grade-button" (click)="toggleShowNewGradeModal()">New Grade</button>
+        <button class="new-grade-button" *ngIf="selectedClassId" (click)="toggleShowNewGradeModal()">New Grade</button>
           <app-new-grade-window
             *ngIf="showNewGradeModal"
             [isOpen]="showNewGradeModal"
+            [selectedClassId]="selectedClassId"
+            [studentListFromOneClass]="studentListFromOneClass"
             (close)="toggleShowNewGradeModal()">
           </app-new-grade-window>
       </div>

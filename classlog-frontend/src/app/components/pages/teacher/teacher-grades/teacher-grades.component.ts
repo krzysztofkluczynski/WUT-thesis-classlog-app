@@ -34,9 +34,9 @@ import {NewGradeWindowComponent} from "../popup-window/new-grade-window/new-grad
 export class TeacherGradesComponent implements OnInit {
   classList: ClassDto[] = [];
   studentListFromOneClass: UserDto[] = [];
+  selectedClassId: number | null = null;
   allStudents: UserDto[] = [];
   filteredStudentList: UserDto[] = [];
-  selectedClassId: string | null = null;
   searchQuery: string = '';
 
   showNewGradeModal: boolean = false;
@@ -80,20 +80,26 @@ export class TeacherGradesComponent implements OnInit {
 
   // Load students based on selected class
   loadStudents(): void {
-    if (this.selectedClassId) {
-      this.axiosService.request('GET', `/users/class/${this.selectedClassId}/role/${2}`, {}).then(
-        (response: { data: UserDto[] }) => {
-          this.studentListFromOneClass = response.data.map(student => ({
-            ...student,
-            createdAt: parseDate(student.createdAt)
-          }));
-          this.filterStudents(); // Filter the list after fetching
-        }
-      ).catch((error: any) => {
-        this.globalNotificationHandler.handleError(error);
-        console.error('Failed to fetch students:', error);
-      });
+
+    if (this.selectedClassId === null) {
+      console.log("Selected class ID is null, not fetching students");
+      this.studentListFromOneClass = [];
+      return;
     }
+
+    this.axiosService.request('GET', `/users/class/${this.selectedClassId}/role/${2}`, {}).then(
+      (response: { data: UserDto[] }) => {
+        this.studentListFromOneClass = response.data.map(student => ({
+          ...student,
+          createdAt: parseDate(student.createdAt)
+        }));
+        this.filterStudents(); // Filter the list after fetching
+      }
+    ).catch((error: any) => {
+      this.globalNotificationHandler.handleError(error);
+      console.error('Failed to fetch students:', error);
+    });
+
   }
 
   // Filter students based on search query

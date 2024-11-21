@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {UserDto} from "../../../../../model/entities/user-dto";
 
 @Component({
   selector: 'app-new-grade-window',
@@ -9,7 +10,10 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 })
 export class NewGradeWindowComponent {
   @Input() isOpen = false;
+  @Input()studentListFromOneClass: UserDto[] = [];
+  @Input()selectedClassId: number | null = null;
   @Output() close = new EventEmitter<void>();
+
   closeWindow() {
     this.close.emit();
   }
