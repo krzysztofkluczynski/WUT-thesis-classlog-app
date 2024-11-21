@@ -64,6 +64,7 @@ export class StudentGradesComponent implements OnInit {
       // Fetch grades data
       this.axiosService.request('GET', `/grades/user/${this.studentId}`, {}).then(
         (response: { data: GradeDto[] }) => {
+          console.log(response.data);
           const grades = response.data.map(grade => ({
             ...grade,
             createdAt: parseDate(grade.createdAt)

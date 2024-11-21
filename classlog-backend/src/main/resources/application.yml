@@ -1,4 +1,8 @@
 spring:
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false # Serialize dates in ISO 8601 format
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSS # Date format with milliseconds precision
   datasource:
     url: jdbc:postgresql://localhost:5432/classlog
     username: classlog

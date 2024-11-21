@@ -75,6 +75,9 @@ html, body {
   border-radius: 10px;
   display: flex;
   flex-direction: column;
+  overflow-y: auto; /* Enable scrolling for the grades section */
+  max-height: 100%; /* Restrict height to fit within the parent container */
+  padding: 10px; /* Add spacing inside the grades container */
 }
 
 .grades-container h2 {
@@ -82,6 +85,11 @@ html, body {
   color: #666;
   margin-bottom: 60px;
 }
+
+.class-grades {
+  margin-bottom: 30px; /* Add space between class groups */
+}
+
 
 .grades-grid {
   display: grid;

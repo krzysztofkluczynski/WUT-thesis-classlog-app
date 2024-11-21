@@ -1,15 +1,22 @@
 export function parseDate(dateInput: any): Date {
-  if (Array.isArray(dateInput)) {
-    // Handle array format received from the backend
-    const [year = 1970, month = 1, day = 1, hour = 0, minute = 0, second = 0, millisecond = 0] = dateInput;
-
-    // Ensure month is adjusted for 0-based indexing in JavaScript Dates
-    return new Date(Date.UTC(year, month - 1, day, hour, minute, second, millisecond / 1000));
-  } else if (typeof dateInput === 'string') {
-    // If it's a string, parse it as a Date
-    return new Date(dateInput);
+  if (typeof dateInput === 'string') {
+    // Handle ISO 8601 string with microseconds
+    const [datePart, timePart] = dateInput.split('T');
+    if (timePart && timePart.includes('.')) {
+      const [time, microseconds] = timePart.split('.');
+      const formattedDateTime = `${datePart}T${time}.${microseconds.slice(0, 3)}Z`; // Truncate to milliseconds and add 'Z' for UTC
+      return new Date(formattedDateTime);
+    }
+    return new Date(dateInput); // If no microseconds, parse directly
   }
 
-  // If the input is not an expected format, return the current date as a fallback
+  if (Array.isArray(dateInput)) {
+    // Convert nanoseconds (6th element) to milliseconds
+    const [year = 1970, month = 1, day = 1, hour = 0, minute = 0, second = 0, nanoseconds = 0] = dateInput;
+    const milliseconds = Math.floor(nanoseconds / 1_000_000); // Convert nanoseconds to milliseconds
+    return new Date(year, month - 1, day, hour, minute, second, milliseconds);
+  }
+
+  // Fallback to the current date
   return new Date();
 }

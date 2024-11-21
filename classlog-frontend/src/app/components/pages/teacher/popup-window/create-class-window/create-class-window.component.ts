@@ -40,15 +40,26 @@ export class CreateClassWindowComponent {
 
   confirmSelection() {
     // Validation for name and description lengths
-    if (this.className.length > 250) {
-      this.globalNotificationHandler.handleError("Class name must not exceed 250 characters.");
+    const errors: string[] = [];
+
+    if (!this.className || this.className.trim().length === 0) {
+      errors.push("Class name cannot be empty.");
+    } else if (this.className.length > 250) {
+      errors.push("Class name must not exceed 250 characters.");
+    }
+
+    if (!this.classDescription || this.classDescription.trim().length === 0) {
+      errors.push("Class description cannot be empty.");
+    } else if (this.classDescription.length > 800) {
+      errors.push("Class description must not exceed 800 characters.");
+    }
+
+    if (errors.length > 0) {
+      this.globalNotificationHandler.handleError(errors.join(" "));
       return;
     }
 
-    if (this.classDescription.length > 800) {
-      this.globalNotificationHandler.handleError("Class description must not exceed 800 characters.");
-      return;
-    }
+
     const classPayload = {
         name: this.className,
         description: this.classDescription

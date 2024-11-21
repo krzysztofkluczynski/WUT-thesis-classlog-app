@@ -120,6 +120,23 @@ export class TeacherDashboardComponent implements OnInit {
 
   onClassCreated(createdClass: ClassDto) {
     this.classList.push(createdClass);
-    this.fetchData();
+
+    const currentUser = this.authService.getUserWithoutToken();
+
+    if (currentUser) {
+      const userDto: UserDto = {
+        id: currentUser.id,
+        name: currentUser.name,
+        surname: currentUser.surname,
+        email: currentUser.email,
+        role: currentUser.role,
+        token: '',
+        createdAt: currentUser.createdAt,
+      };
+
+      this.teachersMap.set(createdClass, [userDto]);
+    } else {
+      console.error('Failed to get current user. Teachers map not updated.');
+    }
   }
 }
