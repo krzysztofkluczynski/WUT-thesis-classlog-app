@@ -1,28 +1,28 @@
 .login-card {
-  border: 4px solid #FFD900; /* Yellow border with 4px thickness */
-  border-radius: 50px; /* Rounded corners with 50px radius */
-  background-color: #FFFFFF; /* White background */
-  padding: 10px; /* Adds some padding inside the card */
+  border: 4px solid #FFD900;
+  border-radius: 50px;
+  background-color: #FFFFFF;
+  padding: 10px;
 }
 
 .app-logo {
-  max-width: 40%; /* Makes the image responsive and fits it within the container */
-  height: auto; /* Maintains aspect ratio */
-  margin: 5px auto; /* Centers the image horizontally and adds space above and below */
-  display: block; /* Ensures the image is treated as a block-level element for centering */
+  max-width: 40%;
+  height: auto;
+  margin: 5px auto;
+  display: block;
 }
 
 .signup-link {
-  color: #FFD900; /* Yellow color */
-  font-weight: bold; /* Makes the text bold */
-  font-size: 1.1rem; /* Slightly larger font */
+  color: #FFD900;
+  font-weight: bold;
+  font-size: 1.1rem;
 }
 
 .custom-btn {
-  border-radius: 20px; /* Add a slight radius to the button */
+  border-radius: 20px;
 }
 
 .bold-label {
-  font-weight: bold; /* Makes the specific labels bold */
+  font-weight: bold;
 }
 

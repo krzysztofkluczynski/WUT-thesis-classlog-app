@@ -9,25 +9,22 @@
         </div>
         <div class="card-body">
           <form (ngSubmit)="onSubmitRegister()" #registerForm="ngForm">
-            <!-- Email field -->
+
             <div class="form-outline mb-3">
               <label class="form-label bold-label" for="registerEmail">Email</label>
               <input type="email" id="registerEmail" name="email" class="form-control" [(ngModel)]="email" required />
             </div>
 
-            <!-- Name field -->
             <div class="form-outline mb-3">
               <label class="form-label bold-label" for="registerName">Name</label>
               <input type="text" id="registerName" name="name" class="form-control" [(ngModel)]="name" required />
             </div>
 
-            <!-- Surname field -->
             <div class="form-outline mb-3">
               <label class="form-label bold-label" for="registerSurname">Surname</label>
               <input type="text" id="registerSurname" name="surname" class="form-control" [(ngModel)]="surname" required />
             </div>
 
-            <!-- Password field -->
             <div class="form-outline mb-3">
               <label class="form-label bold-label" for="registerPassword">Password</label>
               <input
@@ -41,7 +38,6 @@
               />
             </div>
 
-            <!-- Confirm Password field -->
             <div class="form-outline mb-3">
               <label class="form-label bold-label" for="confirmPassword">Confirm Password</label>
               <input
@@ -55,12 +51,10 @@
               />
             </div>
 
-            <!-- Password mismatch message -->
             <div *ngIf="passwordMismatch" class="text-danger mb-4">
               Passwords do not match.
             </div>
 
-            <!-- Submit button -->
             <button type="submit" class="btn btn-primary btn-block mb-3 custom-btn">Sign up</button>
           </form>
         </div>

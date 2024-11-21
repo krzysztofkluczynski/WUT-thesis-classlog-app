@@ -30,6 +30,12 @@ export class LoginFormComponent implements OnInit{
     private router: Router,
     private globalNotificationHandler: GlobalNotificationHandler
   ) {}
+
+  ngOnInit(): void {
+    this.authService.logout()
+  }
+
+
   onSubmitLogin(): void {
     this.axiosService.request('POST', '/login', {
       email: this.email,
@@ -71,7 +77,4 @@ export class LoginFormComponent implements OnInit{
     this.router.navigate(['/register']);
   }
 
-  ngOnInit(): void {
-    this.authService.logout()
-  }
 }

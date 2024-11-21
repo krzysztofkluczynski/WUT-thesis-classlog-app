@@ -3,9 +3,7 @@
 <div class="full-screen-container">
   <div class="tiles-container">
 
-    <!-- Left section: Posts and comments -->
     <div class="big-tile">
-      <!-- Group header and buttons container -->
       <div class="group-header">
         <div class="buttons-container">
           <button class="yellow-button" (click)="navigateToFiles()">Files</button>
@@ -13,7 +11,6 @@
         <h2>Beginners group</h2>
       </div>
 
-      <!-- Posts section -->
       <div class="posts-section">
         <div *ngFor="let post of posts" class="post post-narrow">
           <h5 class="post-title">{{ post.title }}</h5>
@@ -23,12 +20,10 @@
           <hr>
 
           <div class="comments-section">
-            <!-- Display visible comments -->
             <div *ngFor="let comment of getVisibleComments(post.id)" class="comment">
               <strong>{{ getFullName(comment.user) }}</strong>: {{ comment.content }}
             </div>
 
-            <!-- Frameless toggle button -->
             <button
               *ngIf="(postCommentsMap.get(post.id) || []).length > 2"
               class="btn btn-link toggle-comments"
@@ -38,8 +33,6 @@
               {{ expandedComments[post.id] ? 'Hide' : 'Show all' }}
             </button>
           </div>
-
-
 
           <div class="comment-input-container">
             <input
@@ -55,7 +48,6 @@
         </div>
       </div>
 
-      <!-- Message input area -->
       <div class="message-input">
         <input type="text" [(ngModel)]="topic" class="topic-input" placeholder="Topic">
         <div class="message-group">
@@ -68,7 +60,6 @@
 
     </div>
 
-    <!-- Right section: Class history -->
     <div class="small-tiles-container">
       <div class="class-history">
         <h3>Class History</h3>

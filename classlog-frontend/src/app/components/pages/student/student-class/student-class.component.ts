@@ -170,7 +170,6 @@ export class StudentClassComponent implements OnInit {
       return;
     }
 
-    // Create the comment payload
     const commentPayload = {
       post: post,
       user: this.authService.getUserWithoutToken(),
@@ -183,7 +182,6 @@ export class StudentClassComponent implements OnInit {
         const createdComment: CommentDto = response.data;
         console.log('Created comment:', createdComment);
 
-        // Update comments map
         if (!this.postCommentsMap.has(post.id)) {
           this.postCommentsMap.set(post.id, []);
         }

@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { parseDate } from '../../../../utils/date-utils';
 import { GlobalNotificationHandler } from "../../../../service/notification/global-notification-handler.service";
-import { HeaderOptions } from "../../../../utils/header-options";
 
 @Component({
   selector: 'app-admin-components',
@@ -34,24 +33,6 @@ export class AdminDashboardComponent implements OnInit {
     private globalNotificationHandler: GlobalNotificationHandler,
     private route: ActivatedRoute
   ) {}
-
-  goToUserProfile(userId: number): void {
-    this.router.navigate(['/profile', userId], { queryParams: { editMode: true } });
-  }
-
-  loadUsers(userId: number): void {
-    this.axiosService.request('GET', `/users/role/${userId}`, {}).then(
-      (response: { data: UserDto[] }) => {
-        this.usersList = response.data.map(user => ({
-          ...user,
-          createdAt: parseDate(user.createdAt)  // Ensure createdAt is a Date
-        }));
-      }
-    ).catch((error: any) => {
-      this.globalNotificationHandler.handleError(error);
-      console.error('Failed to fetch users:', error);
-    });
-  }
 
   ngOnInit(): void {
     this.user = this.authService.getUser();
@@ -80,6 +61,26 @@ export class AdminDashboardComponent implements OnInit {
       }
     });
   }
+
+  goToUserProfile(userId: number): void {
+    this.router.navigate(['/profile', userId], { queryParams: { editMode: true } });
+  }
+
+  loadUsers(userId: number): void {
+    this.axiosService.request('GET', `/users/role/${userId}`, {}).then(
+      (response: { data: UserDto[] }) => {
+        this.usersList = response.data.map(user => ({
+          ...user,
+          createdAt: parseDate(user.createdAt)
+        }));
+      }
+    ).catch((error: any) => {
+      this.globalNotificationHandler.handleError(error);
+      console.error('Failed to fetch users:', error);
+    });
+  }
+
+
 
   deleteUser(userId: number): void {
     this.axiosService.request('DELETE', `/users/${userId}`, {}).then(

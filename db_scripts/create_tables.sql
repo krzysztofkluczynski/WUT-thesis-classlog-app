@@ -47,7 +47,7 @@ CREATE TABLE file (
     file_id BIGSERIAL PRIMARY KEY,
     class_id INT REFERENCES class(class_id),
     user_id INT REFERENCES classlog_user(user_id),
-    filename VARCHAR(255),
+    file_path VARCHAR(255), -- Changed column name and increased length for full path
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
