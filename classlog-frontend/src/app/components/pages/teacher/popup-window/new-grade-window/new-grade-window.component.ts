@@ -1,24 +1,101 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {UserDto} from "../../../../../model/entities/user-dto";
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { UserDto } from "../../../../../model/entities/user-dto";
+import { FormsModule } from '@angular/forms';
+import { NgForOf, NgIf } from '@angular/common';
+import {AxiosService} from "../../../../../service/axios/axios.service";
+import {AuthService} from "../../../../../service/auth/auth.service";
+import {Router} from "@angular/router";
+import {GlobalNotificationHandler} from "../../../../../service/notification/global-notification-handler.service";
+import {ClassDto} from "../../../../../model/entities/class-dto";
+import {GradeDto} from "../../../../../model/entities/grade-dto";
 
 @Component({
   selector: 'app-new-grade-window',
   standalone: true,
-  imports: [],
+  imports: [FormsModule, NgForOf, NgIf],
   templateUrl: './new-grade-window.component.html',
-  styleUrl: './new-grade-window.component.css'
+  styleUrls: ['./new-grade-window.component.css']
 })
-export class NewGradeWindowComponent {
-  @Input() isOpen = false;
-  @Input()studentListFromOneClass: UserDto[] = [];
-  @Input()selectedClassId: number | null = null;
-  @Output() close = new EventEmitter<void>();
+export class NewGradeWindowComponent implements OnInit {
+  @Input() isOpen = false; // Controls modal visibility
+  @Input() studentListFromOneClass: UserDto[] = []; // List of students to filter
+  @Input() selectedClassId: number | null = null; // Selected class ID for context
+  @Output() close = new EventEmitter<void>(); // Emit event to close modal
 
-  closeWindow() {
+  studentSearchQuery: string = ''; // User input for student search
+  filteredStudentList: UserDto[] = []; // Filtered list of students
+  selectedStudent: UserDto | null = null; // Selected student for grading
+  gradeValue: number | null = null; // Grade value input by the user
+  gradeWage: number = 1; // Grade weight (1-3)
+  gradeDescription: string = ''; // Description of the grade
+
+  constructor(
+    private axiosService: AxiosService,
+    private authService: AuthService,
+    private router: Router,
+    private globalNotificationHandler: GlobalNotificationHandler
+  ) {}
+
+  ngOnInit(): void {
+    // Initialize filtered student list with all students
+    this.filteredStudentList = [...this.studentListFromOneClass];
+  }
+
+  closeWindow(): void {
+    // Emit close event to parent component
     this.close.emit();
   }
 
-  confirmSelection() {
+  filterStudents(): void {
+    const searchQueryLower = this.studentSearchQuery.trim().toLowerCase();
+
+    // Filter students based on name or surname (ignores order)
+    this.filteredStudentList = this.studentListFromOneClass.filter(student => {
+      const fullName = `${student.name} ${student.surname}`.toLowerCase();
+      const reverseFullName = `${student.surname} ${student.name}`.toLowerCase();
+      return fullName.includes(searchQueryLower) || reverseFullName.includes(searchQueryLower);
+    });
+  }
+
+  selectStudent(student: UserDto): void {
+    this.selectedStudent = student;
+    this.studentSearchQuery = `${student.name} ${student.surname}`;
+    this.filteredStudentList = [];
+  }
+
+  confirmSelection(): void {
+    // Ensure all fields are valid before submission
+    if (this.selectedStudent && this.gradeValue !== null && this.gradeValue >= 0 && this.gradeValue <= 100) {
+      const gradePayload = {
+        assignedClass: {
+          id: this.selectedClassId
+        },
+        student: {
+          id: this.selectedStudent.id
+        },
+        teacher: this.authService.getUserWithoutToken(),
+        grade: this.gradeValue,
+        wage: this.gradeWage,
+        description: this.gradeDescription
+      };
+
+      this.axiosService.request('POST', '/grades', gradePayload)
+        .then((response: { data: GradeDto }) => {
+          const createdGrade = response.data; // Retrieve the created class object
+          console.log('Grade created:', createdGrade);
+
+          this.globalNotificationHandler.handleMessage("Grade created successfully");
+        })
+        .catch((error: any) => {
+          console.error('Failed to create grade:', error);
+          this.globalNotificationHandler.handleError(error);
+        })
+        .finally(() => {
+          this.closeWindow();
+        });
+      } else {
+      this.globalNotificationHandler.handleMessage('Please make sure all the fields are properly fullfilled.');
+    }
     this.closeWindow();
   }
 }

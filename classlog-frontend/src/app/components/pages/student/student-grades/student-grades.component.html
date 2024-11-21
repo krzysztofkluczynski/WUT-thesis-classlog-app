@@ -3,6 +3,7 @@
 <div class="full-screen-container">
   <div class="tiles-container">
     <div class="user-profile-and-grades-container">
+
       <!-- Left Section: User Profile -->
       <div class="profile-container">
         <div class="profile-header">
@@ -21,15 +22,23 @@
       <!-- Right Section: Grades -->
       <div class="grades-container">
         <h2>User Grades</h2>
-        <div class="grades-grid">
-          <div *ngFor="let grade of grades" class="grade-item">
-            <p><strong>Grade: </strong>{{ grade.grade }}</p>
-            <p><strong>Wage: </strong>{{ grade.wage }}</p>
-            <p><strong>Description: </strong>{{ grade.description }}</p>
-            <p><strong>Teacher: </strong>{{ getFullName(grade.teacher) }}</p>
-            <p><strong>Date: </strong>{{ grade.createdAt | date:'dd.MM.yyyy HH:mm' }}</p>
+
+        <!-- Loop over grouped grades -->
+        <div *ngFor="let group of groupedGrades" class="class-grades">
+          <!-- Class Name -->
+          <h3>{{ group.className }}</h3>
+          <div class="grades-grid">
+            <!-- Grades under the class -->
+            <div *ngFor="let grade of group.grades" class="grade-item">
+              <p><strong>Grade: </strong>{{ grade.grade }}</p>
+              <p><strong>Wage: </strong>{{ grade.wage }}</p>
+              <p><strong>Description: </strong>{{ grade.description }}</p>
+              <p><strong>Teacher: </strong>{{ getFullName(grade.teacher) }}</p>
+              <p><strong>Date: </strong>{{ grade.createdAt | date:'dd.MM.yyyy HH:mm' }}</p>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
   </div>
