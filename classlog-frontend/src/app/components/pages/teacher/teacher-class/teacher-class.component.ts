@@ -18,6 +18,7 @@ import {FormsModule} from "@angular/forms";
 import {ClassDto} from "../../../../model/entities/class-dto";
 import {CreateClassWindowComponent} from "../popup-window/create-class-window/create-class-window.component";
 import {ShowClassCodeWindowComponent} from "../popup-window/show-class-code-window/show-class-code-window.component";
+import {ClassService} from "../../../../service/class-service/class-service.service";
 
 @Component({
   selector: 'app-teacher-class',
@@ -57,7 +58,8 @@ export class TeacherClassComponent implements OnInit {
     private axiosService: AxiosService,
     private router: Router,
     private globalNotificationHandler: GlobalNotificationHandler,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private classService: ClassService
   ) {}
 
   ngOnInit(): void {
@@ -126,7 +128,7 @@ export class TeacherClassComponent implements OnInit {
   protected readonly getFullName = getFullName;
 
   navigateToFiles() {
-    this.router.navigate([`/files/${this.classId}`]);
+      this.router.navigate([`/files/${this.classId}`]);
   }
 
   toggleAddUserModal() {

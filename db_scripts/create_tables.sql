@@ -45,11 +45,12 @@ CREATE TABLE user_class (
 -- Creating the FILE table
 CREATE TABLE file (
     file_id BIGSERIAL PRIMARY KEY,
-    class_id INT REFERENCES class(class_id),
-    user_id INT REFERENCES classlog_user(user_id),
-    file_path VARCHAR(255), -- Changed column name and increased length for full path
+    class_id BIGINT REFERENCES class(class_id),
+    user_id BIGINT REFERENCES classlog_user(user_id),
+    file_path VARCHAR(255), -- Full file path
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
 
 -- Creating the POST table
 CREATE TABLE post (

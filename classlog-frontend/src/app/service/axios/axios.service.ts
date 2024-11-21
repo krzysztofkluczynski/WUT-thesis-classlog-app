@@ -27,4 +27,34 @@ export class AxiosService {
       headers: headers
     });
   }
+
+  uploadFileRequest(url: string, formData: FormData): Promise<any> {
+    const headers: any = {};
+
+    // Add Authorization header if token exists
+    const token = this.authService.getAuthToken();
+    if (token !== null) {
+      headers["Authorization"] = "Bearer " + token;
+    }
+
+    headers["Content-Type"] = "multipart/form-data";
+
+    // Do not manually set Content-Type for FormData; let Axios handle it
+    return axios.post(url, formData, { headers });
+  }
+
+  requestDownload(url: string, params: any): Promise<any> {
+    const headers: any = {};
+
+    const token = this.authService.getAuthToken();
+    if (token !== null) {
+      headers["Authorization"] = "Bearer " + token;
+    }
+
+    return axios.get(url, {
+      params, // Pass parameters like fileId
+      headers,
+      responseType: "blob", // Ensure the response is treated as binary data
+    });
+  }
 }

@@ -25,14 +25,91 @@ html, body {
   overflow: hidden;
 }
 
-.big-tile {
+.files-container {
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
-  align-items: flex-start;
+  align-items: center;
   padding: 20px;
   background-color: #fffde6;
   border-radius: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+.files-management-container {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 1200px;
+  max-height: 90%;
+}
+
+.header-and-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.section-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.yellow-button {
+  background-color: #F5C000; /* Match the yellow button color */
+  border: none;
+  color: black;
+  padding: 25px 40px; /* Further increase padding for a larger button */
+  font-size: 20px; /* Further increase font size */
+  font-weight: bold;
+  border-radius: 30px; /* Adjust border-radius for a larger button */
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+}
+
+/* Hover effect for Yellow button */
+.yellow-button:hover {
+  background-color: #FFD54F; /* Lighter yellow on hover */
+  transform: scale(1.1); /* Enlarge more on hover */
+}
+
+/* Active effect for Yellow button */
+.yellow-button:active {
+  background-color: #FBC02D; /* Slightly darker yellow on click */
+  transform: scale(0.95); /* Slightly shrink on click */
+}
+
+
+.table-scrollable {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 90%;
+}
+
+
+.table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.table th {
+  text-align: left;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.table td {
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+
+.btn {
+  font-size: 0.8rem;
+  padding: 5px 10px;
 }

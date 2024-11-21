@@ -1,8 +1,53 @@
-<app-header [pageTitle]="'Classlog platform'" [ifShowMenu]="true"/>
+<app-header [pageTitle]="'Classlog platform'" [ifShowMenu]="true"></app-header>
+
 <div class="full-screen-container">
   <div class="tiles-container">
-    <div class="big-tile">
-        Welcome to files section
+    <div class="files-container">
+    <div class="files-management-container">
+      <div class="header-and-action">
+        <h2 class="section-title">Manage Files</h2>
+        <button class="btn btn-warning btn-lg yellow-button" (click)="toggleUploadFileModal()">
+          <i class="bi bi-cloud-upload"></i> Upload File
+        </button>
+        <app-upload-file-popup
+          *ngIf="showUploadFileModal"
+          [isOpen]="showUploadFileModal"
+          [classDto]="classDto"
+          (close)="toggleUploadFileModal()"
+          (fileAdded)="onFileAdded($event)">
+        </app-upload-file-popup>
+      </div>
+
+      <div class="table-scrollable">
+        <table class="table table-striped table-hover mt-4">
+          <thead class="table-light">
+          <tr>
+            <th>User</th>
+            <th>File Name</th>
+            <th>Upload Date</th>
+            <th class="text-center">Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let file of fileList">
+            <td>{{ file.uploadedBy.name }} {{ file.uploadedBy.surname }}</td>
+            <td>{{ getFileName(file.filePath) }}</td>
+            <td>{{ file.createdAt | date: 'dd.MM.yyyy HH:mm' }}</td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-outline-primary me-2" (click)="downloadFile(file.fileId)">
+                <i class="bi bi-file-earmark-arrow-down"></i> Download
+              </button>
+              <button class="btn btn-sm btn-outline-danger"
+                      (click)="deleteFile(file.fileId)"
+                      *ngIf="authService.getUserRoleId() === 1 || file.uploadedBy.id === authService.getUser()?.id">
+                <i class="bi bi-trash3"></i> Delete
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
     </div>
   </div>
 </div>
