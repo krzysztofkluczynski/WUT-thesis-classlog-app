@@ -104,7 +104,7 @@ export class FilesComponent {
         const contentDisposition = response.headers["content-disposition"];
         const fileName = contentDisposition
           ? contentDisposition.split("filename=")[1]?.replace(/"/g, "") // Extract filename
-          : `downloaded_file_${fileId}`; // Fallback filename
+          : `downloaded_${fileId}`; // Fallback filename
 
         // Create a download link and trigger download
         const url = window.URL.createObjectURL(blob);
