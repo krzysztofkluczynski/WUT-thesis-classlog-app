@@ -90,27 +90,48 @@
       </div>
     </div>
 
+    <!-- Small Tiles Container -->
     <div class="small-tiles-container">
       <div class="search-bar">
-        <h3>Search bar and students list</h3>
+
+
+        <h3>Attendance</h3>
         <input
           type="text"
-          class="form-control"
+          class="form-control mb-3"
           placeholder="Search by name or surname"
           [(ngModel)]="searchQuery"
           (input)="filterStudents()"
         />
-        <div class="student-list">
-          <div
-            *ngFor="let student of filteredStudentList"
-            class="student-tile"
-            (click)="onStudentClick(student)"
+
+        <!-- Check All Option -->
+        <div class="form-check mb-2">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="checkAll"
+            (change)="toggleCheckAll()"
           >
-            <span class="student-name">{{ student.name }} {{ student.surname }}</span>
+          <label class="form-check-label" for="checkAll">Check All</label>
+        </div>
+
+        <!-- Student List with Checkboxes -->
+        <div class="student-list">
+          <div *ngFor="let student of filteredStudentList" (click)="toggleStudentPresence(student)" class="form-check student-tile">
+            <label class="form-check-label" for="checkbox-{{student.id}}">
+              {{ student.name }} {{ student.surname }}
+            </label>
+
+            <input
+              type="checkbox"
+              class="form-check-input"
+              [(ngModel)]="student.isPresent"
+              name="isPresent-{{student.id}}"
+              id="checkbox-{{student.id}}"
+            >
           </div>
         </div>
       </div>
-
     </div>
 
   </div>

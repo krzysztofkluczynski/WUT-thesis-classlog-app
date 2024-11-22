@@ -9,6 +9,12 @@ import { GlobalNotificationHandler } from "../../../../service/notification/glob
 import { UserDto } from "../../../../model/entities/user-dto";
 import {parseDate} from "../../../../utils/date-utils";
 import {consumerMarkDirty} from "@angular/core/primitives/signals";
+import {ClassDto} from "../../../../model/entities/class-dto";
+import {LessonDto} from "../../../../model/entities/lesson.dto";
+
+export interface UserDtoWithPresence extends UserDto {
+  isPresent: boolean; // Field to track attendance
+}
 
 @Component({
   selector: 'app-lesson-creator',
@@ -23,14 +29,16 @@ import {consumerMarkDirty} from "@angular/core/primitives/signals";
   styleUrls: ['./lesson-creator.component.css']
 })
 export class LessonCreatorComponent implements OnInit {
-  studentListFromOneClass: UserDto[] = [];
-  filteredStudentList: UserDto[] = [];
+  studentListFromOneClass: UserDtoWithPresence[] = [];
+  filteredStudentList: UserDtoWithPresence[] = [];
   classId: number | null = null;
   lessonDate: Date = new Date();
   lessonTime: string = '';
   lessonSubject: string = '';
   lessonNotes: string = '';
   searchQuery: string = '';
+  createdLesson: LessonDto | null = null;
+  presentStudents: UserDto[] = [];
 
 
   constructor(
@@ -41,18 +49,16 @@ export class LessonCreatorComponent implements OnInit {
     private globalNotificationHandler: GlobalNotificationHandler
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void { //jesli wschodzimy z truby edycji musimy wczytac na poiczatek liste uczniow z calej klasy i oddzielnie atrybut isPresent im dodac
     this.classId = Number(this.route.snapshot.paramMap.get('classId'));
-
 
     this.axiosService.request('GET', `/users/class/${this.classId}/role/${2}`, {}).then(
       (response: { data: UserDto[] }) => {
-        console.log('Response:', response.data);
         this.studentListFromOneClass = response.data.map(student => ({
           ...student,
-          createdAt: parseDate(student.createdAt)
+          createdAt: parseDate(student.createdAt),
+          isPresent: false
         }));
-        console.log('Student List:', this.studentListFromOneClass);
         this.filterStudents();
       }
     ).catch((error: any) => {
@@ -75,20 +81,66 @@ export class LessonCreatorComponent implements OnInit {
     const date = new Date(this.lessonDate); // Initialize date from lessonDate
     date.setHours(hours, minutes, 0, 0); // Set hours, minutes, and seconds
 
-    console.log('Lesson Details:', {
-      subject: this.lessonSubject,
-      dateTime: date,
-      notes: this.lessonNotes
-    });
+    const formattedDateTime = date.toISOString().slice(0, -1); // '2024-10-31T14:30:00'
 
+
+    const lessonPayload = {
+      createdByUser: this.authService.getUserWithoutToken(),
+      lessonClass: {
+        id: this.classId
+      },
+      lessonDate: formattedDateTime,
+      subject: this.lessonSubject,
+      content: this.lessonNotes
+    }
+
+    this.axiosService.request('POST', '/lessons', lessonPayload)
+      .then((response: { data: LessonDto }) => {
+        this.createdLesson = response.data;
+        console.log('Lesson created:', this.createdLesson);
+
+        this.globalNotificationHandler.handleMessage("Lesson created successfully");
+
+        this.presentStudents = this.studentListFromOneClass
+          .filter(student => student.isPresent)
+          .map(({ isPresent, ...rest }) => rest);
+
+        if (!this.createdLesson?.lessonId) {
+          console.error('Lesson ID is missing or invalid:', this.createdLesson);
+          return;
+        }
+        console.log(this.createdLesson)
+
+        this.axiosService.request('POST', '/presence/add/students', {
+          lessonId: this.createdLesson?.lessonId,
+          users: this.presentStudents,
+        }).then((response: { data: string }) => {
+          this.globalNotificationHandler.handleMessage(response.data);
+        }).catch((error: any) => {
+          console.error('Failed to add users to class');
+          this.globalNotificationHandler.handleError('Failed to add users to class. Please try again.');
+        });
+
+
+      })
+      .catch((error: any) => {
+        console.error('Failed to create class:', error);
+        this.globalNotificationHandler.handleError(error);
+      });
   }
 
   returnToDashboard() {
     this.router.navigate(['/teacher/dashboard']);
   }
 
+  toggleCheckAll() {
+    const isChecked = (document.getElementById('checkAll') as HTMLInputElement).checked;
+    this.filteredStudentList.forEach(student => {
+      student.isPresent = isChecked;
+    });
+  }
 
-  onStudentClick(student: UserDto) {
-
+  toggleStudentPresence(student: UserDtoWithPresence) {
+    student.isPresent = !student.isPresent;
   }
 }

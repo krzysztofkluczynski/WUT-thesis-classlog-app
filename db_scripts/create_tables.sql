@@ -139,6 +139,6 @@ CREATE TABLE task_user (
 -- Creating the PRESENCE table
 CREATE TABLE presence (
     presence_id BIGSERIAL PRIMARY KEY,
-    student_id INT REFERENCES classlog_user(user_id),
-    lesson_id INT REFERENCES lesson(lesson_id)
+    student_id BIGINT REFERENCES classlog_user(user_id),
+    lesson_id BIGINT REFERENCES lesson(lesson_id)
 );

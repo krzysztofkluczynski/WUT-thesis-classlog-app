@@ -192,6 +192,7 @@
 }
 
 /* Individual student tile */
+/* Individual student tile */
 .student-tile {
   background-color: #ffffff;
   padding: 15px;
@@ -201,6 +202,7 @@
   cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: space-between; /* Move content and checkbox to opposite ends */
 }
 
 .student-tile:hover {
@@ -209,9 +211,8 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Student name styling */
-.student-name {
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
+/* Checkbox styling */
+.student-tile .form-check-input {
+  margin-left: 10px;
+  border: 3px solid #F5C000; /* Yellow border */
 }
