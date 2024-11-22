@@ -1,0 +1,217 @@
+.full-screen-container {
+  display: flex;
+  flex-direction: column;
+  height: 90vh; /* Fill the remaining 90% of the viewport below the header */
+  overflow: hidden; /* Prevent scrolling */
+}
+
+/* Content container below header */
+.tiles-container {
+  display: flex;
+  gap: 20px;
+  flex: 1; /* Take the remaining space below the header */
+  padding: 20px 20px 20px; /* Remove top padding to avoid overflow */
+  box-sizing: border-box;
+  overflow: hidden; /* Prevent scrolling for the container */
+}
+
+.big-tile {
+  background-color: #FFFDE0;
+  flex: 2; /* Occupy 2/3 of the space */
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+  position: relative; /* Enable positioning for child elements */
+}
+
+.big-tile h1 {
+  padding-bottom: 20px;
+}
+
+.big-tile-content {
+  flex-grow: 1; /* Take up remaining space */
+  overflow-y: auto; /* Allow scrolling for content */
+}
+
+.button-container {
+  position: absolute; /* Place container relative to the big-tile */
+  bottom: 20px; /* Offset from the bottom */
+  left: 20px; /* Add some padding from left */
+  right: 20px; /* Add padding from right */
+  display: flex;
+  justify-content: space-between; /* Spread buttons to opposite corners */
+}
+
+.yellow-button {
+  background-color: #F5C000;
+  border: none;
+  color: black;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.yellow-button:hover {
+  background-color: #FFD54F;
+  transform: scale(1.05);
+}
+
+.yellow-button:active {
+  background-color: #FBC02D;
+  transform: scale(0.95);
+}
+
+/* Right section: Small tiles container */
+.small-tiles-container {
+  flex: 1; /* Occupy 1/3 of the space */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%; /* Match the full height */
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.attendance-list {
+  background-color: #FFFDE0;
+  flex: 1; /* Fill the available space */
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto; /* Allow scrolling for overflow content */
+  box-sizing: border-box;
+}
+
+/* Divider line below General Information */
+.divider {
+  border: 0;
+  height: 2px;
+  background: black;
+  margin: 0px 0 30px; /* Add spacing around the line */
+}
+
+/* Form container styles */
+.form-container {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Space between form elements */
+}
+
+/* Subject Field Custom Styling */
+.custom-subject {
+  max-width: 300px; /* Limit the width */
+  margin: 0; /* Center the subject input */
+}
+
+.custom-subject .form-control {
+  background-color: white; /* Light yellow background */
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+/* Date Field Custom Styling */
+.custom-date {
+  max-width: 250px; /* Limit the width */
+}
+
+.custom-date .input-group {
+  background-color: white; /* Light yellow background */
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+/* Time Field Custom Styling */
+.custom-time {
+  max-width: 250px; /* Limit the width */
+}
+
+.custom-date .input-group {
+  background-color: white; /* Light yellow background */
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+/* Shared Styles for Date and Time Fields */
+.custom-time .input-group {
+  background-color: white; /* Light yellow background */
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+/* Notes Field Styling */
+.custom-notes .form-control {
+  background-color: white; /* Light yellow background */
+  border: 1px solid black;
+  border-radius: 5px;
+  height: 15vh;
+}
+
+
+/* Right section: Small tiles container */
+.small-tiles-container {
+  flex: 1; /* Occupy 1x the space of the left section */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%; /* Match the full height */
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Search bar styles */
+.search-bar {
+  background-color: #FFFDE0;
+  flex: 1;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+/* Student list container */
+.student-list {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Spacing between student tiles */
+  overflow-y: auto;
+  max-height: 300px; /* Limit height for scrollable content */
+}
+
+/* Individual student tile */
+.student-tile {
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.student-tile:hover {
+  transform: translateY(-5px);
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Student name styling */
+.student-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}

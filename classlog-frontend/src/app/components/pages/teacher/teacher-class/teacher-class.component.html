@@ -9,7 +9,7 @@
       <div class="group-header">
         <h2>Beginners group</h2>
         <div class="buttons-container">
-          <button class="yellow-button">Create a lesson</button>
+          <button class="yellow-button" (click)="navigateToLessonCreation()">Create a lesson</button>
           <button class="yellow-button" (click)="toggleAddUserModal()">Add User</button>
           <app-add-user-to-class-window
             *ngIf="showAddUserModal"
@@ -85,7 +85,7 @@
 
     <!-- Right section: Class history -->
     <div class="small-tiles-container">
-      <div class="class-history">
+      <div class="attendance-list">
         <h3>Class History</h3>
         <div *ngFor="let lesson of lessons" class="lesson-tile">
           <div class="lesson-title">{{ lesson.subject }}</div>

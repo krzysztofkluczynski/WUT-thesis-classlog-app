@@ -1,0 +1,117 @@
+<app-header [pageTitle]="'Classlog platform'" [ifShowMenu]="true"></app-header>
+
+<div class="full-screen-container">
+  <div class="tiles-container">
+
+    <!-- Big tile on the left -->
+    <div class="big-tile">
+      <h1>Lesson creator</h1>
+
+      <h5>General information</h5>
+      <hr class="divider">
+
+      <div class="form-container">
+        <form>
+          <!-- Subject Input -->
+          <div class="form-group mb-3 custom-subject">
+            <label for="subject" class="form-label">Subject</label>
+            <input
+              type="text"
+              class="form-control"
+              id="subject"
+              placeholder="Enter the subject"
+              [(ngModel)]="lessonSubject"
+              name="subject"
+            >
+          </div>
+
+          <!-- Date and Time Inputs -->
+          <div class="row mb-3">
+            <!-- Date Input -->
+            <div class="col-md-6 custom-date">
+              <label for="date" class="form-label">Date</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="date"
+                  [(ngModel)]="lessonDate"
+                  name="date"
+                >
+              </div>
+            </div>
+
+            <!-- Time Input -->
+            <div class="col-md-6 custom-time">
+              <label for="time" class="form-label">Time</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-clock"></i></span>
+                <input
+                  type="time"
+                  class="form-control"
+                  id="time"
+                  [(ngModel)]="lessonTime"
+                  name="time"
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Notes Textarea -->
+          <div class="form-group mb-3 custom-notes">
+            <label for="notes" class="form-label">Notes</label>
+            <textarea
+              class="form-control"
+              id="notes"
+              rows="3"
+              placeholder="Enter any additional notes"
+              [(ngModel)]="lessonNotes"
+              name="notes"
+            ></textarea>
+          </div>
+        </form>
+      </div>
+
+      <!-- Buttons -->
+      <div class="button-container">
+        <button
+          class="yellow-button"
+          (click)="returnToDashboard()"
+        >
+          Return
+        </button>
+        <button
+          class="yellow-button"
+          (click)="createLesson()"
+        >
+          Create
+        </button>
+      </div>
+    </div>
+
+    <div class="small-tiles-container">
+      <div class="search-bar">
+        <h3>Search bar and students list</h3>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search by name or surname"
+          [(ngModel)]="searchQuery"
+          (input)="filterStudents()"
+        />
+        <div class="student-list">
+          <div
+            *ngFor="let student of filteredStudentList"
+            class="student-tile"
+            (click)="onStudentClick(student)"
+          >
+            <span class="student-name">{{ student.name }} {{ student.surname }}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

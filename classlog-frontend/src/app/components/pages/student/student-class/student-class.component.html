@@ -61,8 +61,8 @@
     </div>
 
     <div class="small-tiles-container">
-      <div class="class-history">
-        <h3>Class History</h3>
+      <div class="attendance-list">
+        <h3>Lesson History</h3>
         <div *ngFor="let lesson of lessons" class="lesson-tile">
           <div class="lesson-title">{{ lesson.subject }}</div>
           <div class="lesson-date">{{ lesson.lessonDate | date: 'dd.MM.yyyy HH:mm' }}</div>

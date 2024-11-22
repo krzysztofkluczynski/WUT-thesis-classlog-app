@@ -226,5 +226,7 @@ export class TeacherClassComponent implements OnInit {
   }
 
 
-
+  navigateToLessonCreation() {
+    this.router.navigate([`/teacher/lessonCreator/${this.classId}`]);
+  }
 }

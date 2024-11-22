@@ -111,11 +111,6 @@ export class TeacherGradesComponent implements OnInit {
       );
     }
 
-  addNewGrade() {
-    console.log('Add New Grade button clicked!');
-    // Implement functionality here
-  }
-
   onStudentClick(student: UserDto) {
     this.router.navigate(['/teacher/grades', student.id]);
   }
