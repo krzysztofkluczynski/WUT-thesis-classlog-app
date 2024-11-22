@@ -4,7 +4,7 @@ import {ClassDto} from "./class-dto";
 export interface LessonDto {
   lessonId: number;
   createdBy: UserDto;
-  classId: ClassDto;
+  lessonClass: ClassDto;
   lessonDate?: Date;
   subject?: string;
   content?: string;

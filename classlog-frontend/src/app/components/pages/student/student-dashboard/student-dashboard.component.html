@@ -30,10 +30,17 @@
     <div class="small-tiles-container">
       <div class="attendance-list">
         <h3>Lesson History</h3>
-        <div *ngFor="let lesson of lessons" class="lesson-tile">
+        <div *ngFor="let lesson of lessons" class="lesson-tile" (click)="toggleLessonWindow(lesson.lessonId, lesson.lessonClass.id)">
           <div class="lesson-title">{{ lesson.subject }}</div>
           <div class="lesson-date">{{ lesson.lessonDate | date: 'dd.MM.yyyy HH:mm' }}</div>
         </div>
+        <app-lesson-info-window
+          *ngIf="showLessonModal"
+          [isOpen]="showLessonModal"
+          [classId]="classIdForSelectedLesson"
+          [lessonID]="selectedLessonId"
+          (close)="toggleLessonWindow(null, null)">
+        </app-lesson-info-window>
       </div>
     </div>
 

@@ -13,18 +13,20 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {getFullName} from "../../../../utils/user-utils";
 import {FormsModule} from "@angular/forms";
 import {ClassDto} from "../../../../model/entities/class-dto";
+import {LessonInfoWindowComponent} from "../../../shared/lesson-info-window/lesson-info-window.component";
 
 @Component({
   selector: 'app-student-class',
   standalone: true,
-  imports: [
-    HeaderComponent,
-    NgForOf,
-    DatePipe,
-    FormsModule,
-    NgIf,
-    NgClass
-  ],
+    imports: [
+        HeaderComponent,
+        NgForOf,
+        DatePipe,
+        FormsModule,
+        NgIf,
+        NgClass,
+        LessonInfoWindowComponent
+    ],
   templateUrl: './student-class.component.html',
   styleUrl: './student-class.component.css'
 })
@@ -39,6 +41,11 @@ export class StudentClassComponent implements OnInit {
   postCommentsMap: Map<number, CommentDto[]> = new Map(); // Map of Post ID to Comments
   expandedComments: { [postId: number]: boolean } = {}; // Track expanded state for posts
   commentDrafts: { [postId: number]: string } = {};
+  showLessonModal: boolean = false;
+  selectedLessonId: number | null = null;
+  classIdForSelectedLesson: number | null = null;
+
+
 
 
   constructor(
@@ -197,4 +204,9 @@ export class StudentClassComponent implements OnInit {
       });
   }
 
+  toggleLessonWindow(lessonId: number | null, classId: number | null) {
+    this.selectedLessonId = lessonId;
+    this.classIdForSelectedLesson = classId;
+    this.showLessonModal = !this.showLessonModal;
+  }
 }

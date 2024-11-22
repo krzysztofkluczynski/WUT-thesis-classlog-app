@@ -15,6 +15,7 @@ import {
 } from "../popup-window/add-user-to-class-window/add-user-to-class-window.component";
 import {CreateClassWindowComponent} from "../popup-window/create-class-window/create-class-window.component";
 import {JoinClassWindowComponent} from "../../../shared/popup/join-class-window/join-class-window.component";
+import {LessonInfoWindowComponent} from "../../../shared/lesson-info-window/lesson-info-window.component";
 
 @Component({
   selector: 'app-teacher-components',
@@ -27,7 +28,8 @@ import {JoinClassWindowComponent} from "../../../shared/popup/join-class-window/
     AddUserToClassWindowComponent,
     NgIf,
     CreateClassWindowComponent,
-    JoinClassWindowComponent
+    JoinClassWindowComponent,
+    LessonInfoWindowComponent
   ],
   templateUrl: './teacher-dashboard.component.html',
   styleUrls: ['./teacher-dashboard.component.css']
@@ -36,9 +38,14 @@ export class TeacherDashboardComponent implements OnInit {
 
   classList: ClassDto[] = [];
   lessons: LessonDto[] = [];
-  numberOfLessonsToLoad: number = 4;
+  numberOfLessonsToLoad: number = 20;
   showCreateClassModal: boolean = false;
   showJoinClassModal: boolean = false;
+  showLessonModal: boolean = false;
+  selectedLessonId: number | null = null;
+  classIdForSelectedLesson: number | null = null;
+
+
 
   teachersMap: Map<ClassDto, UserDto[]> = new Map();
   constructor(
@@ -111,6 +118,7 @@ export class TeacherDashboardComponent implements OnInit {
           ...lesson,
           lessonDate: parseDate(lesson.lessonDate)
         }));
+        console.log('Fetched lessons:', this.lessons);
       }
     ).catch((error: any) => {
       this.globalNotificationHandler.handleError(error);
@@ -138,5 +146,12 @@ export class TeacherDashboardComponent implements OnInit {
     } else {
       console.error('Failed to get current user. Teachers map not updated.');
     }
+  }
+
+  toggleLessonWindow(lessonId: number | null, classId: number | null) {
+    console.log(lessonId);
+    this.selectedLessonId = lessonId;
+    this.classIdForSelectedLesson = classId;
+    this.showLessonModal = !this.showLessonModal;
   }
 }

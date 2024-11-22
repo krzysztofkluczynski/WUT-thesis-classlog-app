@@ -51,7 +51,7 @@ export class LessonCreatorComponent implements OnInit {
 
   ngOnInit(): void { //jesli wschodzimy z truby edycji musimy wczytac na poiczatek liste uczniow z calej klasy i oddzielnie atrybut isPresent im dodac
     this.classId = Number(this.route.snapshot.paramMap.get('classId'));
-
+    console.log('Edit mode: ' + this.route.snapshot.queryParams['editMode']);
     this.axiosService.request('GET', `/users/class/${this.classId}/role/${2}`, {}).then(
       (response: { data: UserDto[] }) => {
         this.studentListFromOneClass = response.data.map(student => ({

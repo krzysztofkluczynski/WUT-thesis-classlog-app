@@ -11,6 +11,7 @@ import {ClassTileComponent} from "../../../shared/class-tile/class-tile.componen
 import {ClassDto} from "../../../../model/entities/class-dto";
 import {Router} from "@angular/router";
 import {JoinClassWindowComponent} from "../../../shared/popup/join-class-window/join-class-window.component";
+import {LessonInfoWindowComponent} from "../../../shared/lesson-info-window/lesson-info-window.component";
 
 interface UserResponse {
   data: string[];
@@ -24,7 +25,8 @@ interface UserResponse {
         ClassTileComponent,
         DatePipe,
         JoinClassWindowComponent,
-        NgIf
+        NgIf,
+        LessonInfoWindowComponent
     ],
   templateUrl: './student-dashboard.component.html',
   styleUrl: './student-dashboard.component.css'
@@ -39,6 +41,11 @@ export class StudentDashboardComponent implements OnInit {
 
   teachersMap: Map<ClassDto, UserDto[]> = new Map();
   showJoinClassModal: boolean = false;
+  showLessonModal: boolean = false;
+  selectedLessonId: number | null = null;
+  classIdForSelectedLesson: number | null = null;
+
+
   constructor(
     private axiosService: AxiosService,
     private authService: AuthService,
@@ -107,7 +114,13 @@ export class StudentDashboardComponent implements OnInit {
     this.showJoinClassModal = !this.showJoinClassModal;
     if (!this.showJoinClassModal) {
       this.fetchData();
-      window.location.reload(); //TODO, Think of the better way to refresh the page
+      window.location.reload();
     }
+  }
+
+  toggleLessonWindow(lessonId: number | null, classId: number | null) {
+    this.selectedLessonId = lessonId;
+    this.classIdForSelectedLesson = classId;
+    this.showLessonModal = !this.showLessonModal;
   }
 }

@@ -1,0 +1,108 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Dim background */
+  z-index: 9999; /* Ensure it's on top of other elements */
+}
+
+.modal-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fffde6;
+  padding: 30px; /* Increased padding for better spacing */
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25); /* Enhanced shadow for depth */
+  z-index: 10000; /* Above the overlay */
+  width: 450px; /* Adjusted width for a better look */
+  max-height: 90vh; /* Ensure it doesn't overflow the screen */
+  overflow-y: auto; /* Scrollable content if it exceeds height */
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd; /* Add subtle divider */
+}
+
+.modal-header h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.2s ease, transform 0.2s ease; /* Smooth hover effect */
+}
+
+.close-button:hover {
+  color: #000;
+  transform: scale(1.1); /* Slight zoom effect */
+}
+
+.modal-body {
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #ddd; /* Add subtle divider */
+}
+
+.yellow-button {
+  background-color: #F5C000; /* Match the yellow button color */
+  border: none;
+  color: black;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 20px; /* Rounded corners */
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+}
+
+/* Hover effect for New Grade button */
+.yellow-button:hover {
+  background-color: #FFD54F; /* Lighter yellow on hover */
+  transform: scale(1.05); /* Slightly enlarge the button */
+}
+
+/* Active effect for New Grade button */
+.yellow-button:active {
+  background-color: #FBC02D; /* Slightly darker yellow on click */
+  transform: scale(0.95); /* Slightly shrink on click */
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.field {
+  margin-bottom: 10px;
+}
+
+.field label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.field span {
+  font-size: 14px;
+}

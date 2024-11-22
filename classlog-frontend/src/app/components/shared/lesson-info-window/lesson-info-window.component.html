@@ -1,0 +1,41 @@
+<div class="modal-overlay" (click)="closeWindow()"></div>
+<div class="modal-container">
+  <div class="modal-header">
+    <h2>Lesson Details</h2>
+    <button class="close-button" (click)="closeWindow()">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div *ngIf="lessonDto">
+      <div class="field">
+        <label>Lesson ID:</label>
+        <span>{{ lessonDto.lessonId }}</span>
+      </div>
+      <div class="field">
+        <label>Lesson Name:</label>
+        <span>{{ lessonDto.subject }}</span>
+      </div>
+
+      <div class="field">
+        <label>Lesson Date:</label>
+        <div class="lesson-date">{{ lessonDto.lessonDate | date: 'dd.MM.yyyy HH:mm' }}</div>
+      </div>
+      <div class="field">
+        <label>Teacher:</label>
+        <span>{{ lessonDto.createdBy }}</span>
+      </div>
+      <div class="field">
+        <label>Description:</label>
+        <span>{{ lessonDto.content }}</span>
+      </div>
+      <!-- Add more fields as necessary -->
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button class="yellow-button" (click)="editClicked()" *ngIf="authService.getUserRoleId()===1">Edit</button>
+    <button class="yellow-button" (click)="deleteClicked()" *ngIf="authService.getUserRoleId()===1">Delete</button>
+  </div>
+</div>

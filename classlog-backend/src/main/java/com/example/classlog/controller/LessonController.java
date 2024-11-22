@@ -28,9 +28,7 @@ public class LessonController {
     @GetMapping("/{id}")
     public ResponseEntity<LessonDto> getLessonById(@PathVariable Long id) {
         LessonDto lesson = lessonService.getLessonById(id);
-//        if (lesson == null) {
-//            return ResponseEntity.notFound().build();
-//        }
+
         return ResponseEntity.ok(lesson);
     }
 
@@ -41,9 +39,9 @@ public class LessonController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteLesson(@PathVariable Long id) {
+    public ResponseEntity<String> deleteLesson(@PathVariable Long id) {
         lessonService.deleteLesson(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Lesson deleted.");
     }
 
     @GetMapping("/user/createdBy/{userId}/recent/{numbOfLessons}")

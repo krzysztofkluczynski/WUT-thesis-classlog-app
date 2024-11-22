@@ -19,6 +19,7 @@ import {ClassDto} from "../../../../model/entities/class-dto";
 import {CreateClassWindowComponent} from "../popup-window/create-class-window/create-class-window.component";
 import {ShowClassCodeWindowComponent} from "../popup-window/show-class-code-window/show-class-code-window.component";
 import {ClassService} from "../../../../service/class-service/class-service.service";
+import {LessonInfoWindowComponent} from "../../../shared/lesson-info-window/lesson-info-window.component";
 
 @Component({
   selector: 'app-teacher-class',
@@ -33,7 +34,8 @@ import {ClassService} from "../../../../service/class-service/class-service.serv
     FormsModule,
     NgClass,
     CreateClassWindowComponent,
-    ShowClassCodeWindowComponent
+    ShowClassCodeWindowComponent,
+    LessonInfoWindowComponent
   ],
   templateUrl: './teacher-class.component.html',
   styleUrl: './teacher-class.component.css'
@@ -48,8 +50,12 @@ export class TeacherClassComponent implements OnInit {
   showAddUserModal: boolean = false;
   showDeleteUserModal: boolean = false;
   showClassCodeModal: boolean = false;
+  showLessonModal: boolean = false;
+  selectedLessonId: number | null = null;
   topic: string = '';
   message: string = '';
+  classIdForSelectedLesson: number | null = null;
+
 
   commentDrafts: { [postId: number]: string } = {};
 
@@ -227,6 +233,12 @@ export class TeacherClassComponent implements OnInit {
 
 
   navigateToLessonCreation() {
-    this.router.navigate([`/teacher/lessonCreator/${this.classId}`]);
+    this.router.navigate([`/teacher/lessonCreator/${this.classId}`], { queryParams: { editMode: false } });
+  }
+
+  toggleLessonWindow(lessonId: number | null, classId: number | null) {
+    this.selectedLessonId = lessonId;
+    this.classIdForSelectedLesson = classId;
+    this.showLessonModal = !this.showLessonModal;
   }
 }

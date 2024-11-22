@@ -6,6 +6,7 @@ import com.example.classlog.entities.Lesson;
 import com.example.classlog.mapper.LessonMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,6 +36,7 @@ public class LessonService {
         return lessonMapper.toLessonDto(lesson);
     }
 
+    @Transactional
     public void deleteLesson(Long id) {
         lessonRepository.deleteById(id);
     }
