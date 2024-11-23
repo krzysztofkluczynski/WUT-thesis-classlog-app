@@ -25,6 +25,7 @@ public class LessonService {
     }
 
     public LessonDto getLessonById(Long id) {
+        System.out.println(lessonRepository.findByLessonId(id));
         return lessonRepository.findById(id)
                 .map(lessonMapper::toLessonDto)
                 .orElse(null);
@@ -80,4 +81,10 @@ public class LessonService {
                 .collect(Collectors.toList());
     }
 
+    public LessonDto updateLesson(LessonDto lessonDto) {
+        Lesson lesson = lessonMapper.toEntity(lessonDto);
+        System.out.println(lesson);
+        lesson = lessonRepository.save(lesson);
+        return lessonMapper.toLessonDto(lesson);
+    }
 }

@@ -51,7 +51,7 @@ export class LessonInfoWindowComponent implements OnInit {
   }
 
   editClicked() {
-    this.router.navigate([`/teacher/lessonCreator/${this.classId}`], { queryParams: { editMode: true } });
+    this.router.navigate([`/teacher/lessonCreator/${this.classId}`], { queryParams: { editMode: true, lessonId: this.lessonID } });
   }
 
   deleteClicked() {

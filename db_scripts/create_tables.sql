@@ -89,12 +89,10 @@ CREATE TABLE lesson (
 );
 
 
--- Creating the TASK table
 CREATE TABLE task (
     task_id BIGSERIAL PRIMARY KEY,
     created_by INT REFERENCES classlog_user(user_id),
-    lesson_id INT REFERENCES lesson(lesson_id),
-    task_name VARCHAR(255),
+    task_name VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     due_date TIMESTAMP,
     description TEXT

@@ -2,6 +2,7 @@ package com.example.classlog.controller;
 
 import com.example.classlog.dto.LessonDto;
 import com.example.classlog.service.LessonService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,11 +11,11 @@ import java.util.Collections;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/lessons")
 public class LessonController {
 
-    @Autowired
-    private LessonService lessonService;
+    private final LessonService lessonService;
 
     @GetMapping
     public ResponseEntity<List<LessonDto>> getAllLessons() {
@@ -27,8 +28,16 @@ public class LessonController {
 
     @GetMapping("/{id}")
     public ResponseEntity<LessonDto> getLessonById(@PathVariable Long id) {
+        System.out.println("Received ID in Controller: " + id);
+
+        if (id == null) {
+            System.out.println("Received null ID");
+            return ResponseEntity.badRequest().build();
+        }
+
         LessonDto lesson = lessonService.getLessonById(id);
 
+        System.out.println("Lesson returned from service: " + lesson);
         return ResponseEntity.ok(lesson);
     }
 
@@ -102,5 +111,11 @@ public class LessonController {
             return ResponseEntity.ok(Collections.emptyList());
         }
         return ResponseEntity.ok(lessons);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<LessonDto> updateLesson(@RequestBody LessonDto lessonDto) {
+        LessonDto updatedLesson = lessonService.updateLesson(lessonDto);
+        return ResponseEntity.ok(updatedLesson);
     }
 }
