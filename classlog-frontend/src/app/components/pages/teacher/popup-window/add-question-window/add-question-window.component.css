@@ -1,0 +1,207 @@
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Dim background */
+  z-index: 999;
+}
+
+/* Modal Container */
+.modal-container {
+  position: fixed;
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%);
+  background-color: #fffde6;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  width: 90vh;
+  max-height: 80vh;
+  overflow-y: auto; /* Enable scrolling for content */
+  box-sizing: border-box;
+}
+
+/* Modal Header */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-header h2 {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.2s ease;
+}
+
+.close-button:hover {
+  color: #000;
+}
+
+/* Modal Footer */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 10px;
+}
+
+.confirm-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.confirm-button:hover {
+  background-color: #218838;
+}
+
+/* Tab Navigation */
+.tab-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #ddd;
+}
+
+.tab-button {
+  flex: 1;
+  text-align: center;
+  padding: 10px 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.tab-button.active {
+  background-color: #f5c000;
+  color: white;
+  border-radius: 10px 10px 0 0;
+}
+
+.tab-button:hover {
+  background-color: #ffd54f;
+}
+
+/* Tab Content */
+.tab-content {
+  padding: 20px;
+}
+
+/* Option Container */
+.option-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 10px; /* Add spacing between elements */
+}
+
+/* Correct Option Checkbox */
+.option-container input[type="radio"] {
+  margin-right: 10px;
+}
+
+/* Answer Input Field */
+.option-container input[type="text"] {
+  flex: 1; /* Input expands to fill available space */
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+/* Remove Button */
+.remove-button {
+  background-color: #ff6666;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.remove-button:hover {
+  background-color: #ff3333;
+}
+
+/* Add Option Button */
+.yellow-button {
+  background-color: #f5c000;
+  border: none;
+  color: black;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 20px;
+  transition: background-color 0.3s, transform 0.2s;
+  cursor: pointer;
+}
+
+.yellow-button:hover {
+  background-color: #ffd54f;
+  transform: scale(1.05);
+}
+
+.yellow-button:active {
+  background-color: #fbc02d;
+  transform: scale(0.95);
+}
+
+/* Form Fields */
+textarea,
+input[type="text"] {
+  width: 100%;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+textarea {
+  height: 60px;
+}
+
+input[type="file"] {
+  margin-top: 10px;
+}
+
+/* Utility Classes */
+.flex {
+  display: flex;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.space-between {
+  justify-content: space-between;
+}

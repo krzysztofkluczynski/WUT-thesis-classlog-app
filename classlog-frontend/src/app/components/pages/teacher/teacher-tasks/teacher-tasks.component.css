@@ -1,0 +1,65 @@
+.full-screen-container {
+  display: flex;
+  flex-direction: column;
+  height: 90vh; /* Fill the remaining 90% of the viewport below the header */
+  overflow: hidden;
+}
+
+.tiles-container {
+  display: flex;
+  gap: 20px;
+  flex: 1; /* Take the remaining space below the header */
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.big-tile, .small-tiles-container {
+  flex: 1; /* Each occupies 50% of the screen */
+  background-color: #FFFDE0;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto; /* Allow scrolling for overflow content */
+  position: relative;
+}
+
+.big-tile h1 {
+  margin-bottom: 40px;
+}
+
+.divider {
+  border: 0;
+  height: 2px;
+  background: black;
+  margin: 10px 0 20px;
+}
+
+/* Button at the top-right corner */
+.top-right-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #F5C000;
+  border: none;
+  color: black;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.top-right-button:hover {
+  background-color: #FFD54F;
+  transform: scale(1.05);
+}
+
+.top-right-button:active {
+  background-color: #FBC02D;
+  transform: scale(0.95);
+}

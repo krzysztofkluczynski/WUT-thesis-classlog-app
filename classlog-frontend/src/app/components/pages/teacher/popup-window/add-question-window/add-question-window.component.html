@@ -1,0 +1,112 @@
+<div class="modal-overlay" (click)="closeWindow()"></div>
+<div class="modal-container">
+  <div class="modal-header">
+    <h2>Create Question</h2>
+    <button class="close-button" (click)="closeWindow()">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+
+  <!-- Tab Navigation -->
+  <div class="tab-navigation">
+    <button
+      class="tab-button"
+      [class.active]="activeTab === 'close'"
+      (click)="setActiveTab('close')">
+      Close Question
+    </button>
+    <button
+      class="tab-button"
+      [class.active]="activeTab === 'open'"
+      (click)="setActiveTab('open')">
+      Open Question
+    </button>
+    <button
+      class="tab-button"
+      [class.active]="activeTab === 'ready'"
+      (click)="setActiveTab('ready')">
+      Ready Questions
+    </button>
+  </div>
+
+  <!-- Tab Content -->
+  <div class="tab-content">
+    <ng-container *ngIf="activeTab === 'close'">
+      <h3>Close Question</h3>
+      <label for="closeQuestionText">Question Text:</label>
+      <textarea
+        id="closeQuestionText"
+        [(ngModel)]="closeQuestionText"
+        placeholder="Enter your close question here"
+      ></textarea>
+      <label class="mb-3">Please add possible answers and select correct one:</label>
+      <!-- Options with Remove Button and Checkbox -->
+      <div *ngFor="let option of closeOptions; let i = index; trackBy: trackByIndex" class="option-container">
+        <input
+          type="radio"
+          name="correctOption"
+          [value]="i"
+          [(ngModel)]="correctOption"
+        />
+        <input
+          type="text"
+          id="closeOption{{ i }}"
+          [(ngModel)]="closeOptions[i]"
+          placeholder="Enter option {{ i + 1 }}"
+        />
+        <button class="remove-button" (click)="removeCloseOption(i)">Remove</button>
+      </div>
+
+      <!-- Add Option Button -->
+      <button (click)="addCloseOption()" [disabled]="closeOptions.length >= 4" class="yellow-button">Add Option</button>
+
+      <!-- File Attachment -->
+      <div class="modal-body">
+        <label for="fileInputClose">Attach a file:</label>
+        <input type="file" id="fileInputClose" (change)="onFileSelected($event, 'close')" />
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="activeTab === 'open'">
+      <h3>Open Question</h3>
+      <label for="openQuestionText">Question Text:</label>
+      <textarea
+        id="openQuestionText"
+        [(ngModel)]="openQuestionText"
+        placeholder="Enter your open question here"
+      ></textarea>
+
+      <!-- Input for Possible Answer -->
+      <label for="openAnswer">Answer :</label>
+      <input
+        type="text"
+        id="openAnswer"
+        [(ngModel)]="openAnswer"
+        placeholder="Enter the possible answer"
+      />
+
+      <!-- File Attachment -->
+      <div class="modal-body">
+        <label for="fileInputOpen"> </label>
+        <input type="file" id="fileInputOpen" (change)="onFileSelected($event, 'open')" />
+      </div>
+    </ng-container>
+
+
+
+
+    <ng-container *ngIf="activeTab === 'ready'">
+      <h3>Ready Questions</h3>
+      <p>Choose from pre-defined questions:</p>
+      <ul>
+        <li *ngFor="let question of readyQuestions">
+          {{ question }}
+        </li>
+      </ul>
+    </ng-container>
+  </div>
+
+  <div class="modal-footer">
+    <button class="confirm-button" (click)="confirmSelection()">Confirm</button>
+  </div>
+</div>

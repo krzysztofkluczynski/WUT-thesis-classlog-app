@@ -89,50 +89,58 @@ CREATE TABLE lesson (
 );
 
 
+-- Recreate the TASK table
 CREATE TABLE task (
     task_id BIGSERIAL PRIMARY KEY,
-    created_by INT REFERENCES classlog_user(user_id),
+    created_by BIGINT REFERENCES classlog_user(user_id) ON DELETE SET NULL, -- If the user is deleted, retain tasks with null creator
     task_name VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     due_date TIMESTAMP,
     description TEXT
 );
 
--- Creating the QUESTION table
 CREATE TABLE question (
     question_id BIGSERIAL PRIMARY KEY,
-    task_id INT REFERENCES task(task_id),
-    question_type_id INT REFERENCES question_type(question_type_id),
+    question_type_id BIGINT REFERENCES question_type(question_type_id) ON DELETE SET NULL, -- Retain questions with null type
     edited_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    filename VARCHAR(255),
     points INT,
-    content TEXT NOT NULL
+    content TEXT NOT NULL,
+    file_id BIGINT REFERENCES file(file_id) ON DELETE SET NULL -- If the file is deleted, retain the question but set file_id to NULL
 );
 
--- Creating the ANSWER table
+
+-- Recreate the TASK_QUESTION table
+CREATE TABLE task_question (
+    task_question_id BIGSERIAL PRIMARY KEY,
+    task_id BIGINT REFERENCES task(task_id) ON DELETE CASCADE, -- If the task is deleted, remove associated task-question links
+    question_id BIGINT REFERENCES question(question_id) ON DELETE CASCADE -- If the question is deleted, remove associated task-question links
+);
+
+-- Recreate the ANSWER table
 CREATE TABLE answer (
     answer_id BIGSERIAL PRIMARY KEY,
-    question_id INT REFERENCES question(question_id),
+    question_id BIGINT REFERENCES question(question_id) ON DELETE CASCADE, -- If the question is deleted, remove its answers
     is_correct BOOLEAN,
     content TEXT
 );
 
--- Creating the SUBMITTED_ANSWER table
+-- Recreate the SUBMITTED_ANSWER table
 CREATE TABLE submitted_answer (
     submitted_answer_id BIGSERIAL PRIMARY KEY,
-    answer_id INT REFERENCES answer(answer_id),
-    user_id INT REFERENCES classlog_user(user_id),
+    answer_id BIGINT REFERENCES answer(answer_id) ON DELETE CASCADE, -- If the answer is deleted, remove submitted answers
+    user_id BIGINT REFERENCES classlog_user(user_id) ON DELETE CASCADE, -- If the user is deleted, remove their submissions
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     content TEXT
 );
 
-
--- Creating the TASK_USER table
-CREATE TABLE task_user (
-    task_id INT REFERENCES task(task_id),
-    user_id INT REFERENCES classlog_user(user_id),
-    PRIMARY KEY (task_id, user_id)
+-- Recreate the TASK_USER table
+CREATE TABLE user_task (
+    user_task_id BIGSERIAL PRIMARY KEY, -- Surrogate primary key for unique identification
+    task_id BIGINT REFERENCES task(task_id) ON DELETE CASCADE, -- If the task is deleted, remove user-task assignments
+    user_id BIGINT REFERENCES classlog_user(user_id) ON DELETE CASCADE, -- If the user is deleted, remove task-user assignments
+    score INT DEFAULT NULL -- Allow NULL values for score
 );
+
 
 -- Creating the PRESENCE table
 CREATE TABLE presence (

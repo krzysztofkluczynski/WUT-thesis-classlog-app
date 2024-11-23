@@ -1,2 +1,21 @@
 <app-header [pageTitle]="'Classlog platform'" [ifShowMenu]="true"></app-header>
-<p>teacher-tasks works!</p>
+
+<div class="full-screen-container">
+  <div class="tiles-container">
+    <!-- Big tile on the left -->
+    <div class="big-tile">
+      <button class="yellow-button top-right-button" (click)="createTask()">Create</button>
+      <h1>Tasks</h1>
+      <h5>Created</h5>
+      <hr class="divider">
+      <div class="created-tasks"></div>
+    </div>
+
+    <!-- Small tiles container -->
+    <div class="small-tiles-container">
+      <h5>Submitted</h5>
+      <hr class="divider">
+      <div class="submitted-tasks"></div>
+    </div>
+  </div>
+</div>

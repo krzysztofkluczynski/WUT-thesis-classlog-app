@@ -11,5 +11,5 @@ public interface PostMapper {
     PostDto toPostDto(Post entity);
 
     Post toEntity(PostDto postDto);
-    
+
 }

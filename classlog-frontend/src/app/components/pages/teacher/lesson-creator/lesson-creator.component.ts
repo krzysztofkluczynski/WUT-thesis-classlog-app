@@ -225,8 +225,8 @@ export class LessonCreatorComponent implements OnInit {
         this.globalNotificationHandler.handleError(error);
       });
 
-
     }
+    this.router.navigate(['/teacher/class/' + this.classId]);
   }
 
   returnToDashboard() {

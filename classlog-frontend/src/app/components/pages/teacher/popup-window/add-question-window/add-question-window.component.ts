@@ -1,0 +1,114 @@
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {FormsModule} from "@angular/forms";
+import {NgForOf, NgIf} from "@angular/common";
+import {UserDto} from "../../../../../model/entities/user-dto";
+import {AxiosService} from "../../../../../service/axios/axios.service";
+import {GlobalNotificationHandler} from "../../../../../service/notification/global-notification-handler.service";
+import {ActivatedRoute} from "@angular/router";
+import {ClosedQuestion, OpenQuestion} from "../../task-creator/task-creator.component";
+
+@Component({
+  selector: 'app-add-question-window',
+  standalone: true,
+  imports: [
+    FormsModule,
+    NgForOf,
+    NgIf
+  ],
+  templateUrl: './add-question-window.component.html',
+  styleUrl: './add-question-window.component.css'
+})
+export class AddQuestionWindowComponent {
+  @Input() isOpen = false; // Modal visibility
+  @Output() close = new EventEmitter<void>();
+
+  activeTab: 'open' | 'close' | 'ready' = 'close'; // Current tab
+  openQuestionText = ''; // Open question text
+  closeQuestionText = ''; // Close question text
+  closeOptions: string[] = ['']; // Options for close-ended questions
+  correctOption: number | null = null; // Index of the correct option
+  readyQuestions: string[] = ['What is your name?', 'What is your favorite color?']; // Ready questions
+
+  selectedFile: File | null = null; // File attachment
+  openAnswer: string | null = null; // Open question answer
+
+  openQuestion: OpenQuestion | null = null;
+  closedQuestion: ClosedQuestion | null = null;
+  readyQuestionId: number | null = null;
+  @Output() questionSelected = new EventEmitter<OpenQuestion | ClosedQuestion | number>();
+
+
+  constructor(
+    private axiosService: AxiosService,
+    private globalNotificationHandler: GlobalNotificationHandler,
+    private route: ActivatedRoute
+  ) {}
+
+  setActiveTab(tab: 'open' | 'close' | 'ready'): void {
+    this.activeTab = tab;
+  }
+
+  onFileSelected(event: any, type: 'open' | 'close'): void {
+    this.selectedFile = event.target.files[0];
+    console.log(`${type} question file selected:`, this.selectedFile);
+  }
+
+  addCloseOption(): void {
+    if (this.closeOptions.length < 4) {
+      this.closeOptions.push('');
+    }
+  }
+
+  trackByIndex(index: number, item: any): number {
+    return index;
+  }
+
+  confirmSelection(): void {
+    let questionData: OpenQuestion | ClosedQuestion | number | undefined;
+
+    // Determine what data to send based on the active tab
+    if (this.activeTab === 'open') {
+      questionData = {
+        question: this.openQuestionText,
+        answer: this.openAnswer || '',
+        file: this.selectedFile || null,
+      } as OpenQuestion;
+    } else if (this.activeTab === 'close') {
+      const answerMap = new Map<string, boolean>();
+      this.closeOptions.forEach((option, index) => {
+        answerMap.set(option, index === this.correctOption);
+      });
+
+      questionData = {
+        question: this.closeQuestionText,
+        answer: answerMap,
+        file: this.selectedFile || null,
+      } as ClosedQuestion;
+    } else if (this.activeTab === 'ready') {
+      questionData = this.readyQuestionId ?? undefined; // Ensure undefined instead of null
+    }
+
+    // Emit the questionData if it is not null or undefined
+    if (questionData !== undefined) {
+      this.questionSelected.emit(questionData);
+    }
+
+    // Close the modal
+    this.close.emit();
+  }
+
+  removeCloseOption(index: number): void {
+    this.closeOptions.splice(index, 1);
+
+    // Adjust the correctOption if the removed option affects it
+    if (this.correctOption === index) {
+      this.correctOption = null;
+    } else if (this.correctOption !== null && this.correctOption > index) {
+      this.correctOption -= 1;
+    }
+  }
+
+  closeWindow(): void {
+    this.close.emit();
+  }
+}

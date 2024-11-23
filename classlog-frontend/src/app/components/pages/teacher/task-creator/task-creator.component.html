@@ -1,0 +1,107 @@
+<app-header [pageTitle]="'Classlog platform'" [ifShowMenu]="true"></app-header>
+
+<div class="full-screen-container">
+  <div class="tiles-container">
+
+    <!-- Big tile on the left -->
+    <div class="big-tile">
+      <h1>Tasks Creator</h1>
+      <hr class="divider">
+
+      <div class="form-container">
+        <form>
+          <!-- Task Name -->
+          <div class="form-group mb-3 custom-subject">
+            <label for="taskName" class="form-label">Task Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="taskName"
+              placeholder="Enter task name"
+              [(ngModel)]="taskName"
+              name="taskName"
+            >
+          </div>
+
+          <!-- Date and Time -->
+          <div class="row mb-3">
+            <div class="col-md-6 custom-date">
+              <label for="taskDate" class="form-label">Date</label>
+              <input
+                type="date"
+                class="form-control"
+                id="taskDate"
+                [(ngModel)]="taskDate"
+                name="taskDate"
+              >
+            </div>
+            <div class="col-md-6 custom-time">
+              <label for="taskTime" class="form-label">Time</label>
+              <input
+                type="time"
+                class="form-control"
+                id="taskTime"
+                [(ngModel)]="taskTime"
+                name="taskTime"
+              >
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="form-group mb-3 custom-notes">
+            <label for="description" class="form-label">Description</label>
+            <textarea
+              class="form-control"
+              id="description"
+              rows="3"
+              placeholder="Enter task description"
+              [(ngModel)]="taskDescription"
+              name="description"
+            ></textarea>
+          </div>
+        </form>
+      </div>
+
+      <!-- Class Assignment -->
+      <h5>Assign Task to Classes</h5>
+      <div class="class-list">
+        <ul>
+          <li *ngFor="let classItem of classList">
+            <input
+              type="checkbox"
+              id="{{ classItem.name }}"
+              [(ngModel)]="classItem.selected"
+            >
+            <label for="{{ classItem.id }}">{{ classItem.name }}</label>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Buttons -->
+      <div class="button-container">
+        <button class="yellow-button" (click)="returnToDashboard()">Return</button>
+        <button class="yellow-button" (click)="createTask()">Create</button>
+      </div>
+    </div>
+
+    <!-- Small tile on the right -->
+    <!-- Small tile on the right -->
+    <div class="small-tiles-container">
+      <div class="submitted-tasks">
+        <div class="tile-header">
+          <h3>Questions</h3>
+          <button class="yellow-button add-question-button" (click)="toggleAddQuestionModal()">Add Question</button>
+          <app-add-question-window
+            *ngIf="showAddQuestionModal"
+            [isOpen]="showAddQuestionModal"
+            (questionSelected)="handleQuestionSelected($event)"
+          (close)="toggleAddQuestionModal()">
+          </app-add-question-window>
+        </div>
+        <!-- Questions content here -->
+      </div>
+    </div>
+
+
+  </div>
+</div>
