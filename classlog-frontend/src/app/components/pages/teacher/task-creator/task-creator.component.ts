@@ -302,8 +302,12 @@ export class TaskCreatorComponent implements OnInit {
 
   handleQuestionSelected(question: OpenQuestion | ClosedQuestion | number): void {
     if (typeof question === 'number') {
-      this.questionIdsFromBase.push(question);
-      console.log('Ready Question ID:', question);
+      if (!this.questionIdsFromBase.includes(question)) {
+        this.questionIdsFromBase.push(question);
+        console.log('Ready Question ID:', question);
+      } else {
+        console.log('Duplicate Question ID skipped:', question);
+      }
     } else if ('answer' in question && question.answer instanceof Map) {
       this.closedQuestions.push(question as ClosedQuestion);
       console.log('Closed Question:', question);

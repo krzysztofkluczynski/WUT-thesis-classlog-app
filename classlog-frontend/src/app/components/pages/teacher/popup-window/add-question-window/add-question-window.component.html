@@ -95,15 +95,18 @@
 
 
 
-    <ng-container *ngIf="activeTab === 'ready'">
-      <h3>Ready Questions</h3>
-      <p>Choose from pre-defined questions:</p>
-      <ul>
-        <li *ngFor="let question of readyQuestions">
-          {{ question }}
+    <div class="ready-questions-container">
+      <ul class="ready-questions-list">
+        <li
+          *ngFor="let question of readyQuestions"
+          (click)="selectReadyQuestion(question)"
+          [class.selected]="readyQuestionId === question.questionId"
+          class="ready-question-item">
+          {{ question.content }}
         </li>
       </ul>
-    </ng-container>
+    </div>
+
   </div>
 
   <div class="modal-footer">

@@ -128,4 +128,11 @@ export class AddQuestionWindowComponent {
       console.error('Failed to fetch ready questions:', error);
   });
 }
+
+  selectReadyQuestion(question: QuestionDto): void {
+    this.readyQuestionId = question.questionId; // Set the selected question ID
+    console.log('Selected Ready Question:', question);
+    // this.questionSelected.emit(question.questionId); // Emit the selected question ID
+  }
+
 }

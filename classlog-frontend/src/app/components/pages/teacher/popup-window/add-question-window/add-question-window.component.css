@@ -205,3 +205,50 @@ input[type="file"] {
 .space-between {
   justify-content: space-between;
 }
+
+/* Ready Questions Container */
+.ready-questions-container {
+  max-height: 200px; /* Limit height for scrolling */
+  overflow-y: auto; /* Enable vertical scrolling */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: #f9f9f9;
+}
+
+/* Ready Questions List */
+.ready-questions-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Ready Question Item */
+.ready-question-item {
+  padding: 10px;
+  margin-bottom: 5px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.ready-question-item:hover {
+  background-color: #f5f5f5;
+  transform: translateY(-2px);
+}
+
+.ready-question-item:active {
+  background-color: #eaeaea;
+}
+
+
+/* Highlight selected question */
+.ready-question-item.selected {
+  background-color: #f5c000; /* Highlight color */
+  color: white; /* Text color for the highlight */
+  font-weight: bold;
+  border-color: #ffa500; /* Border color for highlight */
+}
