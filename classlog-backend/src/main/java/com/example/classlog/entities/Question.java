@@ -36,4 +36,9 @@ public class Question {
     @JoinColumn(name = "file_id", nullable = true)
     private File file;
 
+    @PrePersist
+    protected void onCreate() {
+        this.editedAt = LocalDateTime.now();
+    }
+
 }

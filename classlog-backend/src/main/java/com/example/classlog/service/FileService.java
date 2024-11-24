@@ -44,10 +44,17 @@ public class FileService {
         return fileMapper.toFileDto(savedFile);
     }
 
+
     public FileDto saveFile(FileDto fileDto, MultipartFile file) throws IOException {
-        // Construct the directory path as "class/id"
-        String classDir = uploadDir + "/class/" + fileDto.getAssignedClass().getId() + "/";
-        Path directoryPath = Paths.get(classDir);
+        // Determine the directory path
+        String baseDir;
+        if (fileDto.getAssignedClass() != null) {
+            baseDir = uploadDir + "/class/" + fileDto.getAssignedClass().getId();
+        } else {
+            baseDir = uploadDir + "/tasks"; // Default directory for tasks
+        }
+
+        Path directoryPath = Paths.get(baseDir);
         Files.createDirectories(directoryPath); // Ensure the directory exists
 
         // Construct the file path
@@ -55,7 +62,10 @@ public class FileService {
 
         // Check if the file already exists
         if (Files.exists(filePath)) {
-            throw new AppException("File with name " + file.getOriginalFilename() + " already exists in directory " + classDir, HttpStatus.CONFLICT);
+            throw new AppException(
+                    "File with name " + file.getOriginalFilename() + " already exists in directory " + baseDir,
+                    HttpStatus.CONFLICT
+            );
         }
 
         // Save the file to the filesystem

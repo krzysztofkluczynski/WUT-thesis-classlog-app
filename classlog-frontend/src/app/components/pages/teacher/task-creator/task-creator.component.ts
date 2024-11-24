@@ -12,6 +12,7 @@ import {UserDto} from "../../../../model/entities/user-dto";
 import {NewGradeWindowComponent} from "../popup-window/new-grade-window/new-grade-window.component";
 import {AddQuestionWindowComponent} from "../popup-window/add-question-window/add-question-window.component";
 import {TaskDto} from "../../../../model/entities/task-dto";
+import {FileDto} from "../../../../model/entities/file-dto";
 
 export interface ClassDtoWithSelect extends ClassDto {
   selected: boolean; // Field to track attendance
@@ -55,6 +56,10 @@ export class TaskCreatorComponent implements OnInit {
   openQuestions: OpenQuestion[] = [];
   questionIdsFromBase: number[] = [];
 
+  createdTask: TaskDto | null = null;
+
+  tempFileDto: FileDto | null = null;
+
   constructor(
     private axiosService: AxiosService,
     private authService: AuthService,
@@ -83,7 +88,7 @@ export class TaskCreatorComponent implements OnInit {
   }
 
   createTask() {
-    console.log(`${this.taskDate}T${this.taskTime}`)
+    console.log(`${this.taskDate}T${this.taskTime}`);
 
     const taskData = {
       taskName: this.taskName,
@@ -95,14 +100,125 @@ export class TaskCreatorComponent implements OnInit {
     // Send task creation request to the backend
     this.axiosService.request('POST', '/tasks', taskData).then(
       (response: { data: TaskDto }) => {
-        const taskId = response.data.id;
-        this.globalNotificationHandler.handleMessage('Task created successfully' + response.data.taskName);
+        this.createdTask = response.data;
+        this.globalNotificationHandler.handleMessage(
+          'Task created successfully: ' + response.data.taskName
+        );
 
+        // Assign users to the task
         this.axiosService
-          .request('POST', `/tasks/${taskId}/assign-users`, this.classList.filter(classItem => classItem.selected))
+          .request(
+            'POST',
+            `/tasks/${this.createdTask.id}/assign-users`,
+            this.classList.filter((classItem) => classItem.selected)
+          )
           .then(() => {
             console.log('Task created and users assigned successfully');
-            this.returnToDashboard();
+
+            // Handle Closed Questions
+            this.closedQuestions.forEach((closedQuestion) => {
+              if (closedQuestion.file) {
+                const fileDto = {
+                  uploadedBy: this.authService.getUserWithoutToken(),
+                  assignedClass: null,
+                };
+
+                // Create FormData for file upload
+                const formData = new FormData();
+                formData.append('file', closedQuestion.file);
+                formData.append(
+                  'fileDto',
+                  new Blob([JSON.stringify(fileDto)], { type: 'application/json' })
+                );
+
+                // Upload the file
+                this.axiosService
+                  .uploadFileRequest('/files/upload', formData)
+                  .then((response: { data: FileDto }) => {
+                    const fileDtoResponse = {
+                      ...response.data,
+                      createdAt: parseDate(response.data.createdAt),
+                    };
+
+                    console.log('File uploaded successfully:', fileDtoResponse);
+
+                    this.globalNotificationHandler.handleMessage(
+                      'File uploaded successfully'
+                    );
+
+                    // Send the question payload with the uploaded file
+                    this.sendClosedQuestion(closedQuestion, fileDtoResponse);
+                  })
+                  .catch((error) => {
+                    console.error('Failed to upload file:', error);
+                    this.globalNotificationHandler.handleError(error);
+                  });
+              } else {
+                // Send the question payload without a file
+                this.sendClosedQuestion(closedQuestion, null);
+              }
+            });
+
+            // Handle Open Questions
+            this.openQuestions.forEach((openQuestion) => {
+              if (openQuestion.file) {
+                const fileDto = {
+                  uploadedBy: this.authService.getUserWithoutToken(),
+                  assignedClass: null,
+                };
+
+                // Create FormData for file upload
+                const formData = new FormData();
+                formData.append('file', openQuestion.file);
+                formData.append(
+                  'fileDto',
+                  new Blob([JSON.stringify(fileDto)], { type: 'application/json' })
+                );
+
+                // Upload the file
+                this.axiosService
+                  .uploadFileRequest('/files/upload', formData)
+                  .then((response: { data: FileDto }) => {
+                    const fileDtoResponse = {
+                      ...response.data,
+                      createdAt: parseDate(response.data.createdAt),
+                    };
+
+                    console.log('File uploaded successfully:', fileDtoResponse);
+
+                    this.globalNotificationHandler.handleMessage(
+                      'File uploaded successfully'
+                    );
+
+                    // Send the question payload with the uploaded file
+                    this.sendOpenQuestion(openQuestion, fileDtoResponse);
+                  })
+                  .catch((error) => {
+                    console.error('Failed to upload file:', error);
+                    this.globalNotificationHandler.handleError(error);
+                  });
+              } else {
+                // Send the question payload without a file
+                this.sendOpenQuestion(openQuestion, null);
+              }
+            });
+
+            // Handle Question IDs
+            if (this.questionIdsFromBase.length > 0) {
+              this.axiosService
+                .request(
+                  'POST',
+                  `/assignQuestionsToTask/${this.createdTask?.id}`,
+                  this.questionIdsFromBase.map((id) => ({ questionId: id }))
+                )
+                .then(() =>
+                  console.log('Questions assigned to the task successfully')
+                )
+                .catch((error: any) => {
+                  this.globalNotificationHandler.handleError(error);
+                  console.error('Failed to assign questions to the task:', error);
+                });
+            }
           })
           .catch((error: any) => {
             this.globalNotificationHandler.handleError(error);
@@ -114,6 +230,66 @@ export class TaskCreatorComponent implements OnInit {
       console.error('Failed to create task:', error);
     });
   }
+
+
+// Helper function for sending closed question
+  private sendClosedQuestion(closedQuestion: ClosedQuestion, fileDto: FileDto | null): void {
+    const payload = [
+      {
+        question: {
+          questionId: null,
+          questionType: { questionTypeId: 1, typeName: 'Closed Question' },
+          points: 5, // Adjust points as needed
+          content: closedQuestion.question,
+          fileId: fileDto, // Attach the uploaded file if present
+        },
+        answers: Array.from(closedQuestion.answer).map(([content, isCorrect]) => ({
+          content,
+          isCorrect,
+        })),
+      },
+    ];
+
+    this.axiosService
+      .request('POST', `/questions/withAnswers/${this.createdTask?.id}`, payload)
+      .then(() =>
+        console.log('Closed question with answers added successfully')
+      )
+      .catch((error: any) => {
+        this.globalNotificationHandler.handleError(error);
+        console.error('Failed to add closed question:', error);
+      });
+  }
+
+// Helper function for sending open question
+  private sendOpenQuestion(openQuestion: OpenQuestion, fileDto: FileDto | null): void {
+    const payload = [{
+      question: {
+        questionId: null,
+        questionType: { questionTypeId: 2, typeName: 'Open Question' },
+        points: 5, // Adjust points as needed
+        content: openQuestion.question,
+        fileId: fileDto, // Attach the uploaded file if present
+      },
+      answers: [
+        {
+          content: openQuestion.answer,
+          isCorrect: true, // Open question has a single correct answer
+        },
+      ],
+    }];
+
+    this.axiosService
+      .request('POST', `/questions/withAnswers/${this.createdTask?.id}`, payload)
+      .then(() =>
+        console.log('Open question with answers added successfully')
+      )
+      .catch((error: any) => {
+        this.globalNotificationHandler.handleError(error);
+        console.error('Failed to add open question:', error);
+      });
+  }
+
 
 
   onClassSelected(classItem: ClassDto) {

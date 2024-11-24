@@ -20,6 +20,5 @@ public class QuestionDto {
     private Integer points;
     private String content;
     private FileDto fileId;
-
 }
 

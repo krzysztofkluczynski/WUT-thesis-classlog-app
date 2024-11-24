@@ -6,6 +6,7 @@ import {AxiosService} from "../../../../../service/axios/axios.service";
 import {GlobalNotificationHandler} from "../../../../../service/notification/global-notification-handler.service";
 import {ActivatedRoute} from "@angular/router";
 import {ClosedQuestion, OpenQuestion} from "../../task-creator/task-creator.component";
+import {QuestionDto} from "../../../../../model/entities/question-dto";
 
 @Component({
   selector: 'app-add-question-window',
@@ -27,7 +28,7 @@ export class AddQuestionWindowComponent {
   closeQuestionText = ''; // Close question text
   closeOptions: string[] = ['']; // Options for close-ended questions
   correctOption: number | null = null; // Index of the correct option
-  readyQuestions: string[] = ['What is your name?', 'What is your favorite color?']; // Ready questions
+  readyQuestions: QuestionDto[] = []; // Ready questions
 
   selectedFile: File | null = null; // File attachment
   openAnswer: string | null = null; // Open question answer
@@ -46,6 +47,9 @@ export class AddQuestionWindowComponent {
 
   setActiveTab(tab: 'open' | 'close' | 'ready'): void {
     this.activeTab = tab;
+    if (this.readyQuestions.length === 0) {
+      this.fetchReadyQuestions();
+    }
   }
 
   onFileSelected(event: any, type: 'open' | 'close'): void {
@@ -85,7 +89,7 @@ export class AddQuestionWindowComponent {
         file: this.selectedFile || null,
       } as ClosedQuestion;
     } else if (this.activeTab === 'ready') {
-      questionData = this.readyQuestionId ?? undefined; // Ensure undefined instead of null
+      questionData = this.readyQuestionId ?? undefined;
     }
 
     // Emit the questionData if it is not null or undefined
@@ -111,4 +115,17 @@ export class AddQuestionWindowComponent {
   closeWindow(): void {
     this.close.emit();
   }
+
+  private fetchReadyQuestions() {
+    this.axiosService.request('GET', '/questions', {}).then(
+      (response: { data: QuestionDto[] }) => {
+        this.readyQuestions = response.data;
+        console.log('Fetched ready questions:', this.readyQuestions);
+        this.globalNotificationHandler.handleMessage('Fetched ready questions');
+      }
+    ).catch((error: any) => {
+      this.globalNotificationHandler.handleError(error);
+      console.error('Failed to fetch ready questions:', error);
+  });
+}
 }

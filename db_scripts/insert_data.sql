@@ -28,6 +28,7 @@ INSERT INTO user_class (class_id, user_id) VALUES
     (3, 4),
     (3, 2);
 
+
 -- Inserting data into the QUESTION_TYPE table
 INSERT INTO question_type (type_name) VALUES
     ('Multiple Choice'),
