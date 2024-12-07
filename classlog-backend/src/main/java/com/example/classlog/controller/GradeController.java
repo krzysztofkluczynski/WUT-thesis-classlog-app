@@ -21,6 +21,12 @@ public class GradeController {
         return ResponseEntity.ok(grades);
     }
 
+    @GetMapping("/class/{classId}")
+    public ResponseEntity<List<GradeDto>> getGradesByClassId(@PathVariable Long classId) {
+        List<GradeDto> grades = gradeService.findGradesByClassId(classId);
+        return ResponseEntity.ok(grades);
+    }
+
     @PostMapping
     public ResponseEntity<GradeDto> createGrade(@RequestBody GradeDto gradeDto) {
         GradeDto createdGrade = gradeService.saveGrade(gradeDto);

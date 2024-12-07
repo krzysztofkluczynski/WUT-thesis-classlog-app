@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.nio.CharBuffer;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -48,6 +49,15 @@ public class UserService {
         if (optionalUser.isPresent()) {
             throw new AppException("Email already exists", HttpStatus.BAD_REQUEST);
         }
+
+        String emailRegex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
+        Pattern pattern = Pattern.compile(emailRegex);
+
+        // Check if the email matches the pattern
+        if (!pattern.matcher(userDto.email()).matches()) {
+            throw new AppException("Invalid email format", HttpStatus.BAD_REQUEST);
+        }
+
 
         User user = userMapper.signUpToUser(userDto);
         user.setPassword(passwordEncoder.encode(CharBuffer.wrap(userDto.password())));

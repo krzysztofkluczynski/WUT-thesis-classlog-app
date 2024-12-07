@@ -14,6 +14,8 @@ import {
     DeleteUserFromClassWindowComponent
 } from "../popup-window/delete-user-from-class-window/delete-user-from-class-window.component";
 import {NewGradeWindowComponent} from "../popup-window/new-grade-window/new-grade-window.component";
+import {getFullName} from "../../../../utils/user-utils";
+import {GradeDto} from "../../../../model/entities/grade-dto";
 
 @Component({
   selector: 'app-teacher-grades',
@@ -38,6 +40,8 @@ export class TeacherGradesComponent implements OnInit {
   allStudents: UserDto[] = [];
   filteredStudentList: UserDto[] = [];
   searchQuery: string = '';
+
+  gradesFromOneClass: GradeDto[] = [];
 
   showNewGradeModal: boolean = false;
 
@@ -100,6 +104,18 @@ export class TeacherGradesComponent implements OnInit {
       console.error('Failed to fetch students:', error);
     });
 
+    this.axiosService.request('GET', `/grades/class/${this.selectedClassId}`, {}).then(
+      (response: { data: GradeDto[] }) => {
+        this.gradesFromOneClass = response.data.map(grade => ({
+          ...grade,
+          createdAt: parseDate(grade.createdAt)
+        }));
+      }
+    ).catch((error: any) => {
+      this.globalNotificationHandler.handleError(error);
+      console.error('Failed to fetch grades:', error);
+    });
+
   }
 
   // Filter students based on search query
@@ -118,4 +134,6 @@ export class TeacherGradesComponent implements OnInit {
   toggleShowNewGradeModal() {
     this.showNewGradeModal = !this.showNewGradeModal;
   }
+
+  protected readonly getFullName = getFullName;
 }

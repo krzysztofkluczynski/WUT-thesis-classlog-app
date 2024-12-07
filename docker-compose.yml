@@ -25,6 +25,8 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
     ports:
       - "${BACKEND_PORT}:8080"
+    # volumes:
+    #   - ./uploads:/uploads # Mount the 'uploads' folder
     depends_on:
       classlog-db:
         condition: service_healthy

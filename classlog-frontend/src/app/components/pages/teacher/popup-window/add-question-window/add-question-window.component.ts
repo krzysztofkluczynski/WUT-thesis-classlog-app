@@ -33,8 +33,6 @@ export class AddQuestionWindowComponent {
   selectedFile: File | null = null; // File attachment
   openAnswer: string | null = null; // Open question answer
 
-  openQuestion: OpenQuestion | null = null;
-  closedQuestion: ClosedQuestion | null = null;
   readyQuestionId: number | null = null;
   @Output() questionSelected = new EventEmitter<OpenQuestion | ClosedQuestion | number>();
 
@@ -92,7 +90,6 @@ export class AddQuestionWindowComponent {
       questionData = this.readyQuestionId ?? undefined;
     }
 
-    // Emit the questionData if it is not null or undefined
     if (questionData !== undefined) {
       this.questionSelected.emit(questionData);
     }
@@ -121,7 +118,6 @@ export class AddQuestionWindowComponent {
       (response: { data: QuestionDto[] }) => {
         this.readyQuestions = response.data;
         console.log('Fetched ready questions:', this.readyQuestions);
-        this.globalNotificationHandler.handleMessage('Fetched ready questions');
       }
     ).catch((error: any) => {
       this.globalNotificationHandler.handleError(error);
@@ -132,7 +128,6 @@ export class AddQuestionWindowComponent {
   selectReadyQuestion(question: QuestionDto): void {
     this.readyQuestionId = question.questionId; // Set the selected question ID
     console.log('Selected Ready Question:', question);
-    // this.questionSelected.emit(question.questionId); // Emit the selected question ID
   }
 
 }

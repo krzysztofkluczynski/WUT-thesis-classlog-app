@@ -62,4 +62,10 @@ public class GradeService {
 
         return gradeMapper.toGradeDto(gradeRepository.save(grade));
     }
+
+    public List<GradeDto> findGradesByClassId(Long classId) {
+        return gradeRepository.findByAssignedClass_IdOrderByCreatedAtDesc(classId).stream()
+                .map(gradeMapper::toGradeDto)
+                .collect(Collectors.toList());
+    }
 }

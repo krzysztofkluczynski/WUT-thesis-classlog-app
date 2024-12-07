@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface GradeRepository extends JpaRepository<Grade, Long> {
     List<Grade> findByStudent_Id(Long studentId);
+    List<Grade> findByAssignedClass_IdOrderByCreatedAtDesc(Long classId);
 }
