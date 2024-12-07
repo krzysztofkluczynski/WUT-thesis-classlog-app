@@ -6,38 +6,48 @@ services:
       context: ./classlog-frontend
       dockerfile: Dockerfile
     ports:
-      - "4200:4200"
+      - "${FRONTEND_PORT}:4200" # Use variable for the frontend port
     depends_on:
       - classlog-backend
       - classlog-db
+    env_file:
+      - .env
 
   classlog-backend:
     build:
       context: ./classlog-backend
       dockerfile: Dockerfile
+    environment:
+      - SPRING_PROFILES_ACTIVE=custom
+      - SPRING_ALLOWED_ORIGIN=${SPRING_ALLOWED_ORIGIN}
+      - DB_URL=${DB_URL}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
     ports:
-      - "8080:8080"
+      - "${BACKEND_PORT}:8080"
     depends_on:
-      - classlog-db
+      classlog-db:
+        condition: service_healthy
+    env_file:
+      - .env
 
   classlog-db:
     image: postgres:latest
     environment:
-      POSTGRES_USER: classlog
-      POSTGRES_PASSWORD: classlog
-      POSTGRES_DB: classlog
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     ports:
       - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
-
-  flyway:
-    image: flyway/flyway
-    depends_on:
-      - classlog-db
-    command: -url=jdbc:postgresql://classlog-db:5432/classlog -user=classlog -password=classlog migrate
-    volumes:
-      - ./db_scripts:/flyway/sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    env_file:
+      - .env
 
 volumes:
   postgres-data:

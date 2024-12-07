@@ -1,12 +1,11 @@
 spring:
+  profiles:
+    active: local
   jackson:
     serialization:
       write-dates-as-timestamps: false # Serialize dates in ISO 8601 format
     date-format: yyyy-MM-dd'T'HH:mm:ss.SSS # Date format with milliseconds precision
   datasource:
-    url: jdbc:postgresql://localhost:5432/classlog
-    username: classlog
-    password: classlog
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -16,5 +15,31 @@ spring:
   servlet:
     multipart:
       max-file-size: 10MB       # Maximum size of a single file
-      max-request-size: 50MB    # Maximum size of a request (including all files and data)
+      max-request-size: 30MB    # Maximum size of a request (including all files and data)
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:postgresql://localhost:5432/classlog
+    username: classlog
+    password: classlog
+custom:
+  cors:
+    allowed-origin: http://localhost:4200
+
+---
+spring:
+  config:
+    activate:
+      on-profile: custom
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+custom:
+  cors:
+    allowed-origin: ${SPRING_ALLOWED_ORIGIN:*}
 
