@@ -103,5 +103,9 @@ public class TaskService {
     }
 
 
-
+    public List<TaskDto> getTasksByCreatedBy(Long id) {
+        return taskRepository.findByCreatedBy_IdOrderByCreatedAtDesc(id).stream()
+                .map(taskMapper::toTaskDto)
+                .collect(Collectors.toList());
+    }
 }

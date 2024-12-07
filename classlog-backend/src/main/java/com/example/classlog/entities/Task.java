@@ -37,6 +37,9 @@ public class Task {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    @Column(name = "score")
+    private Integer score;
+
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();

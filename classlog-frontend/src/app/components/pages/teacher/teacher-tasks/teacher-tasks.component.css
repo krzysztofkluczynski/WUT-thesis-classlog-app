@@ -1,7 +1,16 @@
+/* General styles */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden; /* Prevent page scrolling */
+}
+
 .full-screen-container {
   display: flex;
   flex-direction: column;
-  height: 90vh; /* Fill the remaining 90% of the viewport below the header */
+  height: 90vh; /* Fill 90% of the viewport */
   overflow: hidden;
 }
 
@@ -14,35 +23,105 @@
   overflow: hidden;
 }
 
-.big-tile, .small-tiles-container {
-  flex: 1; /* Each occupies 50% of the screen */
+/* Big tile (left content) */
+.big-tile {
   background-color: #FFFDE0;
+  flex: 1.5; /* Slightly larger than the right tile */
   border-radius: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  overflow-y: auto; /* Allow scrolling for overflow content */
+  gap: 10px; /* Reduced gap for tighter layout */
+  overflow: hidden;
   position: relative;
 }
 
 .big-tile h1 {
-  margin-bottom: 40px;
+  margin-bottom: 10px; /* Reduced margin to bring header closer to other elements */
+  font-size: 28px;
+  color: #333;
+}
+
+.big-tile h5 {
+  margin-top: 0; /* Remove extra space above */
+  margin-bottom: 5px; /* Bring "Created" closer to the divider */
+  font-size: 18px;
 }
 
 .divider {
   border: 0;
   height: 2px;
-  background: black;
-  margin: 10px 0 20px;
+  background-color: #333;
+  margin: 5px 0 10px; /* Adjust spacing around the divider */
 }
 
-/* Button at the top-right corner */
-.top-right-button {
-  position: absolute;
-  top: 20px;
-  right: 20px;
+/* Table container for Created Tasks */
+.created-tasks {
+  flex: 1;
+  overflow-y: auto;
+  border-radius: 10px;
+  background-color: #fff;
+  padding: 15px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive table */
+.table-responsive {
+  max-height: 80%; /* Limit table height */
+  overflow-y: auto; /* Scroll when overflowing */
+  border-radius: 10px;
+}
+
+.table {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+}
+
+.table thead {
+  position: sticky; /* Sticky header for scrolling */
+  top: 0;
+  z-index: 2;
+  background-color: #333; /* Dark background for the header */
+  color: white;
+}
+
+.table th,
+.table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f5f5f5; /* Light gray on hover */
+}
+
+/* Clickable rows */
+.clickable-row {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.clickable-row:hover {
+  background-color: #f9f9f9; /* Subtle highlight on hover */
+}
+
+/* Small tiles container (right content) */
+.small-tiles-container {
+  flex: 1;
+  background-color: #FFFDE0;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+/* Yellow button */
+.yellow-button {
   background-color: #F5C000;
   border: none;
   color: black;
@@ -51,15 +130,18 @@
   font-weight: bold;
   border-radius: 20px;
   cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 20px;
   transition: background-color 0.3s, transform 0.2s;
 }
 
-.top-right-button:hover {
+.yellow-button:hover {
   background-color: #FFD54F;
   transform: scale(1.05);
 }
 
-.top-right-button:active {
+.yellow-button:active {
   background-color: #FBC02D;
   transform: scale(0.95);
 }

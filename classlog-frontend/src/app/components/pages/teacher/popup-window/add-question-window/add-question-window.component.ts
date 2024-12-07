@@ -74,6 +74,7 @@ export class AddQuestionWindowComponent {
         question: this.openQuestionText,
         answer: this.openAnswer || '',
         file: this.selectedFile || null,
+        points: 1
       } as OpenQuestion;
     } else if (this.activeTab === 'close') {
       const answerMap = new Map<string, boolean>();
@@ -85,6 +86,7 @@ export class AddQuestionWindowComponent {
         question: this.closeQuestionText,
         answer: answerMap,
         file: this.selectedFile || null,
+        points: 1
       } as ClosedQuestion;
     } else if (this.activeTab === 'ready') {
       questionData = this.readyQuestionId ?? undefined;

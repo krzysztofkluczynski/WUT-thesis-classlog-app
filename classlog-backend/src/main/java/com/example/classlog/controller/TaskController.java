@@ -39,6 +39,13 @@ public class TaskController {
         return task.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/createdBy/{id}")
+    public ResponseEntity<List<TaskDto>> getTasksByCreatedBy(@PathVariable Long id) {
+        List<TaskDto> tasks = taskService.getTasksByCreatedBy(id);
+        return ResponseEntity.ok(tasks);
+    }
+
+
     // Standard POST to create a new task
     @PostMapping
     public ResponseEntity<TaskDto> createTask(@RequestBody TaskDto task) {

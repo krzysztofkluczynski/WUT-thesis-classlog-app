@@ -8,6 +8,7 @@ import {Router} from "@angular/router";
 import {GlobalNotificationHandler} from "../../../service/notification/global-notification-handler.service";
 import {LessonDto} from "../../../model/entities/lesson.dto";
 import {parseDate} from "../../../utils/date-utils";
+import {getFullName} from "../../../utils/user-utils";
 
 @Component({
   selector: 'app-lesson-info-window',
@@ -68,4 +69,6 @@ export class LessonInfoWindowComponent implements OnInit {
   closeWindow() {
     this.close.emit();
   }
+
+    protected readonly getFullName = getFullName;
 }

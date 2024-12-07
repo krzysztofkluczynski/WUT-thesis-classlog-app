@@ -10,10 +10,6 @@
   <div class="modal-body">
     <div *ngIf="lessonDto">
       <div class="field">
-        <label>Lesson ID:</label>
-        <span>{{ lessonDto.lessonId }}</span>
-      </div>
-      <div class="field">
         <label>Lesson Name:</label>
         <span>{{ lessonDto.subject }}</span>
       </div>
@@ -24,7 +20,7 @@
       </div>
       <div class="field">
         <label>Teacher:</label>
-        <span>{{ lessonDto.createdByUser }}</span>
+        <span>{{ getFullName(lessonDto.createdByUser) }}</span>
       </div>
       <div class="field">
         <label>Description:</label>

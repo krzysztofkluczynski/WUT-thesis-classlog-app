@@ -8,14 +8,37 @@
       <h1>Tasks</h1>
       <h5>Created</h5>
       <hr class="divider">
-      <div class="created-tasks"></div>
+
+      <!-- Tasks Table -->
+      <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+          <thead class="table-dark">
+          <tr>
+            <th>Task Name</th>
+            <th>Description</th>
+            <th>Due Date</th>
+            <th>Created At</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let task of createdTasks" (click)="onTaskClick(task)" class="clickable-row">
+            <td>{{ task.taskName }}</td>
+            <td>{{ task.description }}</td>
+            <td>{{ task.dueDate | date: 'dd.MM.yyyy HH:mm' }}</td>
+            <td>{{ task.createdAt | date: 'dd.MM.yyyy HH:mm' }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <!-- Small tiles container -->
     <div class="small-tiles-container">
       <h5>Submitted</h5>
       <hr class="divider">
-      <div class="submitted-tasks"></div>
+      <div class="submitted-tasks">
+        <p>No submitted tasks available.</p>
+      </div>
     </div>
   </div>
 </div>

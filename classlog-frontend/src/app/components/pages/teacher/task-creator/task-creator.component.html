@@ -66,16 +66,18 @@
       <h5>Assign Task to Classes</h5>
       <div class="class-list">
         <ul>
-          <li *ngFor="let classItem of classList">
-            <input
-              type="checkbox"
-              id="{{ classItem.name }}"
-              [(ngModel)]="classItem.selected"
-            >
-            <label for="{{ classItem.id }}">{{ classItem.name }}</label>
+          <li *ngFor="let classItem of classList" class="class-item">
+            <label>
+              <input
+                type="checkbox"
+                [(ngModel)]="classItem.selected"
+              >
+              {{ classItem.name }}
+            </label>
           </li>
         </ul>
       </div>
+
 
       <!-- Buttons -->
       <div class="button-container">
@@ -94,13 +96,68 @@
             *ngIf="showAddQuestionModal"
             [isOpen]="showAddQuestionModal"
             (questionSelected)="handleQuestionSelected($event)"
-          (close)="toggleAddQuestionModal()">
+            (close)="toggleAddQuestionModal()">
           </app-add-question-window>
         </div>
-        <!-- Questions content here -->
+
+        <!-- Closed Questions -->
+        <div class="questions-category">
+          <hr class="section-divider">
+          <h4>Closed Questions</h4>
+          <div class="questions-grid">
+            <!-- Closed Questions (newly created) -->
+            <div *ngFor="let question of closedQuestions; let i = index" class="question-box">
+              <div class="question-content">
+                <p><strong>Q:</strong> {{ question.question }}</p>
+              </div>
+              <div class="action-icons">
+                <i class="bi bi-trash" (click)="removeClosedQuestion(i)"></i>
+              </div>
+            </div>
+
+            <!-- Ready Closed Questions (from the base) -->
+            <div *ngFor="let question of ReadyClosedQuestionsFromTheBase; let i = index" class="question-box">
+              <div class="question-content">
+                <p><strong>Q:</strong> {{ question.content }}</p>
+              </div>
+              <div class="action-icons">
+                <i class="bi bi-trash" (click)="removeReadyClosedQuestion(i)"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Open Questions -->
+        <div class="questions-category">
+          <hr class="section-divider">
+          <h4>Open Questions</h4>
+          <div class="questions-grid">
+            <!-- Open Questions (newly created) -->
+            <div *ngFor="let question of openQuestions; let i = index" class="question-box">
+              <div class="question-content">
+                <p><strong>Q:</strong> {{ question.question }}</p>
+              </div>
+              <div class="action-icons">
+                <i class="bi bi-trash" (click)="removeOpenQuestion(i)"></i>
+              </div>
+            </div>
+
+            <!-- Ready Open Questions (from the base) -->
+            <div *ngFor="let question of ReadyOpenQuestionsFromTheBase; let i = index" class="question-box">
+              <div class="question-content">
+                <p><strong>Q:</strong> {{ question.content }}</p>
+              </div>
+              <div class="action-icons">
+                <i class="bi bi-trash" (click)="removeReadyOpenQuestion(i)"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
       </div>
     </div>
-
-
   </div>
 </div>

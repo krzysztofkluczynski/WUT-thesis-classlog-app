@@ -1,7 +1,7 @@
 .full-screen-container {
   display: flex;
   flex-direction: column;
-  height: 90vh; /* Fill 90% of viewport below header */
+  height: 90vh;
   overflow: hidden;
 }
 
@@ -14,32 +14,138 @@
 }
 
 .big-tile, .small-tiles-container {
-  flex: 1; /* Each takes 50% of the width */
+  flex: 1;
   background-color: #FFFDE0;
   border-radius: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 20px;
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
-  overflow-y: auto; /* Scroll if content overflows */
+  overflow-y: auto;
 }
 
-.big-tile h1 {
-  margin-bottom: 10px;
+.class-list {
+  max-height: 200px; /* Restrict height and enable scrolling for overflow */
+  overflow-y: auto; /* Add vertical scrolling if the list exceeds max height */
+  background-color: #fff; /* White background for contrast */
+  border: 1px solid #ddd; /* Light border for a clean look */
+  border-radius: 10px; /* Rounded corners */
+  padding: 10px; /* Space around the list items */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
-.divider {
-  border: 0;
-  height: 2px;
-  background: black;
-  margin: 10px 0 20px;
+.class-list ul {
+  list-style-type: none; /* Remove default list bullets */
+  padding: 0;
+  margin: 0;
 }
 
-.button-container {
-  margin-top: auto; /* Align buttons at the bottom */
+.class-item {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  border-bottom: 1px solid #eee; /* Light divider between items */
+  transition: background-color 0.2s;
+}
+
+.class-item:last-child {
+  border-bottom: none; /* Remove border for the last item */
+}
+
+.class-item label {
+  display: flex;
+  align-items: center;
+  cursor: pointer; /* Indicate clickability */
+  font-size: 14px;
+  color: #333; /* Darker text color for better readability */
+}
+
+.class-item input[type="checkbox"] {
+  margin-right: 10px; /* Add spacing between checkbox and text */
+}
+
+.class-item:hover {
+  background-color: #f9f9f9; /* Subtle hover effect for better UX */
+}
+
+
+.questions-section {
+  margin-top: 20px;
+}
+
+.questions-category {
+  margin-bottom: 20px;
+}
+
+.questions-category h4 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.questions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.question-box {
+  background-color: #ffffff;
+  padding: 15px;
+  border: 2px solid #f5c000;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between; /* Separate content and actions */
+  align-items: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.action-icons {
+  display: flex;
+  align-items: center;
+}
+
+.action-icons i {
+  font-size: 18px;
+  color: #ff0000; /* Red for delete icon */
+  cursor: pointer;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.action-icons i:hover {
+  color: #d00000; /* Darker red on hover */
+  transform: scale(1.1); /* Slightly larger on hover */
+}
+
+.question-content {
+  flex: 1;
+}
+
+
+.question-box p {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden; /* Hide overflowing text */
+  text-overflow: ellipsis; /* Add "..." for overflowing text */
+}
+
+.question-box ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.question-box ul li {
+  font-size: 14px;
+  color: #555;
+}
+
+.question-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
 .yellow-button {
@@ -64,45 +170,33 @@
   transform: scale(0.95);
 }
 
-.class-list ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  max-height: 200px; /* Set a maximum height for the class list */
-  overflow-y: auto; /* Enable vertical scrolling if content overflows */
-  /*border: 1px solid #ddd; !* Optional: Add a border for better visual distinction *!*/
-  padding: 10px; /* Add some padding inside the scrollable area */
-  border-radius: 10px; /* Optional: Round corners */
-  /*background-color: #f9f9f9; !* Optional: Light background for contrast *!*/
+.section-divider {
+  border: 0;
+  height: 1px;
+  background-color: #ccc; /* Light gray for a subtle look */
+  margin: 20px 0;
 }
 
-
-.class-list li {
-  margin: 10px 0;
-  display: flex;
-  align-items: center;
+.questions-category h4 {
+  margin-top: 10px;
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
 }
 
-.class-list input[type="checkbox"] {
-  margin-right: 10px;
-}
-
-.small-tiles-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-/* Style for the header container inside the small tile */
 .tile-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
+  justify-content: space-between; /* Align buttons on opposite sides */
+  align-items: flex-end; /* Align buttons to the bottom */
+  margin-top: auto; /* Push the container to the bottom */
+  position: relative;
 }
 
-/* Optional: Add specific styles to the add-question button for size adjustments */
-.add-question-button {
-  padding: 5px 15px;
-  font-size: 14px;
+.button-container {
+  display: flex;
+  justify-content: space-between; /* Align buttons on opposite sides */
+  align-items: flex-end; /* Align buttons to the bottom */
+  margin-top: auto; /* Push the container to the bottom */
+  padding-top: 20px; /* Add some space above the buttons */
 }

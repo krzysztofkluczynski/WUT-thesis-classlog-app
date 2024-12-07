@@ -13,6 +13,7 @@ import {NewGradeWindowComponent} from "../popup-window/new-grade-window/new-grad
 import {AddQuestionWindowComponent} from "../popup-window/add-question-window/add-question-window.component";
 import {TaskDto} from "../../../../model/entities/task-dto";
 import {FileDto} from "../../../../model/entities/file-dto";
+import {QuestionDto} from "../../../../model/entities/question-dto";
 
 export interface ClassDtoWithSelect extends ClassDto {
   selected: boolean; // Field to track attendance
@@ -22,12 +23,14 @@ export interface ClosedQuestion {
   question: string;
   answer: Map<string, boolean>;
   file?: File | null;
+  points: number;
 }
 
 export interface OpenQuestion {
   question: string;
   answer: string;
   file?: File | null;
+  points: number;
 }
 
 @Component({
@@ -55,11 +58,10 @@ export class TaskCreatorComponent implements OnInit {
   closedQuestions: ClosedQuestion[] = [];
   openQuestions: OpenQuestion[] = [];
   questionIdsFromBase: number[] = [];
+  ReadyOpenQuestionsFromTheBase: QuestionDto[] = [];
+  ReadyClosedQuestionsFromTheBase: QuestionDto[] = [];
 
   createdTask: TaskDto | null = null;
-
-  tempFileDto: FileDto | null = null;
-
   constructor(
     private axiosService: AxiosService,
     private authService: AuthService,
@@ -90,11 +92,14 @@ export class TaskCreatorComponent implements OnInit {
   createTask() {
     console.log(`${this.taskDate}T${this.taskTime}`);
 
+    let score: number = this.calculateScore();
+
     const taskData = {
       taskName: this.taskName,
       description: this.taskDescription,
       dueDate: `${this.taskDate}T${this.taskTime}`, // Combine date and time
       createdBy: this.authService.getUserWithoutToken(),
+      score: score
     };
 
     // Send task creation request to the backend
@@ -208,18 +213,19 @@ export class TaskCreatorComponent implements OnInit {
               this.axiosService
                 .request(
                   'POST',
-                  `/assignQuestionsToTask/${this.createdTask?.id}`,
-                  this.questionIdsFromBase.map((id) => ({ questionId: id }))
+                  `/questions/assignQuestionsToTask/${this.createdTask?.id}`,
+                   this.questionIdsFromBase // Send the entire list of IDs in an array
                 )
                 .then(() =>
                   console.log('Questions assigned to the task successfully')
                 )
                 .catch((error: any) => {
                   this.globalNotificationHandler.handleError(error);
-                  console.error('Failed to assign questions to the task:', error);
+                  console.error('Failed to assign ready questions to the task:', error);
                 });
             }
           })
+
           .catch((error: any) => {
             this.globalNotificationHandler.handleError(error);
             console.error('Failed to assign users to the task:', error);
@@ -239,9 +245,9 @@ export class TaskCreatorComponent implements OnInit {
         question: {
           questionId: null,
           questionType: { questionTypeId: 1, typeName: 'Closed Question' },
-          points: 5, // Adjust points as needed
+          points: closedQuestion.points,
           content: closedQuestion.question,
-          fileId: fileDto, // Attach the uploaded file if present
+          fileId: fileDto,
         },
         answers: Array.from(closedQuestion.answer).map(([content, isCorrect]) => ({
           content,
@@ -267,7 +273,7 @@ export class TaskCreatorComponent implements OnInit {
       question: {
         questionId: null,
         questionType: { questionTypeId: 2, typeName: 'Open Question' },
-        points: 5, // Adjust points as needed
+        points: openQuestion.points, // Adjust points as needed
         content: openQuestion.question,
         fileId: fileDto, // Attach the uploaded file if present
       },
@@ -303,6 +309,21 @@ export class TaskCreatorComponent implements OnInit {
   handleQuestionSelected(question: OpenQuestion | ClosedQuestion | number): void {
     if (typeof question === 'number') {
       if (!this.questionIdsFromBase.includes(question)) {
+
+        this.axiosService.request('GET', `/questions/${question}`, {}).then(
+          (response: { data: QuestionDto }) => {
+            const questionDto = response.data;
+            if (questionDto.questionType.typeName === 'Closed Question') {
+              this.ReadyClosedQuestionsFromTheBase.push(questionDto);
+            } else {
+              this.ReadyOpenQuestionsFromTheBase.push(questionDto);
+            }
+          }
+        ).catch((error: any) => {
+          this.globalNotificationHandler.handleError(error);
+          console.error('Failed to fetch classes:', error);
+        });
+
         this.questionIdsFromBase.push(question);
         console.log('Ready Question ID:', question);
       } else {
@@ -317,5 +338,56 @@ export class TaskCreatorComponent implements OnInit {
     }
   }
 
+  removeClosedQuestion(index: number): void {
+    this.closedQuestions.splice(index, 1);
+    console.log(`Removed closed question at index ${index}`);
+  }
+
+  removeOpenQuestion(index: number): void {
+    this.openQuestions.splice(index, 1);
+    console.log(`Removed open question at index ${index}`);
+  }
+
+  removeReadyClosedQuestion(index: number): void {
+    const removedQuestionId = this.ReadyClosedQuestionsFromTheBase[index].questionId;
+    this.ReadyClosedQuestionsFromTheBase.splice(index, 1);
+    this.removeQuestionIdFromBase(removedQuestionId);
+    console.log(`Removed closed question from base at index ${index}, ID: ${removedQuestionId}`);
+  }
+
+  removeReadyOpenQuestion(index: number): void {
+    const removedQuestionId = this.ReadyOpenQuestionsFromTheBase[index].questionId;
+    this.ReadyOpenQuestionsFromTheBase.splice(index, 1);
+    this.removeQuestionIdFromBase(removedQuestionId);
+    console.log(`Removed open question from base at index ${index}, ID: ${removedQuestionId}`);
+  }
+
+  private removeQuestionIdFromBase(questionId: number): void {
+    const index = this.questionIdsFromBase.indexOf(questionId);
+    if (index !== -1) {
+      this.questionIdsFromBase.splice(index, 1);
+      console.log(`Removed question ID ${questionId} from questionIdsFromBase.`);
+    } else {
+      console.warn(`Question ID ${questionId} not found in questionIdsFromBase.`);
+    }
+  }
+
+
+  private calculateScore(): number {
+    let score = 0;
+
+    [
+      this.closedQuestions,
+      this.openQuestions,
+      this.ReadyClosedQuestionsFromTheBase,
+      this.ReadyOpenQuestionsFromTheBase
+    ].forEach((questions) => {
+      questions.forEach((q) => {
+        score += q.points || 0; // Add points, default to 0 if undefined
+      });
+    });
+
+    return score;
+  }
 
 }
