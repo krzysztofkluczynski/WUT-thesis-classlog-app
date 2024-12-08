@@ -1,34 +1,38 @@
 <app-header [pageTitle]="'Classlog platform'" [ifShowMenu]="true"></app-header>
 
 <div class="full-screen-container">
-  <!-- Big Yellow Tile -->
   <div class="tiles-container">
     <!-- Return Button -->
-    <button class="yellow-button return-button" (click)="goBack()">
-      Return
-    </button>
+    <button class="yellow-button return-button" (click)="goBack()">Return</button>
+
     <div class="content">
-      <!-- Task Information Tile -->
+      <!-- Task Information -->
       <div class="task-info-tile">
         <h2 class="task-title">{{ task?.taskName }}</h2>
         <p class="task-description">{{ task?.description }}</p>
       </div>
 
-      <!-- Separator Line -->
+      <!-- Separator -->
       <div class="separator-line"></div>
 
-      <!-- Questions and Answers Tiles -->
+      <!-- Questions and Answers -->
       <div class="question-list">
-        <!-- Check if there are questions -->
-        <div *ngIf="(questionsWithAnswers ?? []).length > 0; else noQuestions">
-          <div class="question-tile" *ngFor="let questionWithAnswers of questionsWithAnswers">
-            <!-- Display Question -->
-
+        <div *ngIf="questionsWithAnswers.length > 0; else noQuestions">
+          <div *ngFor="let questionWithAnswers of questionsWithAnswers" class="question-tile">
+            <!-- Question Content -->
             <h3 class="question-title">{{ questionWithAnswers.question.content }}</h3>
-            <p>{{ questionWithAnswers.file?.name }}</p>
 
-            <!-- Display Answers for the Question -->
-            <div class="answers-list">
+            <!-- MP3 File Information and Player -->
+            <div *ngIf="questionWithAnswers.fileUrl" class="mt-2">
+              <p>Recording: {{ questionWithAnswers.file?.name }}</p>
+              <audio controls class="w-100">
+                <source [src]="questionWithAnswers.fileUrl" type="audio/mpeg" />
+                Your browser does not support the audio element.
+              </audio>
+            </div>
+
+            <!-- Answers -->
+            <div class="answers-list mt-3">
               <p *ngFor="let answer of questionWithAnswers.answers" class="answer-item">
                 {{ answer.content }}
               </p>
@@ -36,7 +40,7 @@
           </div>
         </div>
 
-        <!-- Template for No Questions -->
+        <!-- No Questions Fallback -->
         <ng-template #noQuestions>
           <p class="no-questions-message">No questions within that test.</p>
         </ng-template>
