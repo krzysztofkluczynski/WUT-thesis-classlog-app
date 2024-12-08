@@ -1,13 +1,9 @@
 package com.example.classlog.controller;
 
-import com.example.classlog.dto.ClassDto;
 import com.example.classlog.dto.FileDto;
-import com.example.classlog.dto.UserDto;
-import com.example.classlog.entities.File;
 
-import com.example.classlog.exception.AppException;
+import com.example.classlog.config.exceptions.AppException;
 import com.example.classlog.service.FileService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;

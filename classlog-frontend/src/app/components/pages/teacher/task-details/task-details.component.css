@@ -126,3 +126,29 @@ html, body {
   top: 20px;
   left: 20px;
 }
+
+/* Styling for Audio Player */
+audio {
+  width: 300px; /* Set a fixed width */
+  margin-top: 10px; /* Add spacing above audio element */
+  margin-bottom: 15px;
+}
+
+/* Styling for Answers List */
+.answers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between each answer */
+  margin-top: 30px; /* Space above the list */
+}
+
+.answers-list label {
+  font-size: 1rem; /* Slightly larger font for answers */
+  color: #333;
+  display: flex;
+  align-items: center;
+}
+
+.answers-list input[type="checkbox"] {
+  margin-right: 10px; /* Add space between checkbox and answer text */
+}

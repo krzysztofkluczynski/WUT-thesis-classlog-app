@@ -6,12 +6,15 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.classlog.dto.UserDto;
+import com.example.classlog.entities.Role;
+import com.example.classlog.repository.RoleRepository;
 import com.example.classlog.service.UserService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.util.Base64;
@@ -26,6 +29,7 @@ public class UserAuthenticationProvider {
     private String secretKey;
 
     private final UserService userService;
+    private final RoleRepository roleRepository;
 
     @PostConstruct
     protected void init() {
@@ -44,8 +48,11 @@ public class UserAuthenticationProvider {
                 .withExpiresAt(validity)
                 .withClaim("name", user.getName())
                 .withClaim("surname", user.getSurname())
+                .withClaim("role", user.getRole().getRoleName())
                 .sign(algorithm);
     }
+
+
 
     public Authentication validateToken(String token) {
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
@@ -59,10 +66,15 @@ public class UserAuthenticationProvider {
                 .email(decoded.getSubject())
                 .name(decoded.getClaim("name").asString())
                 .surname(decoded.getClaim("surname").asString())
+                .role(roleRepository.getByRoleName(decoded.getClaim("role").asString()))
                 .build();
 
-        return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + user.getRole().getRoleName());
+
+        return new UsernamePasswordAuthenticationToken(user, null, Collections.singleton(authority));
     }
+
+
 
     public Authentication validateTokenStrongly(String token) {
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
@@ -74,7 +86,10 @@ public class UserAuthenticationProvider {
 
         UserDto user = userService.findByEmail(decoded.getSubject());
 
-        return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + user.getRole().getRoleName());
+
+        return new UsernamePasswordAuthenticationToken(user, null, Collections.singleton(authority));
     }
+
 
 }

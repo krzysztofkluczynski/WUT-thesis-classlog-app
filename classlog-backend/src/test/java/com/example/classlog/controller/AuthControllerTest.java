@@ -3,9 +3,6 @@ package com.example.classlog.controller;
 import com.example.classlog.dto.CredentialsDto;
 import com.example.classlog.dto.SignUpDto;
 import com.example.classlog.dto.UserDto;
-import com.example.classlog.entities.Role;
-import com.example.classlog.entities.User;
-import com.example.classlog.exception.AppException;
 import com.example.classlog.repository.UserRepository;
 import com.example.classlog.service.UserService;
 import com.example.classlog.config.UserAuthenticationProvider;
@@ -14,10 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

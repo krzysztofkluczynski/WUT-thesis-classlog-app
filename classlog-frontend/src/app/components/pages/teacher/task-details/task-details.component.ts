@@ -13,7 +13,7 @@ export interface QuestionWithAnswersDto {
   question: QuestionDto;
   answers: AnswerDto[];
   file: File | null;
-  fileUrl: string | null; // URL for the audio playback
+  fileUrl: string | null;
 }
 
 @Component({
@@ -26,7 +26,7 @@ export interface QuestionWithAnswersDto {
 export class TaskDetailsComponent implements OnInit, OnDestroy {
   task: TaskDto | null = null;
   questionsWithAnswers: QuestionWithAnswersDto[] = [];
-  private objectUrls: string[] = []; // Track created object URLs for cleanup
+  private objectUrls: string[] = [];
 
   constructor(
     private axiosService: AxiosService,
@@ -49,7 +49,6 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
   }
 
   private loadTaskDetails(taskId: string) {
-    // Fetch task details
     this.axiosService.request('GET', `/tasks/${taskId}`, {}).then(
       (response: { data: TaskDto }) => {
         this.task = response.data;
@@ -69,9 +68,9 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
           ...item,
           question: {
             ...item.question,
-            editedAt: parseDate(item.question.editedAt), // Parse the editedAt field
+            editedAt: parseDate(item.question.editedAt),
           },
-          fileUrl: null, // Initialize fileUrl
+          fileUrl: null,
         }));
         this.fetchFiles();
       },
@@ -98,7 +97,6 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
             const blob = new Blob([response.data], { type: contentType });
             const url = URL.createObjectURL(blob);
 
-            // Store URL for cleanup and playback
             this.objectUrls.push(url);
             this.questionsWithAnswers[index].fileUrl = url;
             this.questionsWithAnswers[index].file = new File([blob], `question_${fileId}.mp3`, { type: contentType });
@@ -112,9 +110,13 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
+  getCorrectAnswer(answers: AnswerDto[]): string | null {
+    const correctAnswer = answers.find(answer => answer.isCorrect);
+    return correctAnswer ? correctAnswer.content : null;
+  }
+
   private cleanupObjectUrls() {
     this.objectUrls.forEach((url) => URL.revokeObjectURL(url));
-    console.log('Cleaned up object URLs.');
   }
 
   goBack() {

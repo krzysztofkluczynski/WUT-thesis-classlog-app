@@ -45,6 +45,34 @@ public class TaskController {
         return ResponseEntity.ok(tasks);
     }
 
+    // Endpoint 1: All tasks assigned to the user
+    @GetMapping("/assignedToUser/{id}")
+    public ResponseEntity<List<TaskDto>> getAllTasksAssignedToUser(@PathVariable Long id) {
+        List<TaskDto> tasks = taskService.getTasksByUser(id);
+        return ResponseEntity.ok(tasks);
+    }
+
+    // Endpoint 2: Tasks with dueDate > now and no record in submitted_answer
+    @GetMapping("/assignedToUser/{id}/current/notSubmitted")
+    public ResponseEntity<List<TaskDto>> getCurrentTasksTodoByUser(@PathVariable Long id) {
+        List<TaskDto> tasks = taskService.getTasksTodoByUser(id);
+        return ResponseEntity.ok(tasks);
+    }
+
+    // Endpoint 3: Tasks with records in submitted_answer
+    @GetMapping("/assignedToUser/{id}/submitted")
+    public ResponseEntity<List<TaskDto>> getCurrentTasksDoneByUser(@PathVariable Long id) {
+        List<TaskDto> tasks = taskService.getTasksDoneByUser(id);
+        return ResponseEntity.ok(tasks);
+    }
+
+    // Endpoint 4: Tasks with dueDate < now and no record in submitted_answer
+    @GetMapping("/assignedToUser/{id}/overdue/notSubmitted")
+    public ResponseEntity<List<TaskDto>> getOverdueTasksNotSubmittedByUser(@PathVariable Long id) {
+        List<TaskDto> tasks = taskService.getOverdueTasksNotSubmittedByUser(id);
+        return ResponseEntity.ok(tasks);
+    }
+
 
     // Standard POST to create a new task
     @PostMapping

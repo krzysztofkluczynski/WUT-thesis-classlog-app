@@ -9,7 +9,7 @@ import com.example.classlog.dto.CredentialsDto;
 import com.example.classlog.dto.SignUpDto;
 import com.example.classlog.dto.UserDto;
 import com.example.classlog.entities.User;
-import com.example.classlog.exception.AppException;
+import com.example.classlog.config.exceptions.AppException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;

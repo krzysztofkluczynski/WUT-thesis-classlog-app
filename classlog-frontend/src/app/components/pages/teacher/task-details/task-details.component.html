@@ -2,45 +2,51 @@
 
 <div class="full-screen-container">
   <div class="tiles-container">
-    <!-- Return Button -->
     <button class="yellow-button return-button" (click)="goBack()">Return</button>
-
     <div class="content">
-      <!-- Task Information -->
       <div class="task-info-tile">
         <h2 class="task-title">{{ task?.taskName }}</h2>
         <p class="task-description">{{ task?.description }}</p>
       </div>
 
-      <!-- Separator -->
       <div class="separator-line"></div>
 
-      <!-- Questions and Answers -->
       <div class="question-list">
         <div *ngIf="questionsWithAnswers.length > 0; else noQuestions">
           <div *ngFor="let questionWithAnswers of questionsWithAnswers" class="question-tile">
-            <!-- Question Content -->
             <h3 class="question-title">{{ questionWithAnswers.question.content }}</h3>
 
-            <!-- MP3 File Information and Player -->
-            <div *ngIf="questionWithAnswers.fileUrl" class="mt-2">
-              <p>Recording: {{ questionWithAnswers.file?.name }}</p>
-              <audio controls class="w-100">
+            <!-- Audio Container for MP3 -->
+            <div *ngIf="questionWithAnswers.fileUrl" class="audio-container">
+              <audio controls>
                 <source [src]="questionWithAnswers.fileUrl" type="audio/mpeg" />
                 Your browser does not support the audio element.
               </audio>
             </div>
 
-            <!-- Answers -->
-            <div class="answers-list mt-3">
-              <p *ngFor="let answer of questionWithAnswers.answers" class="answer-item">
-                {{ answer.content }}
-              </p>
+            <!-- Closed Questions -->
+            <div *ngIf="questionWithAnswers.question.questionType.questionTypeId === 1">
+              <div *ngFor="let answer of questionWithAnswers.answers">
+                <label>
+                  <input type="checkbox" />
+                  {{ answer.content }}
+                </label>
+              </div>
             </div>
+
+            <!-- Open Questions -->
+            <div *ngIf="questionWithAnswers.question.questionType.questionTypeId === 2">
+              <label>
+                Your Answer:
+                <input type="text" class="form-control" />
+              </label>
+            </div>
+
+            <!-- Correct Answer -->
+            <p class="mt-3"><strong>Answer:</strong> {{ getCorrectAnswer(questionWithAnswers.answers) }}</p>
           </div>
         </div>
 
-        <!-- No Questions Fallback -->
         <ng-template #noQuestions>
           <p class="no-questions-message">No questions within that test.</p>
         </ng-template>

@@ -145,3 +145,35 @@ html, body {
   background-color: #FBC02D;
   transform: scale(0.95);
 }
+
+/* General styles for table */
+.table th,
+.table td {
+  text-align: center; /* Center-align all table content */
+  vertical-align: middle; /* Vertically center-align the content */
+  padding: 10px;
+}
+
+/* Actions Cell */
+.actions-cell {
+  text-align: center; /* Center-align content in the Actions cell */
+  width: 60px; /* Adjust the width of the Actions column */
+}
+
+/* Delete icon styles */
+.delete-icon {
+  color: #ff4d4f;
+  font-size: 20px;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.delete-icon:hover {
+  color: #ff7875;
+  transform: scale(1.5);
+}
+
+.delete-icon:active {
+  color: #d9363e;
+  transform: scale(0.9);
+}

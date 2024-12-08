@@ -56,4 +56,17 @@ export class TeacherTasksComponent {
     this.router.navigate(['/teacher/taskDetails', task.id]);
   }
 
+  deleteTask(task: TaskDto): void {
+    if (confirm(`Are you sure you want to delete the task "${task.taskName}"?`)) {
+      this.axiosService.request('DELETE', `/tasks/${task.id}`, {}).then(() => {
+        this.createdTasks = this.createdTasks.filter(t => t.id !== task.id);
+        this.globalNotificationHandler.handleMessage('Task deleted successfully.');
+      }).catch((error: any) => {
+        this.globalNotificationHandler.handleError(error);
+        console.error('Failed to delete task:', error);
+      });
+    }
+  }
+
+
 }

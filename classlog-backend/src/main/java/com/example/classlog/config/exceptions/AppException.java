@@ -1,4 +1,4 @@
-package com.example.classlog.exception;
+package com.example.classlog.config.exceptions;
 
 import org.springframework.http.HttpStatus;
 

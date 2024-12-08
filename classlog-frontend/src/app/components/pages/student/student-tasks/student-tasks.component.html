@@ -1,2 +1,50 @@
 <app-header [pageTitle]="'Classlog platform'" [ifShowMenu]="true"></app-header>
-<p>student-tasks works!</p>
+
+<div class="full-screen-container">
+  <div class="tiles-container">
+
+    <!-- Big tile for To Do tasks -->
+    <div class="big-tile">
+      <h1>Tasks</h1>
+      <h5>To Do</h5>
+      <hr class="divider">
+
+      <!-- Waiting Tasks Table -->
+      <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+          <thead class="table-dark">
+          <tr>
+            <th>Task Name</th>
+            <th>Description</th>
+            <th>Due Date</th>
+            <th>Created By</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let task of waitingTasks" class="clickable-row">
+            <td (click)="onToDoTaskClick(task)">{{ task.taskName }}</td>
+            <td (click)="onToDoTaskClick(task)">{{ task.description }}</td>
+            <td (click)="onToDoTaskClick(task)">{{ task.dueDate | date: 'dd.MM.yyyy HH:mm' }}</td>
+            <td (click)="onToDoTaskClick(task)">{{ getFullName(task.createdBy) }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Yellow box for all tasks (submitted and not submitted) -->
+    <div class="small-tiles-container">
+      <h1>Task Status</h1>
+      <hr class="divider">
+
+      <div class="submitted-not-submitted-container">
+        <!-- Combined tasks -->
+        <div *ngFor="let task of overdueTasks" [ngClass]="getTaskStatusClass(task)" class="task-card" (click)="onNotDoneTaskClick(task)">
+          <div class="task-title">{{ task.taskName }}</div>
+          <div class="task-due-date">Due: {{ task.dueDate | date: 'dd.MM.yyyy HH:mm' }}</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

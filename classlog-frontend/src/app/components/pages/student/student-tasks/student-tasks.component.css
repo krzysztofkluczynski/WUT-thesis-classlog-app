@@ -1,0 +1,151 @@
+/* General styles */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.full-screen-container {
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  overflow: hidden;
+}
+
+.tiles-container {
+  display: flex;
+  gap: 20px;
+  flex: 1;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Big tile for "To Do" tasks */
+.big-tile {
+  background-color: #FFFDE0;
+  flex: 1.5;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.big-tile h1 {
+  font-size: 28px;
+  color: #333;
+}
+
+.big-tile h5 {
+  font-size: 18px;
+}
+
+.divider {
+  border: 0;
+  height: 2px;
+  background-color: #333;
+  margin: 10px 0;
+}
+
+.table-responsive {
+  max-height: 80%;
+  overflow-y: auto;
+  border-radius: 10px;
+}
+
+.table {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+.clickable-row {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.clickable-row:hover {
+  background-color: #f9f9f9;
+}
+
+/* Right section: Small yellow box for task status */
+.small-tiles-container {
+  flex: 1;
+  background-color: #FFFDE0;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+}
+
+.small-tiles-container h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+.submitted-not-submitted-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+/* Task card styles */
+.task-card {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.task-card:hover {
+  transform: translateY(-5px);
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Green border for submitted tasks */
+.green-border {
+  border: 2px solid #66BB6A; /* Thicker border for better visibility */
+}
+
+/* Red border for not submitted tasks */
+.red-border {
+  border: 2px solid #EF5350; /* Thicker border for better visibility */
+}
+
+
+/* Task card content */
+.task-title {
+  font-weight: bold;
+  color: #333;
+  font-size: 18px;
+}
+
+.task-due-date {
+  font-size: 14px;
+  color: #666;
+}
+.task-status {
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 10px;
+  color: #333;
+}

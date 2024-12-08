@@ -18,14 +18,18 @@
             <th>Description</th>
             <th>Due Date</th>
             <th>Created At</th>
+            <th>Actions</th>
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let task of createdTasks" (click)="onTaskClick(task)" class="clickable-row">
-            <td>{{ task.taskName }}</td>
-            <td>{{ task.description }}</td>
-            <td>{{ task.dueDate | date: 'dd.MM.yyyy HH:mm' }}</td>
-            <td>{{ task.createdAt | date: 'dd.MM.yyyy HH:mm' }}</td>
+          <tr *ngFor="let task of createdTasks" class="clickable-row">
+            <td (click)="onTaskClick(task)">{{ task.taskName }}</td>
+            <td (click)="onTaskClick(task)">{{ task.description }}</td>
+            <td (click)="onTaskClick(task)">{{ task.dueDate | date: 'dd.MM.yyyy HH:mm' }}</td>
+            <td (click)="onTaskClick(task)">{{ task.createdAt | date: 'dd.MM.yyyy HH:mm' }}</td>
+            <td class="actions-cell">
+              <i class="bi bi-trash delete-icon" (click)="deleteTask(task)"></i>
+            </td>
           </tr>
           </tbody>
         </table>

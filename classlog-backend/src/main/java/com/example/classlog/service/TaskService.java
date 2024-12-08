@@ -13,6 +13,7 @@ import com.example.classlog.repository.UserTaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -105,6 +106,43 @@ public class TaskService {
 
     public List<TaskDto> getTasksByCreatedBy(Long id) {
         return taskRepository.findByCreatedBy_IdOrderByCreatedAtDesc(id).stream()
+                .map(taskMapper::toTaskDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<TaskDto> getTasksByUser(Long id) {
+        List<UserTask> userTasks = userTaskRepository.findByUser_Id(id);
+        return userTasks.stream()
+                .map(UserTask::getTask)
+                .map(taskMapper::toTaskDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<TaskDto> getTasksByUserCurrent(Long id) {
+        LocalDateTime now = LocalDateTime.now(); // Pobierz aktualną datę i czas
+        List<UserTask> userTasks = userTaskRepository.findByUser_Id(id);
+
+        return userTasks.stream()
+                .filter(userTask -> userTask.getTask().getDueDate().isAfter(now)) // Filtruj zadania z dueDate > now
+                .map(UserTask::getTask)
+                .map(taskMapper::toTaskDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<TaskDto> getTasksTodoByUser(Long userId) {
+        return taskRepository.findTasksTodoByUser(userId).stream()
+                .map(taskMapper::toTaskDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<TaskDto> getTasksDoneByUser(Long userId) {
+        return taskRepository.findTasksDoneByUser(userId).stream()
+                .map(taskMapper::toTaskDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<TaskDto> getOverdueTasksNotSubmittedByUser(Long userId) {
+        return taskRepository.findOverdueTasksNotSubmittedByUser(userId).stream()
                 .map(taskMapper::toTaskDto)
                 .collect(Collectors.toList());
     }

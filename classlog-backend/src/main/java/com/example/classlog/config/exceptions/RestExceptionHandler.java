@@ -1,7 +1,6 @@
-package com.example.classlog.config;
+package com.example.classlog.config.exceptions;
 
 import com.example.classlog.dto.ErrorDto;
-import com.example.classlog.exception.AppException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
