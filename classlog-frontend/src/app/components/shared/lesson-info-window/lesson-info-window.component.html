@@ -15,8 +15,8 @@
       </div>
 
       <div class="field">
-        <label>Lesson Date:</label>
-        <div class="lesson-date">{{ lessonDto.lessonDate | date: 'dd.MM.yyyy HH:mm' }}</div>
+        <label>Lesson Date: </label>
+        <span class="lesson-date">{{ lessonDto.lessonDate | date: 'dd.MM.yyyy HH:mm' }}</span>
       </div>
       <div class="field">
         <label>Teacher:</label>
@@ -26,7 +26,6 @@
         <label>Description:</label>
         <span>{{ lessonDto.content }}</span>
       </div>
-      <!-- Add more fields as necessary -->
     </div>
   </div>
 

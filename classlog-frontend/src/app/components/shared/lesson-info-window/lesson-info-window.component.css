@@ -18,7 +18,7 @@
   border-radius: 10px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25); /* Enhanced shadow for depth */
   z-index: 10000; /* Above the overlay */
-  width: 450px; /* Adjusted width for a better look */
+  width: 600px; /* Adjusted width for a better look */
   max-height: 90vh; /* Ensure it doesn't overflow the screen */
   overflow-y: auto; /* Scrollable content if it exceeds height */
 }

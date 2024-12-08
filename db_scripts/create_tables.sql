@@ -128,7 +128,7 @@ CREATE TABLE answer (
 -- Recreate the SUBMITTED_ANSWER table
 CREATE TABLE submitted_answer (
     submitted_answer_id BIGSERIAL PRIMARY KEY,
-    answer_id BIGINT REFERENCES answer(answer_id) ON DELETE CASCADE, -- If the answer is deleted, remove submitted answers
+    task_question_id BIGINT REFERENCES task_question(task_question_id) ON DELETE CASCADE, -- Reference task_question table
     user_id BIGINT REFERENCES classlog_user(user_id) ON DELETE CASCADE, -- If the user is deleted, remove their submissions
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     content TEXT

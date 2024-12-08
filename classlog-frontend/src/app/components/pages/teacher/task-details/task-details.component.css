@@ -1,0 +1,88 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: auto; /* Enable scrolling */
+}
+
+.full-screen-container {
+  display: flex;
+  justify-content: center; /* Center yellow tile horizontally */
+  align-items: center; /* Center yellow tile vertically */
+  min-height: 90vh; /* Full-screen height */
+  padding: 20px;
+}
+
+.tiles-container {
+  display: flex;
+  justify-content: center; /* Center the content inside yellow tile */
+  align-items: center; /* Center vertically inside yellow tile */
+  width: 100%;
+  min-height: 80vh; /* Set the height of the yellow tile */
+  padding: 40px;
+  background-color: #fffde6; /* Yellow tile background */
+  border-radius: 20px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Add shadow for depth */
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 800px; /* Limit the width of inner tiles */
+}
+
+.task-info-tile {
+  background-color: #ffffff;
+  width: 100%;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.task-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.task-description {
+  font-size: 1rem;
+  color: #555;
+}
+
+.separator-line {
+  width: 100%;
+  height: 2px;
+  background-color: #cccccc; /* Light gray line */
+  margin: 20px 0; /* Add spacing around the line */
+}
+
+.question-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between question tiles */
+  width: 100%;
+}
+
+.question-tile {
+  background-color: #ffffff;
+  width: 100%;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.question-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.question-content {
+  font-size: 1rem;
+  color: #555;
+}

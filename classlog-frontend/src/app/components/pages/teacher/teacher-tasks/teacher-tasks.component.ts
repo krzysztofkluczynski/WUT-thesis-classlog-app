@@ -53,7 +53,6 @@ export class TeacherTasksComponent {
 
   onTaskClick(task: TaskDto): void {
     console.log('Task clicked:', task);
-    // Navigate to a detailed view, edit page, or perform other actions
     this.router.navigate(['/teacher/taskDetails', task.id]);
   }
 

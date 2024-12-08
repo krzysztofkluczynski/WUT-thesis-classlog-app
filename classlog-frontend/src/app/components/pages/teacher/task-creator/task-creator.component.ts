@@ -234,6 +234,9 @@ export class TaskCreatorComponent implements OnInit {
     ).catch((error: any) => {
       this.globalNotificationHandler.handleError(error);
       console.error('Failed to create task:', error);
+    }).finally(() => {
+      console.log('Task creation process completed.'); // Execute regardless of success or error
+      this.returnToDashboard();
     });
   }
 
