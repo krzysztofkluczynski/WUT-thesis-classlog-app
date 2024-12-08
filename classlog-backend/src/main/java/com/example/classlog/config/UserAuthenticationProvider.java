@@ -29,7 +29,6 @@ public class UserAuthenticationProvider {
 
     @PostConstruct
     protected void init() {
-        System.out.println("Secret key: " + secretKey); //TODO delete that line
         // this is to avoid having the raw secret key available in the JVM
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }

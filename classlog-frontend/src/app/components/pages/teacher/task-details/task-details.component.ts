@@ -117,10 +117,6 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
     console.log('Cleaned up object URLs.');
   }
 
-  getObjectUrl(fileUrl: string | null): string | null {
-    return fileUrl;
-  }
-
   goBack() {
     this.router.navigate(['/teacher/tasks']);
   }
