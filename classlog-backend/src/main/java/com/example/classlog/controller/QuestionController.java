@@ -28,6 +28,13 @@ public class QuestionController {
         return ResponseEntity.ok(questionDto);
     }
 
+    @GetMapping("/withAnswers/{taskId}")
+    public ResponseEntity<List<QuestionWithAnswersDto>> getQuestionsWithAnswers(@PathVariable long taskId) {
+        List<QuestionWithAnswersDto> questionWithAnswersDtos = questionService.getQuestionsWithAnswers(taskId);
+        return ResponseEntity.ok(questionWithAnswersDtos);
+    }
+
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteQuestion(@PathVariable Long id) {
         questionService.deleteQuestion(id);

@@ -20,8 +20,8 @@ public class SubmittedAnswer {
     private Long submittedAnswerId;
 
     @ManyToOne
-    @JoinColumn(name = "answer_id", nullable = false)
-    private Answer answer;
+    @JoinColumn(name = "task_question_id", nullable = false)
+    private TaskQuestion taskQuestion;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

@@ -19,6 +19,6 @@ public class QuestionDto {
     private LocalDateTime editedAt;
     private Integer points;
     private String content;
-    private FileDto fileId;
+    private FileDto file;
 }
 

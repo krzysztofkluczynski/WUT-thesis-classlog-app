@@ -108,4 +108,28 @@ public class QuestionService {
                 .map(questionMapper::toQuestionDto)
                 .collect(Collectors.toList());
     }
+
+    public List<QuestionWithAnswersDto> getQuestionsWithAnswers(long taskId) {
+        // Fetch all TaskQuestion entities associated with the given taskId
+        List<TaskQuestion> taskQuestions = taskQuestionRepository.findAllByTaskId(taskId);
+
+        // Map each TaskQuestion to a QuestionWithAnswersDto
+        return taskQuestions.stream()
+                .map(taskQuestion -> {
+                    // Fetch the question associated with the TaskQuestion
+                    Question question = taskQuestion.getQuestion();
+
+                    // Fetch all answers associated with the question
+                    List<Answer> answers = answerRepository.findAllByQuestion_QuestionId(question.getQuestionId());
+
+                    // Map the question and answers to a QuestionWithAnswersDto
+                    return QuestionWithAnswersDto.builder()
+                            .question(questionMapper.toQuestionDto(question))
+                            .answers(answers.stream()
+                                    .map(answerMapper::toAnswerDto)
+                                    .collect(Collectors.toList()))
+                            .build();
+                })
+                .collect(Collectors.toList());
+    }
 }

@@ -3,22 +3,43 @@
 <div class="full-screen-container">
   <!-- Big Yellow Tile -->
   <div class="tiles-container">
+    <!-- Return Button -->
+    <button class="yellow-button return-button" (click)="goBack()">
+      Return
+    </button>
     <div class="content">
       <!-- Task Information Tile -->
       <div class="task-info-tile">
-        <h2 class="task-title">Task Title</h2>
-        <p class="task-description">This is the description of the task. It can include instructions, details, and relevant information about the task.</p>
+        <h2 class="task-title">{{ task?.taskName }}</h2>
+        <p class="task-description">{{ task?.description }}</p>
       </div>
 
       <!-- Separator Line -->
       <div class="separator-line"></div>
 
-      <!-- Questions Tiles -->
+      <!-- Questions and Answers Tiles -->
       <div class="question-list">
-        <div class="question-tile" *ngFor="let question of questions">
-          <h3 class="question-title">Question {{ question.number }}</h3>
-          <p class="question-content">{{ question.content }}</p>
+        <!-- Check if there are questions -->
+        <div *ngIf="(questionsWithAnswers ?? []).length > 0; else noQuestions">
+          <div class="question-tile" *ngFor="let questionWithAnswers of questionsWithAnswers">
+            <!-- Display Question -->
+
+            <h3 class="question-title">{{ questionWithAnswers.question.content }}</h3>
+            <p>{{ questionWithAnswers.file?.name }}</p>
+
+            <!-- Display Answers for the Question -->
+            <div class="answers-list">
+              <p *ngFor="let answer of questionWithAnswers.answers" class="answer-item">
+                {{ answer.content }}
+              </p>
+            </div>
+          </div>
         </div>
+
+        <!-- Template for No Questions -->
+        <ng-template #noQuestions>
+          <p class="no-questions-message">No questions within that test.</p>
+        </ng-template>
       </div>
     </div>
   </div>

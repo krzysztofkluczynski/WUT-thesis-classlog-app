@@ -11,7 +11,7 @@ public interface AnswerMapper {
     // Map Answer entity to AnswerDto
     @Mapping(target = "id", source = "answer.answerId")
     @Mapping(target = "question", source = "answer.question") // Map nested Question object
-    AnswerDto toDto(Answer answer);
+    AnswerDto toAnswerDto(Answer answer);
 
     // Map AnswerDto to Answer entity
     @Mapping(target = "answerId", source = "dto.id")

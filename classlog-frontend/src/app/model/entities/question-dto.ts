@@ -7,5 +7,5 @@ export interface QuestionDto {
   editedAt: Date;
   points: number;
   content: string;
-  fileId: FileDto | null;
+  file: FileDto | null;
 }
