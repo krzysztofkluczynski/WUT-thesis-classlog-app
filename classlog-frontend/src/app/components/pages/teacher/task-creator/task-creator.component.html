@@ -108,7 +108,7 @@
             <!-- Closed Questions (newly created) -->
             <div *ngFor="let question of closedQuestions; let i = index" class="question-box">
               <div class="question-content">
-                <p><strong>Q:</strong> {{ question.question }}</p>
+                <p><strong>Q:</strong> {{ truncateText(question.question) }}</p>
               </div>
               <div class="action-icons">
                 <i class="bi bi-trash" (click)="removeClosedQuestion(i)"></i>
@@ -118,7 +118,7 @@
             <!-- Ready Closed Questions (from the base) -->
             <div *ngFor="let question of ReadyClosedQuestionsFromTheBase; let i = index" class="question-box">
               <div class="question-content">
-                <p><strong>Q:</strong> {{ question.content }}</p>
+                <p><strong>Q:</strong> {{ truncateText(question.content) }}</p>
               </div>
               <div class="action-icons">
                 <i class="bi bi-trash" (click)="removeReadyClosedQuestion(i)"></i>
@@ -126,6 +126,7 @@
             </div>
           </div>
         </div>
+
 
         <!-- Open Questions -->
         <div class="questions-category">

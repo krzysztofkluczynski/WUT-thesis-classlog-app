@@ -9,6 +9,6 @@ import java.util.List;
 @Data
 @Builder
 public class QuestionWithAnswersDto {
-    QuestionDto question;
-    List<AnswerDto> answers;
+    private QuestionDto question;
+    private List<AnswerDto> answers;
 }

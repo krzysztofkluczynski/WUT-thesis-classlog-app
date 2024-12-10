@@ -91,33 +91,41 @@
 }
 
 .question-box {
-  background-color: #ffffff;
-  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
   border: 2px solid #f5c000;
   border-radius: 10px;
+  background-color: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: flex;
-  justify-content: space-between; /* Separate content and actions */
-  align-items: center;
-  transition: transform 0.2s, box-shadow 0.2s;
+  max-height: 100px; /* Limit height */
+  overflow: hidden;
+  position: relative; /* Position elements properly */
+}
+
+.question-content {
+  flex: 1; /* Allow content to expand */
+  white-space: nowrap; /* Prevent wrapping */
+  overflow: hidden; /* Hide overflowing text */
+  text-overflow: ellipsis; /* Show ellipsis for overflow */
 }
 
 .action-icons {
-  display: flex;
-  align-items: center;
+  margin-left: 10px; /* Add space between content and icons */
 }
 
 .action-icons i {
   font-size: 18px;
   color: #ff0000; /* Red for delete icon */
   cursor: pointer;
-  transition: transform 0.2s, color 0.2s;
 }
 
 .action-icons i:hover {
   color: #d00000; /* Darker red on hover */
   transform: scale(1.1); /* Slightly larger on hover */
 }
+
 
 .question-content {
   flex: 1;

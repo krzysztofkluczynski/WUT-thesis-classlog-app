@@ -393,4 +393,10 @@ export class TaskCreatorComponent implements OnInit {
     return score;
   }
 
+  truncateText(content: string): string {
+    if (content.length > 5) {
+      return content.slice(0, 5) + '...';
+    }
+    return content;
+  }
 }

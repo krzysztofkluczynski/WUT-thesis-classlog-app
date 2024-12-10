@@ -1,16 +1,16 @@
 package com.example.classlog.service;
 
 
-import com.example.classlog.dto.ClassDto;
-import com.example.classlog.dto.TaskDto;
+import com.example.classlog.config.exceptions.AppException;
+import com.example.classlog.dto.*;
+import com.example.classlog.entities.SubmittedAnswer;
 import com.example.classlog.entities.Task;
 import com.example.classlog.entities.User;
 import com.example.classlog.entities.UserTask;
 import com.example.classlog.mapper.TaskMapper;
-import com.example.classlog.repository.TaskRepository;
-import com.example.classlog.repository.UserRepository;
-import com.example.classlog.repository.UserTaskRepository;
+import com.example.classlog.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -28,6 +28,10 @@ public class TaskService {
     private final TaskMapper taskMapper;
     private final UserRepository userRepository;
     private final UserTaskRepository userTaskRepository;
+
+    private final TaskQuestionRepository taskQuestionRepository;
+
+    private final SubmittedAnswerRepository submittedAnswerRepository;
 
     private final UserService userService;
 
@@ -146,4 +150,49 @@ public class TaskService {
                 .map(taskMapper::toTaskDto)
                 .collect(Collectors.toList());
     }
+
+    public boolean processSubmittedTask(SubmittedTaskDto submittedTaskDto) {
+        // Retrieve the UserTask entry for the given task and user
+        Optional<UserTask> userTaskOptional = userTaskRepository.findByUser_IdAndTask_Id(
+                submittedTaskDto.getUser().getId(),
+                submittedTaskDto.getTask().getId()
+        );
+
+        if (userTaskOptional.isEmpty()) {
+            return false;
+        }
+
+        UserTask userTask = userTaskOptional.get();
+        int totalScore = 0;
+
+        // Iterate through the questions and evaluate answers
+        for (QuestionWithAnswersAndUserAnswerDto questionWithUserAnswer : submittedTaskDto.getQuestionsWithAnswers()) {
+            QuestionDto questionDto = questionWithUserAnswer.getQuestion();
+            String userAnswer = questionWithUserAnswer.getUserAnswer();
+
+            // Check if the user's answer matches any correct answer
+            boolean isCorrect = questionWithUserAnswer.getAnswers().stream()
+                    .anyMatch(answer -> answer.getIsCorrect() && answer.getContent().equals(userAnswer));
+
+            // Add points to total score if the answer is correct
+            if (isCorrect) {
+                totalScore += questionDto.getPoints();
+            }
+
+            // Save the SubmittedAnswer record
+            SubmittedAnswer submittedAnswer = new SubmittedAnswer();
+            submittedAnswer.setUser(userTask.getUser());
+            submittedAnswer.setTaskQuestion(taskQuestionRepository.findTaskQuestionByQuestionIdAndTaskId(questionDto.getQuestionId(), submittedTaskDto.getTask().getId())
+                    .orElseThrow(() -> new AppException("Task not submitted", HttpStatus.NOT_FOUND)));
+            submittedAnswer.setCreatedAt(LocalDateTime.now());
+            submittedAnswer.setContent(userAnswer);
+            submittedAnswerRepository.save(submittedAnswer);
+        }
+
+        userTask.setScore(totalScore);
+        userTaskRepository.save(userTask);
+
+        return true;
+    }
+
 }

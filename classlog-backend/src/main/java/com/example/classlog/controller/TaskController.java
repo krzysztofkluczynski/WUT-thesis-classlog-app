@@ -1,6 +1,7 @@
 package com.example.classlog.controller;
 
 import com.example.classlog.dto.ClassDto;
+import com.example.classlog.dto.SubmittedTaskDto;
 import com.example.classlog.dto.TaskDto;
 import com.example.classlog.dto.UserDto;
 import com.example.classlog.entities.Task;
@@ -103,6 +104,16 @@ public class TaskController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/submit")
+    public ResponseEntity<Void> submitTask(@RequestBody SubmittedTaskDto submittedTaskDto) {
+        boolean isSuccess = taskService.processSubmittedTask(submittedTaskDto);
+        if (isSuccess) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
 

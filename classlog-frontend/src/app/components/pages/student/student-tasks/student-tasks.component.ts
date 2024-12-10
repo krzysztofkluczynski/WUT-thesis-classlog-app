@@ -40,7 +40,6 @@ export class StudentTasksComponent {
   ) {}
 
   ngOnInit(): void {
-    // Fetch tasks
     this.fetchWaitingTasks();
     this.fetchSubmittedTasks();
     this.fetchNotSubmittedTasks();
@@ -119,7 +118,7 @@ export class StudentTasksComponent {
 
   onToDoTaskClick(task: TaskDto): void {
     console.log('Task clicked:', task);
-    this.router.navigate(['/student/taskDetails', task.id]);
+    this.router.navigate(['/student/task/solve/', task.id]);
   }
 
   protected readonly getFullName = getFullName;

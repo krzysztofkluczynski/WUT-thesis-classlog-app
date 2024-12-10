@@ -1,0 +1,67 @@
+<app-header [pageTitle]="'Classlog platform'" [ifShowMenu]="true"></app-header>
+
+<div class="full-screen-container">
+  <div class="tiles-container">
+    <button class="yellow-button return-button" (click)="goBack()">Return</button>
+    <div class="content">
+      <div class="task-info-tile">
+        <h2 class="task-title">{{ task?.taskName }}</h2>
+        <p class="task-description">{{ task?.description }}</p>
+      </div>
+
+      <div class="separator-line"></div>
+
+      <div class="question-list">
+        <div *ngIf="questionsWithAnswers.length > 0; else noQuestions">
+          <div *ngFor="let questionWithAnswers of questionsWithAnswers; let i = index" class="question-tile">
+            <h3 class="question-title">{{ questionWithAnswers.question.content }}</h3>
+
+            <!-- Audio Container -->
+            <div *ngIf="questionWithAnswers.fileUrl" class="audio-container">
+              <audio controls>
+                <source [src]="questionWithAnswers.fileUrl" type="audio/mpeg" />
+                Your browser does not support the audio element.
+              </audio>
+            </div>
+
+            <!-- Closed Questions -->
+            <div *ngIf="questionWithAnswers.question.questionType.questionTypeId === 1">
+              <div *ngFor="let answer of questionWithAnswers.answers">
+                <label>
+                  <input
+                    type="radio"
+                    [value]="answer.content"
+                    name="question{{ i }}"
+                    (change)="onAnswerSelected(i, answer.content)"
+                  />
+                  {{ answer.content }}
+                </label>
+              </div>
+            </div>
+
+            <!-- Open Questions -->
+            <div *ngIf="questionWithAnswers.question.questionType.questionTypeId === 2">
+              <label>
+                Your Answer:
+                <input
+                  type="text"
+                  class="form-control"
+                  [value]="questionsWithAnswers[i].userAnswer || ''"
+                  (input)="onOpenAnswerChange(i, $event)"
+                />
+              </label>
+            </div>
+
+          </div>
+        </div>
+
+        <ng-template #noQuestions>
+          <p class="no-questions-message">No questions available in this task.</p>
+        </ng-template>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button class="yellow-button submit-button" (click)="submitAnswers()">Submit</button>
+  </div>
+</div>

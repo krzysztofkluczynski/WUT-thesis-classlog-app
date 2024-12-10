@@ -32,8 +32,8 @@ public class SecurityConfig {
                         .accessDeniedHandler(customAccessDeniedHandler))
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers(HttpMethod.POST, "/login", "/register").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/users", "/users/role/**").hasAnyRole("Teacher", "Student", "Admin")
                         .anyRequest().hasAnyRole("Teacher", "Student", "Admin"));
         return http.build();
     }
+
 }

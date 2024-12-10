@@ -32,6 +32,4 @@ public class SubmittedAnswer {
 
     @Column(name = "content")
     private String content;
-
-    // Getters and Setters
 }

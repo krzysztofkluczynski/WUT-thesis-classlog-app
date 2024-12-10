@@ -36,6 +36,7 @@
               <th>Grade</th>
               <th>Wage</th>
               <th>Description</th>
+              <th>Date</th>
             </tr>
             </thead>
             <tbody>
@@ -44,6 +45,7 @@
               <td>{{ grade.grade }}</td>
               <td>{{ grade.wage }}</td>
               <td>{{ grade.description }}</td>
+              <td>{{ grade.createdAt | date: 'dd.MM.yyyy HH:mm' }}</td>
             </tr>
             </tbody>
           </table>
