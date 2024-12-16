@@ -32,4 +32,10 @@ public class GradeController {
         GradeDto createdGrade = gradeService.saveGrade(gradeDto);
         return ResponseEntity.status(201).body(createdGrade);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteGrade(@PathVariable Long id) {
+        gradeService.deleteGrade(id);
+        return ResponseEntity.noContent().build();
+    }
 }

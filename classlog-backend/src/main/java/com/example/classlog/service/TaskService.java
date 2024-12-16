@@ -3,11 +3,8 @@ package com.example.classlog.service;
 
 import com.example.classlog.config.exceptions.AppException;
 import com.example.classlog.dto.*;
-import com.example.classlog.entities.SubmittedAnswer;
-import com.example.classlog.entities.Task;
-import com.example.classlog.entities.User;
-import com.example.classlog.entities.UserTask;
-import com.example.classlog.mapper.TaskMapper;
+import com.example.classlog.entities.*;
+import com.example.classlog.mapper.*;
 import com.example.classlog.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,8 +23,17 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
+    private final AnswerMapper answerMapper;
+
+    private final UserMapper userMapper;
+
+    private final QuestionMapper questionMapper;
+
+    private final UserTaskMapper userTaskMapper;
     private final UserRepository userRepository;
     private final UserTaskRepository userTaskRepository;
+    private final AnswerRepository answerRepository;
+    private final QuestionRepository questionRepository;
 
     private final TaskQuestionRepository taskQuestionRepository;
 
@@ -195,4 +201,98 @@ public class TaskService {
         return true;
     }
 
+    public Optional<SubmittedTaskDto> getSubmittedTaskDetails(Long taskId, Long userId) {
+        // Check if the user and task relationship exists
+        Optional<UserTask> userTaskOptional = userTaskRepository.findByUser_IdAndTask_Id(userId, taskId);
+
+        if (userTaskOptional.isEmpty()) {
+            return Optional.empty();
+        }
+
+        UserTask userTask = userTaskOptional.get();
+
+        // Fetch submitted answers for the given task and user
+        List<SubmittedAnswer> submittedAnswers = submittedAnswerRepository.findByTaskQuestion_Task_IdAndUser_Id(taskId, userId);
+
+        // Map submitted answers to QuestionWithAnswersAndUserAnswerDto
+        List<QuestionWithAnswersAndUserAnswerDto> questionsWithAnswers = submittedAnswers.stream()
+                .map(submittedAnswer -> {
+                    TaskQuestion taskQuestion = submittedAnswer.getTaskQuestion();
+
+                    // Fetch answers for the question from AnswerRepository
+                    List<Answer> answersForQuestion = answerRepository.findAllByQuestion_QuestionId(taskQuestion.getQuestion().getQuestionId());
+
+                    // Map answers to AnswerDto
+                    List<AnswerDto> answerDtos = answersForQuestion.stream()
+                            .map(answerMapper::toAnswerDto)
+                            .collect(Collectors.toList());
+
+                    Question question = questionRepository.findById(taskQuestion.getQuestion().getQuestionId())
+                            .orElseThrow(() -> new AppException("Question not found", HttpStatus.NOT_FOUND));
+
+                    // Build and return QuestionWithAnswersAndUserAnswerDto
+                    return QuestionWithAnswersAndUserAnswerDto.builder()
+                            .question(questionMapper.toQuestionDto(question))
+                            .answers(answerDtos)
+                            .userAnswer(submittedAnswer.getContent())
+                            .score(answerDtos.stream()
+                                    .filter(AnswerDto::getIsCorrect) // Find the correct answer
+                                    .anyMatch(correctAnswer -> correctAnswer.getContent().equals(submittedAnswer.getContent()))
+                                    ? taskQuestion.getQuestion().getPoints() // If the user answer matches, assign points
+                                    : 0)// Otherwise, assign 0
+                    .build();
+                })
+                .collect(Collectors.toList());
+
+
+        // Create SubmittedTaskDto
+        SubmittedTaskDto submittedTaskDto = SubmittedTaskDto.builder()
+                .task(taskMapper.toTaskDto(userTask.getTask()))
+                .user(userMapper.toUserDto(userTask.getUser()))
+                .questionsWithAnswers(questionsWithAnswers)
+                .score(userTask.getScore())
+                .build();
+
+        return Optional.of(submittedTaskDto);
+    }
+
+
+    public List<UserTaskDto> getTasksCreatedByUserSubmitted(Long id) {
+        List<UserTask> userTasks = userTaskRepository.findTasksCreatedByUserWithSubmittedAnswers(id);
+
+        return userTasks.stream()
+                .map(userTaskMapper::toDto)
+                .peek(dto -> dto.setScore(dto.getScore() != null ? dto.getScore() : 0)) // Ensure score is set if null
+                .collect(Collectors.toList());
+    }
+
+
+
+    public List<UserTaskDto> getOverdueTasksNotSubmitttedCreatedByUser(Long id) {
+        List<UserTask> userTasks = userTaskRepository.findOverdueTasksNotSubmittedByCreatedByUser(id);
+
+        userTasks.forEach(userTask -> {
+            if (userTask.getScore() == null) {
+                userTask.setScore(0); // Explicitly set score to 0 for overdue tasks
+                userTaskRepository.save(userTask); // Save the updated score to the database
+            }
+        });
+
+        return userTasks.stream()
+                .map(userTaskMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+
+    public boolean updateUserTaskScore(Long userId, Long taskId, Integer newScore) {
+        Optional<UserTask> userTaskOptional = userTaskRepository.findByUser_IdAndTask_Id(userId, taskId);
+        if (userTaskOptional.isPresent()) {
+            UserTask userTask = userTaskOptional.get();
+            userTask.setScore(newScore);
+            userTaskRepository.save(userTask);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -123,7 +123,7 @@ export class StudentTasksComponent {
 
   protected readonly getFullName = getFullName;
 
-  onNotDoneTaskClick(task: ExtendedTaskDto) {
-    //TODO
+  onSubmittedTaskClick(task: ExtendedTaskDto) {
+    this.router.navigate(['/task', task.id, 'submitted', this.authService.getUser()?.id]);
   }
 }

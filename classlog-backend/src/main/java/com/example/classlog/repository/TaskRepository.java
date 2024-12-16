@@ -1,12 +1,12 @@
 package com.example.classlog.repository;
 
 import com.example.classlog.entities.Task;
+import com.example.classlog.entities.UserTask;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> findByCreatedBy_IdOrderByCreatedAtDesc(Long id);
@@ -24,4 +24,36 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
             "WHERE ut.user.id = :userId AND t.dueDate < CURRENT_TIMESTAMP " +
             "AND NOT EXISTS (SELECT sa FROM SubmittedAnswer sa WHERE sa.user.id = ut.user.id AND sa.taskQuestion.task.id = t.id)")
     List<Task> findOverdueTasksNotSubmittedByUser(@Param("userId") Long userId);
+
+    @Query(value = """
+                SELECT ut
+                FROM UserTask ut
+                JOIN ut.task t
+                WHERE t.createdBy.id = :createdById
+                  AND EXISTS (
+                      SELECT 1
+                      FROM SubmittedAnswer sa
+                      JOIN sa.taskQuestion tq
+                      WHERE tq.task.id = t.id
+                        AND sa.user.id = ut.user.id
+                  )
+            """)
+    List<UserTask> findUserTasksWithSubmittedAnswers(@Param("createdById") Long createdById);
+
+    @Query("""
+    SELECT ut
+    FROM UserTask ut
+    JOIN ut.task t
+    WHERE t.createdBy.id = :createdById
+      AND t.dueDate < CURRENT_TIMESTAMP
+      AND NOT EXISTS (
+          SELECT 1
+          FROM SubmittedAnswer sa
+          JOIN sa.taskQuestion tq
+          WHERE tq.task.id = t.id
+            AND sa.user.id = ut.user.id
+      )
+""")
+    List<UserTask> findOverdueUserTasksWithoutSubmittedAnswers(@Param("createdById") Long createdById);
+
 }

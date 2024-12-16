@@ -137,6 +137,10 @@ html, body {
   outline: none;
 }
 
+.delete-comment-btn {
+  margin-left: 10px; /* Adds additional space from the comment text */
+}
+
 .send-button {
   background-color: #F5C000; /* Match the yellow button color */
   border: none;
@@ -257,5 +261,41 @@ html, body {
 
 .comments-section .toggle-comments:hover {
   color: #333;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.post-title {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.delete-icon {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.2s ease;
+  padding: 0;
+}
+
+.delete-icon:hover {
+  color: #c0392b;
+  transform: scale(1.2);
+}
+
+.delete-icon:active {
+  color: #a93226;
+  transform: scale(0.9);
 }
 

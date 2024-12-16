@@ -110,6 +110,7 @@ export class TeacherGradesComponent implements OnInit {
           ...grade,
           createdAt: parseDate(grade.createdAt)
         }));
+        console.log('Grades from one class:', this.gradesFromOneClass);
       }
     ).catch((error: any) => {
       this.globalNotificationHandler.handleError(error);
@@ -133,7 +134,18 @@ export class TeacherGradesComponent implements OnInit {
 
   toggleShowNewGradeModal() {
     this.showNewGradeModal = !this.showNewGradeModal;
+    this.loadStudents();
   }
 
   protected readonly getFullName = getFullName;
+
+  addGradeToList(newGrade: GradeDto): void {
+    console.log('Adding new grade to list:', newGrade);
+    this.gradesFromOneClass.push(newGrade);
+
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([this.router.url]);
+    });
+  }
+
 }

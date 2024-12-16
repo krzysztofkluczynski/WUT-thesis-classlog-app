@@ -18,6 +18,9 @@ import {LessonCreatorComponent} from "./components/pages/teacher/lesson-creator/
 import {TaskCreatorComponent} from "./components/pages/teacher/task-creator/task-creator.component";
 import {TaskDetailsComponent} from "./components/pages/teacher/task-details/task-details.component";
 import {TaskResolverComponent} from "./components/pages/student/task-resolver/task-resolver.component";
+import {
+  SubmittedTaskDetailsComponent
+} from "./components/shared/submitted-task-details/submitted-task-details.component";
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -66,6 +69,11 @@ export const routes: Routes = [
   {
     path: 'files/:classId',
     component: FilesComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: "task/:taskId/submitted/:userId",
+    component: SubmittedTaskDetailsComponent,
     canActivate: [authGuard]
   },
   {

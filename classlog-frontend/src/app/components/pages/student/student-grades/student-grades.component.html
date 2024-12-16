@@ -36,6 +36,13 @@
               <p><strong>Description: </strong>{{ grade.description }}</p>
               <p><strong>Teacher: </strong>{{ getFullName(grade.teacher) }}</p>
               <p><strong>Date: </strong>{{ grade.createdAt | date:'dd.MM.yyyy HH:mm' }}</p>
+
+              <i
+                *ngIf="authService.getUserRole() === 'Teacher' && teacherClassesIds.includes(grade.assignedClass.id)"
+                class="bi bi-trash delete-icon"
+                (click)="deleteGrade(grade)"
+              ></i>
+
             </div>
           </div>
         </div>

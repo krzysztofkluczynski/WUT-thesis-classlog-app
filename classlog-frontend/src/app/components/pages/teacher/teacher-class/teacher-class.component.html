@@ -3,29 +3,27 @@
 <div class="full-screen-container">
   <div class="tiles-container">
 
-    <!-- Left section: Posts and comments -->
+    <!-- Left Section: Posts and Comments -->
     <div class="big-tile">
-      <!-- Group header and buttons container -->
+      <!-- Group Header and Controls -->
       <div class="group-header">
-        <h2>Beginners group</h2>
+        <h2>Beginners Group</h2>
         <div class="buttons-container">
-          <button class="yellow-button" (click)="navigateToLessonCreation()">Create a lesson</button>
+          <button class="yellow-button" (click)="navigateToLessonCreation()">Create Lesson</button>
           <button class="yellow-button" (click)="toggleAddUserModal()">Add User</button>
           <app-add-user-to-class-window
             *ngIf="showAddUserModal"
             [isOpen]="showAddUserModal"
             (close)="toggleAddUserModal()">
           </app-add-user-to-class-window>
-
           <button class="yellow-button" (click)="toggleDeleteUserModal()">Delete User</button>
           <app-delete-user-from-class-window
             *ngIf="showDeleteUserModal"
             [isOpen]="showDeleteUserModal"
             (close)="toggleDeleteUserModal()">
           </app-delete-user-from-class-window>
-
           <button class="yellow-button" (click)="navigateToFiles()">Files</button>
-          <button class="yellow-button" (click)="toggleShowClassCodeModal()">Show class code</button>
+          <button class="yellow-button" (click)="toggleShowClassCodeModal()">Show Class Code</button>
           <app-show-class-code-window
             *ngIf="showClassCodeModal"
             [isOpen]="showClassCodeModal"
@@ -35,18 +33,32 @@
         </div>
       </div>
 
-      <!-- Posts section -->
+      <!-- Posts Section -->
       <div class="posts-section">
-        <div *ngFor="let post of posts" class="post post-narrow">
-          <h5 class="post-title">{{ post.title }}</h5>
+        <div *ngFor="let post of posts" class="post">
+          <div class="post-header">
+            <h5 class="post-title">{{ post.title }}</h5>
+            <button
+              *ngIf="post.user.id === authService.getUserWithoutToken()?.id"
+              class="btn btn-link delete-post-btn delete-icon"
+              (click)="deletePost(post.id)">
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
           <div class="post-author">{{ post.user.name + ' ' + post.user.surname }}</div>
           <p class="post-content">{{ post.content }}</p>
           <hr />
 
-          <!-- Comments section -->
+          <!-- Comments Section -->
           <div class="comments-section">
             <div *ngFor="let comment of getVisibleComments(post.id)" class="comment">
-              <strong>{{ getFullName(comment.user) }}</strong>: {{ comment.content }}
+              <span><strong>{{ getFullName(comment.user) }}</strong>: {{ comment.content }}</span>
+              <button
+                *ngIf="comment.user.id === authService.getUserWithoutToken()?.id"
+                class="btn btn-link delete-comment-btn delete-icon"
+                (click)="deleteComment(comment)">
+                <i class="bi bi-trash"></i>
+              </button>
             </div>
             <button
               *ngIf="(postCommentsMap.get(post.id) || []).length > 2"
@@ -57,7 +69,7 @@
             </button>
           </div>
 
-          <!-- Comment input -->
+          <!-- Add Comment -->
           <div class="comment-input-container">
             <input
               type="text"
@@ -71,7 +83,7 @@
         </div>
       </div>
 
-      <!-- Message input area -->
+      <!-- Add Post Section -->
       <div class="message-input">
         <input type="text" [(ngModel)]="topic" class="topic-input" placeholder="Topic" />
         <div class="message-group">
@@ -83,11 +95,14 @@
       </div>
     </div>
 
-    <!-- Right section: Class history -->
+    <!-- Right Section: Class History -->
     <div class="small-tiles-container">
       <div class="attendance-list">
         <h3>Class History</h3>
-        <div *ngFor="let lesson of lessons" class="lesson-tile" (click)="toggleLessonWindow(lesson.lessonId, lesson.lessonClass.id)">
+        <div
+          *ngFor="let lesson of lessons"
+          class="lesson-tile"
+          (click)="toggleLessonWindow(lesson.lessonId, lesson.lessonClass.id)">
           <div class="lesson-title">{{ lesson.subject }}</div>
           <div class="lesson-date">{{ lesson.lessonDate | date: 'dd.MM.yyyy HH:mm' }}</div>
         </div>

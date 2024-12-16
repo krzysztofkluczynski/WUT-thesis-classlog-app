@@ -44,5 +44,9 @@ public class CommentService {
         Comment savedComment = commentRepository.save(comment);
         return commentMapper.toCommentDto(savedComment);
     }
+
+    public void deleteComment(Long commentId) {
+        commentRepository.deleteById(commentId);
+    }
 }
 

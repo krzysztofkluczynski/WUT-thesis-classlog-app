@@ -46,8 +46,6 @@ export class StudentClassComponent implements OnInit {
   classIdForSelectedLesson: number | null = null;
 
 
-
-
   constructor(
     private route: ActivatedRoute,
     private authService: AuthService,
@@ -208,5 +206,27 @@ export class StudentClassComponent implements OnInit {
     this.selectedLessonId = lessonId;
     this.classIdForSelectedLesson = classId;
     this.showLessonModal = !this.showLessonModal;
+  }
+
+  deleteComment(id: number) {
+    this.axiosService.request('DELETE', `/comments/${id}`, {}).then(
+      (response: any) => {
+        this.globalNotificationHandler.handleMessagewithType(`Comment deleted successfully.`, 'success');
+      }
+    ).catch((error: any) => {
+      this.globalNotificationHandler.handleError(error);
+      console.error('Failed to delete post:', error);
+    });
+  }
+
+  deletePost(id: number) {
+    this.axiosService.request('DELETE', `/posts/${id}`, {}).then(
+      (response: any) => {
+        this.globalNotificationHandler.handleMessagewithType(`Post deleted successfully.`, 'success');
+      }
+    ).catch((error: any) => {
+      this.globalNotificationHandler.handleError(error);
+      console.error('Failed to delete comment:', error);
+    });
   }
 }

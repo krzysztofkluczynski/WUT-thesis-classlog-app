@@ -40,4 +40,8 @@ public class PostService {
         Post savedPost = postRepository.save(post);
         return postMapper.toPostDto(savedPost);
     }
+
+    public void deletePost(Long postId) {
+        postRepository.deleteById(postId);
+    }
 }

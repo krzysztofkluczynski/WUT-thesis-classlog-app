@@ -1,9 +1,6 @@
 package com.example.classlog.controller;
 
-import com.example.classlog.dto.ClassDto;
-import com.example.classlog.dto.SubmittedTaskDto;
-import com.example.classlog.dto.TaskDto;
-import com.example.classlog.dto.UserDto;
+import com.example.classlog.dto.*;
 import com.example.classlog.entities.Task;
 import com.example.classlog.entities.User;
 import com.example.classlog.entities.UserTask;
@@ -16,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -115,5 +113,44 @@ public class TaskController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @GetMapping("/{taskId}/user/{userId}/submitted")
+    public ResponseEntity<SubmittedTaskDto> getSubmittedTaskDetails(
+            @PathVariable Long taskId,
+            @PathVariable Long userId) {
+        Optional<SubmittedTaskDto> submittedTask = taskService.getSubmittedTaskDetails(taskId, userId);
+        return submittedTask.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+    // Endpoint 3: Tasks with records in submitted_answer
+    @GetMapping("/createdBy/{id}/submitted")
+    public ResponseEntity<List<UserTaskDto>> getSubmitttedTasksCreatedByUser(@PathVariable Long id) {
+        List<UserTaskDto> tasks = taskService.getTasksCreatedByUserSubmitted(id);
+        return ResponseEntity.ok(tasks);
+    }
+
+    // Endpoint 4: Tasks with dueDate < now and no record in submitted_answer
+    @GetMapping("/createdBy/{id}/overdue/notSubmitted")
+    public ResponseEntity<List<UserTaskDto>> getOverdueTasksNotSubmittedCreatedByUser(@PathVariable Long id) {
+        List<UserTaskDto> tasks = taskService.getOverdueTasksNotSubmitttedCreatedByUser(id);
+        return ResponseEntity.ok(tasks);
+    }
+
+    @PutMapping("/user/{userId}/task/{taskId}/score")
+    public ResponseEntity<?> updateScore(
+            @PathVariable Long userId,
+            @PathVariable Long taskId,
+            @RequestBody Map<String, Integer> payload) {
+        Integer newScore = payload.get("newScore");
+        boolean isUpdated = taskService.updateUserTaskScore(userId, taskId, newScore);
+        if (isUpdated) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+
 }
 

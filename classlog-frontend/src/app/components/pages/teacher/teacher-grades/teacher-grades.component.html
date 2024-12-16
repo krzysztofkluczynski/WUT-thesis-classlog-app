@@ -17,13 +17,14 @@
 
         <!-- Add New Grade Button -->
         <button class="new-grade-button" *ngIf="selectedClassId" (click)="toggleShowNewGradeModal()">New Grade</button>
-          <app-new-grade-window
-            *ngIf="showNewGradeModal"
-            [isOpen]="showNewGradeModal"
-            [selectedClassId]="selectedClassId"
-            [studentListFromOneClass]="studentListFromOneClass"
-            (close)="toggleShowNewGradeModal()">
-          </app-new-grade-window>
+        <app-new-grade-window
+          *ngIf="showNewGradeModal"
+          [isOpen]="showNewGradeModal"
+          [selectedClassId]="selectedClassId"
+          [studentListFromOneClass]="studentListFromOneClass"
+          (close)="toggleShowNewGradeModal()"
+          (gradeCreated)="addGradeToList($event)">
+        </app-new-grade-window>
       </div>
 
       <!-- Scrollable Student Grades Table -->

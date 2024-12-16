@@ -1,0 +1,168 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: auto; /* Enable scrolling */
+}
+
+.full-screen-container {
+  display: flex;
+  justify-content: center; /* Center yellow tile horizontally */
+  align-items: center; /* Center yellow tile vertically */
+  min-height: 90vh; /* Full-screen height */
+  padding: 20px;
+}
+
+.tiles-container {
+  position: relative; /* Enables absolute positioning for children like the return button */
+  display: flex;
+  justify-content: center; /* Center the content inside yellow tile */
+  align-items: center; /* Center vertically inside yellow tile */
+  width: 100%;
+  min-height: 80vh; /* Set the height of the yellow tile */
+  padding: 40px;
+  background-color: #fffde6; /* Yellow tile background */
+  border-radius: 20px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Add shadow for depth */
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 800px; /* Limit the width of inner tiles */
+}
+
+.task-info-tile {
+  background-color: #ffffff;
+  width: 100%;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-info-tile {
+  background-color: #ffffff;
+  width: 100%;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.task-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.task-description {
+  font-size: 1rem;
+  color: #555;
+}
+
+.separator-line {
+  width: 100%;
+  height: 2px;
+  background-color: #cccccc; /* Light gray line */
+  margin: 20px 0; /* Add spacing around the line */
+}
+
+.question-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Space between question tiles */
+  width: 100%;
+  margin-top: 20px; /* Add space above the question list */
+}
+
+.question-tile {
+  background-color: #ffffff;
+  width: 100%;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px; /* Add margin below each tile */
+}
+
+.question-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.question-content {
+  font-size: 1rem;
+  color: #555;
+}
+
+.no-questions-message {
+  font-size: 16px;
+  color: #666;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Reusable Yellow Button Styles */
+.yellow-button {
+  background-color: #F5C000; /* Yellow color */
+  border: none;
+  color: black;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 20px; /* Rounded corners */
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+}
+
+.yellow-button:hover {
+  background-color: #FFD54F; /* Lighter yellow on hover */
+  transform: scale(1.05); /* Slightly enlarge the button */
+}
+
+.yellow-button:active {
+  background-color: #FBC02D; /* Slightly darker yellow on click */
+  transform: scale(0.95); /* Slightly shrink on click */
+}
+
+/* Specific Positioning for Return Button */
+.return-button {
+  position: absolute; /* Position in the top-left corner of the yellow container */
+  top: 20px;
+  left: 20px;
+}
+
+/* Styling for Audio Player */
+audio {
+  width: 300px; /* Set a fixed width */
+  margin-top: 10px; /* Add spacing above audio element */
+  margin-bottom: 15px;
+}
+
+/* Styling for Answers List */
+.answers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between each answer */
+  margin-top: 30px; /* Space above the list */
+}
+
+.answers-list label {
+  font-size: 1rem; /* Slightly larger font for answers */
+  color: #333;
+  display: flex;
+  align-items: center;
+}
+
+.answers-list input[type="checkbox"] {
+  margin-right: 10px; /* Add space between checkbox and answer text */
+}
+
+.button-group {
+  margin: 10px;
+  gap: 30px; /* Space between buttons */
+  display: flex;
+}

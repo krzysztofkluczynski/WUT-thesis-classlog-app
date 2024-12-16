@@ -160,3 +160,18 @@ html, body {
   transform: translateY(-1px); /* Lift the tile slightly */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15); /* Slightly deeper shadow */
 }
+
+.delete-icon {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 20px;
+  color: red;
+  cursor: pointer;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.delete-icon:hover {
+  color: darkred;
+  transform: scale(1.1);
+}

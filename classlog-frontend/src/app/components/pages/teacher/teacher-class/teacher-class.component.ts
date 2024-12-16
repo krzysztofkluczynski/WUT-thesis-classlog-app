@@ -60,7 +60,7 @@ export class TeacherClassComponent implements OnInit {
   commentDrafts: { [postId: number]: string } = {};
 
   constructor(
-    private authService: AuthService,
+    public authService: AuthService,
     private axiosService: AxiosService,
     private router: Router,
     private globalNotificationHandler: GlobalNotificationHandler,
@@ -240,5 +240,32 @@ export class TeacherClassComponent implements OnInit {
     this.selectedLessonId = lessonId;
     this.classIdForSelectedLesson = classId;
     this.showLessonModal = !this.showLessonModal;
+  }
+
+  deleteComment(comment: CommentDto) {
+    this.axiosService.request('DELETE', `/comments/${comment.id}`, {}).then(
+      (response: any) => {
+        this.globalNotificationHandler.handleMessagewithType(`Comment deleted successfully.`, 'success');
+        const postId = comment.post.id; // Ensure we use the correct post ID
+        const updatedComments = (this.postCommentsMap.get(postId) || []).filter(c => c.id !== comment.id);
+        this.postCommentsMap.set(postId, updatedComments);
+      }
+    ).catch((error: any) => {
+      this.globalNotificationHandler.handleError(error);
+      console.error('Failed to delete post:', error);
+    });
+  }
+
+  deletePost(id: number) {
+    this.axiosService.request('DELETE', `/posts/${id}`, {}).then(
+      (response: any) => {
+        this.globalNotificationHandler.handleMessagewithType(`Post deleted successfully.`, 'success');
+        this.posts = this.posts.filter(post => post.id !== id);
+        this.postCommentsMap.delete(id); // Clean up comments for the deleted post
+      }
+    ).catch((error: any) => {
+      this.globalNotificationHandler.handleError(error);
+      console.error('Failed to delete comment:', error);
+    });
   }
 }

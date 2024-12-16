@@ -39,7 +39,7 @@
 
       <div class="submitted-not-submitted-container">
         <!-- Combined tasks -->
-        <div *ngFor="let task of overdueTasks" [ngClass]="getTaskStatusClass(task)" class="task-card" (click)="onNotDoneTaskClick(task)">
+        <div *ngFor="let task of overdueTasks" [ngClass]="getTaskStatusClass(task)" class="task-card" (click)="onSubmittedTaskClick(task)">
           <div class="task-title">{{ task.taskName }}</div>
           <div class="task-due-date">Due: {{ task.dueDate | date: 'dd.MM.yyyy HH:mm' }}</div>
         </div>

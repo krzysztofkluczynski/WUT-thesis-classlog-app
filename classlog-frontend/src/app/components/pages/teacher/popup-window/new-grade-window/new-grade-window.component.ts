@@ -21,6 +21,8 @@ export class NewGradeWindowComponent implements OnInit {
   @Input() studentListFromOneClass: UserDto[] = []; // List of students to filter
   @Input() selectedClassId: number | null = null; // Selected class ID for context
   @Output() close = new EventEmitter<void>(); // Emit event to close modal
+  @Output() gradeCreated = new EventEmitter<GradeDto>(); // Emit the new grade
+
 
   studentSearchQuery: string = ''; // User input for student search
   filteredStudentList: UserDto[] = []; // Filtered list of students
@@ -81,10 +83,12 @@ export class NewGradeWindowComponent implements OnInit {
 
       this.axiosService.request('POST', '/grades', gradePayload)
         .then((response: { data: GradeDto }) => {
-          const createdGrade = response.data; // Retrieve the created class object
+          const createdGrade = response.data;
           console.log('Grade created:', createdGrade);
 
           this.globalNotificationHandler.handleMessage("Grade created successfully");
+          console.log('Emitting gradeCreated event:', createdGrade); // Debug log
+          this.gradeCreated.emit(createdGrade);
         })
         .catch((error: any) => {
           console.error('Failed to create grade:', error);

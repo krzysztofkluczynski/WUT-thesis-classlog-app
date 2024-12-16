@@ -16,4 +16,5 @@ public class SubmittedTaskDto {
     private TaskDto task;
     private UserDto user;
     private List<QuestionWithAnswersAndUserAnswerDto> questionsWithAnswers;
+    Integer score;
 }

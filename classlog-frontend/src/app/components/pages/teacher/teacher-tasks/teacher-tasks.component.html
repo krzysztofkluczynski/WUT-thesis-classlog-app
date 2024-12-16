@@ -2,7 +2,7 @@
 
 <div class="full-screen-container">
   <div class="tiles-container">
-    <!-- Big tile on the left -->
+    <!-- Big tile for created tasks -->
     <div class="big-tile">
       <button class="yellow-button top-right-button" (click)="createTask()">Create</button>
       <h1>Tasks</h1>
@@ -36,12 +36,25 @@
       </div>
     </div>
 
-    <!-- Small tiles container -->
+    <!-- Right Section for task statuses -->
     <div class="small-tiles-container">
-      <h5>Submitted</h5>
+      <h1>Task Status</h1>
       <hr class="divider">
-      <div class="submitted-tasks">
-        <p>No submitted tasks available.</p>
+
+      <div class="submitted-not-submitted-container">
+        <!-- Combined tasks -->
+        <div
+          *ngFor="let task of overdueTasks"
+          [ngClass]="{ 'green-border': task.status === 'submitted', 'red-border': task.status === 'notSubmitted' }"
+          class="task-card"
+          (click)="onSubmittedTaskClick(task)"
+        >
+          <div class="task-title">{{ task.task.taskName }}</div>
+          <div class="task-due-date">Due: {{ task.task.dueDate | date: 'dd.MM.yyyy HH:mm' }}</div>
+          <div class="task-user">
+            <strong>User:</strong> {{ task.user.name }} {{ task.user.surname }}
+          </div>
+        </div>
       </div>
     </div>
   </div>

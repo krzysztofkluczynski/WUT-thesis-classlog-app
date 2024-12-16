@@ -68,4 +68,8 @@ public class GradeService {
                 .map(gradeMapper::toGradeDto)
                 .collect(Collectors.toList());
     }
+
+    public void deleteGrade(Long id) {
+        gradeRepository.deleteById(id);
+    }
 }

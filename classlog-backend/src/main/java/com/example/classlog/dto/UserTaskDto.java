@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UserTaskDto {
     private Long userTaskId;
-    private UserDto task;
-    private TaskDto user;
+    private UserDto user;
+    private TaskDto task;
     private Integer score;
 }

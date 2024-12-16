@@ -1,0 +1,87 @@
+<app-header [pageTitle]="'Classlog platform'" [ifShowMenu]="true"></app-header>
+
+<div class="full-screen-container" *ngIf="submittedTask; else loading">
+  <div class="tiles-container">
+    <!-- Return Button -->
+    <button class="yellow-button return-button" (click)="goBack()">Return</button>
+
+    <!-- Content Section -->
+    <div class="content">
+      <!-- Task Information -->
+      <div class="task-info-tile">
+        <h2 class="task-title">{{ submittedTask.task.taskName }}</h2>
+        <p class="task-description">{{ submittedTask.task.description }}</p>
+        <p><strong>Due Date:</strong> {{ submittedTask.task.dueDate | date: 'dd.MM.yyyy HH:mm' }}</p>
+        <p><strong>Maximum score:</strong> {{ submittedTask.task.score }}</p>
+      </div>
+
+      <!-- User Information -->
+      <div class="user-info-tile">
+        <h3>User Information</h3>
+        <p><strong>Name:</strong> {{ submittedTask.user.name }}</p>
+        <p><strong>Email:</strong> {{ submittedTask.user.email }}</p>
+        <p *ngIf="!isEditingScore"><strong>Score:</strong> {{ submittedTask.score }}</p>
+
+        <!-- Edit Score Section -->
+        <div *ngIf="isEditingScore">
+          <label for="newScore">Edit Score:</label>
+          <input id="newScore" type="number" [(ngModel)]="newScore"/>
+          <div class="button-group">
+            <button class="yellow-button save-button" (click)="confirmEditScore()">Save</button>
+            <button class="yellow-button cancel-button" (click)="cancelEditScore()">Cancel</button>
+          </div>
+        </div>
+
+        <!-- Edit Score Button -->
+        <button *ngIf="!isEditingScore && authService.getUserRole() === 'Teacher'" class="yellow-button edit-score-button" (click)="editScore()">Edit Score</button>
+      </div>
+
+      <!-- Separator -->
+      <div class="separator-line"></div>
+
+      <!-- Questions Section -->
+      <div class="question-list">
+        <h3>Questions</h3>
+        <div *ngIf="hasQuestions; else noQuestions">
+          <div *ngFor="let question of submittedTask.questionsWithAnswers" class="question-tile">
+            <h4 class="question-title">{{ question.question.content }}</h4>
+
+            <div *ngIf="question.fileUrl" class="audio-container">
+              <audio controls>
+                <source [src]="question.fileUrl" type="audio/mpeg" />
+                Your browser does not support the audio element.
+              </audio>
+            </div>
+
+            <!-- Answers List -->
+            <div class="answers-list">
+              <p>Possible Answers:</p>
+              <ul>
+                <li *ngFor="let answer of question.answers">
+                  {{ answer.content }}
+                  <span *ngIf="answer.isCorrect" class="correct-label">(Correct)</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- User's Answer -->
+            <p><strong>User's Answer:</strong> {{ question.userAnswer }}</p>
+
+            <!-- Correct Answer -->
+            <p><strong>Points:</strong> {{ question.score }} / {{ question.question.points }}</p>
+          </div>
+        </div>
+
+        <!-- No Questions Fallback -->
+        <ng-template #noQuestions>
+          <p class="no-questions-message">No questions available for this task.</p>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Loading Fallback -->
+<ng-template #loading>
+  <p>Loading task details...</p>
+</ng-template>

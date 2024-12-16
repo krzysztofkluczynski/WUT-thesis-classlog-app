@@ -10,6 +10,7 @@ import { GradeDto } from "../../../../model/entities/grade-dto";
 import { DatePipe, NgForOf, NgIf } from "@angular/common";
 import { ReactiveFormsModule } from "@angular/forms";
 import { getFullName } from "../../../../utils/user-utils";
+import {ClassDto} from "../../../../model/entities/class-dto";
 
 @Component({
   selector: 'app-student-grades',
@@ -27,6 +28,7 @@ import { getFullName } from "../../../../utils/user-utils";
 export class StudentGradesComponent implements OnInit {
   studentId: number = 0;
   groupedGrades: { className: string; grades: GradeDto[] }[] = [];
+  teacherClassesIds: number[] = [];
   userDto: UserDto = {
     id: 0,
     name: '',
@@ -38,7 +40,7 @@ export class StudentGradesComponent implements OnInit {
   };
 
   constructor(
-    private authService: AuthService,
+    public authService: AuthService,
     private axiosService: AxiosService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -90,7 +92,37 @@ export class StudentGradesComponent implements OnInit {
         console.error('Failed to fetch grades:', error);
       });
     });
+
+    if (this.authService.getUser()?.role.roleName === 'Teacher') {
+      this.axiosService.request('GET', `/classes/user/${this.authService.getUser()?.id}`, {}).then(
+        (response: { data: ClassDto[] }) => {
+          this.teacherClassesIds = response.data.map(classDto => classDto.id);
+        }).catch((error: any) => {
+        this.globalNotificationHandler.handleError(error);
+        console.error('Failed to fetch teacher classes:', error);
+      });
+    }
+
+
   }
 
   protected readonly getFullName = getFullName;
+
+  deleteGrade(grade: GradeDto) {
+
+
+    this.axiosService.request('DELETE', `/grades/${grade.gradeId}`, {}).then(
+      (response: any) => {
+        this.globalNotificationHandler.handleMessage(`Grade deleted successfully`);
+
+        // Remove the grade from the groupedGrades structure
+        this.groupedGrades = this.groupedGrades.map(group => ({
+          ...group,
+          grades: group.grades.filter(g => g.gradeId !== grade.gradeId)
+        })).filter(group => group.grades.length > 0);
+      }
+    ).catch((error: any) => {
+      this.globalNotificationHandler.handleError(error);
+    });
+  }
 }

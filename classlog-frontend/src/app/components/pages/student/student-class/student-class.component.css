@@ -115,7 +115,7 @@ html, body {
 .comment {
   font-size: 0.8rem;
   color: #333333;
-  margin: 5px 0;
+  margin: 5px 20px 5px 0;
 }
 
 .comment-input-container {
