@@ -28,6 +28,7 @@ export class AddQuestionWindowComponent {
   closeQuestionText = ''; // Close question text
   closeOptions: string[] = ['']; // Options for close-ended questions
   correctOption: number | null = null; // Index of the correct option
+  points: number | null = null;
   readyQuestions: QuestionDto[] = []; // Ready questions
 
   selectedFile: File | null = null; // File attachment
@@ -45,6 +46,7 @@ export class AddQuestionWindowComponent {
 
   setActiveTab(tab: 'open' | 'close' | 'ready'): void {
     this.activeTab = tab;
+    this.points = null;
     if (this.readyQuestions.length === 0) {
       this.fetchReadyQuestions();
     }
@@ -66,15 +68,19 @@ export class AddQuestionWindowComponent {
   }
 
   confirmSelection(): void {
+    if (this.points === null || this.points <= 0) {
+      this.globalNotificationHandler.handleMessage('Please enter a valid points value.');
+      return;
+    }
+
     let questionData: OpenQuestion | ClosedQuestion | number | undefined;
 
-    // Determine what data to send based on the active tab
     if (this.activeTab === 'open') {
       questionData = {
         question: this.openQuestionText,
         answer: this.openAnswer || '',
         file: this.selectedFile || null,
-        points: 1
+        points: this.points
       } as OpenQuestion;
     } else if (this.activeTab === 'close') {
       const answerMap = new Map<string, boolean>();
@@ -86,7 +92,7 @@ export class AddQuestionWindowComponent {
         question: this.closeQuestionText,
         answer: answerMap,
         file: this.selectedFile || null,
-        points: 1
+        points: this.points
       } as ClosedQuestion;
     } else if (this.activeTab === 'ready') {
       questionData = this.readyQuestionId ?? undefined;
@@ -96,9 +102,9 @@ export class AddQuestionWindowComponent {
       this.questionSelected.emit(questionData);
     }
 
-    // Close the modal
     this.close.emit();
   }
+
 
   removeCloseOption(index: number): void {
     this.closeOptions.splice(index, 1);
