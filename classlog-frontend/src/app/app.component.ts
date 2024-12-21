@@ -16,13 +16,7 @@ import {AdminDashboardComponent} from "./components/pages/admin/admin-dashboard/
   selector: 'app-root',
   standalone: true,
   imports: [
-    RouterOutlet,
-    FormsModule,
-    ReactiveFormsModule,
-    HeaderComponent,
-    LoginFormComponent,
-    RegisterFormComponent,
-    UserProfileComponent,
+    RouterOutlet
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
