@@ -37,6 +37,10 @@ export class LoginFormComponent implements OnInit{
 
 
   onSubmitLogin(): void {
+    if (this.email === '' || this.password === '') {
+      this.globalNotificationHandler.handleError('Please fill in all fields');
+      return;
+    }
     this.axiosService.request('POST', '/login', {
       email: this.email,
       password: this.password

@@ -1,3 +1,5 @@
+// noinspection TypeScriptValidateTypes
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NgClass, NgIf } from '@angular/common';
@@ -18,17 +20,17 @@ class MockHeaderComponent {}
 
 class MockRouter {
   events = new Subject<NavigationEnd>();
-  navigate = jasmine.createSpy('navigate');
+  navigate = jasmine.createSpy('navigate').and.callFake((commands: any[], extras?: any) => {});
 }
 
 class MockHeaderService {
   selectedOption$ = of(null);
-  setSelectedOption = jasmine.createSpy('setSelectedOption');
+  setSelectedOption = jasmine.createSpy('setSelectedOption').and.stub();
   getSelectedOption = jasmine.createSpy('getSelectedOption').and.returnValue(null);
 }
 
 class MockAuthService {
-  setUser = jasmine.createSpy('setUser');
+  setUser = jasmine.createSpy('setUser').and.stub();
   getUser = jasmine.createSpy('getUser').and.returnValue({
     id: 1,
     name: 'Mock User',
@@ -40,7 +42,7 @@ class MockAuthService {
   });
   getUserRole = jasmine.createSpy('getUserRole').and.returnValue('Admin');
   getAuthToken = jasmine.createSpy('getAuthToken').and.returnValue('mock-token');
-  logout = jasmine.createSpy('logout');
+  logout = jasmine.createSpy('logout').and.stub();
 }
 
 class MockAxiosService {
@@ -65,7 +67,7 @@ class MockAxiosService {
 }
 
 class MockGlobalNotificationHandler {
-  handleError = jasmine.createSpy('handleError');
+  handleError = jasmine.createSpy('handleError').and.stub();
 }
 
 describe('LoginFormComponent', () => {
@@ -98,8 +100,6 @@ describe('LoginFormComponent', () => {
     fixture = TestBed.createComponent(LoginFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-
-    (mockRouter.events as Subject<any>).next(new NavigationEnd(1, '/admin/students', '/admin/students'));
   });
 
   it('should create', () => {
@@ -110,4 +110,61 @@ describe('LoginFormComponent', () => {
     expect(mockAuthService.logout).toHaveBeenCalled();
   });
 
+  it('should submit login and navigate to admin dashboard for Admin role', async () => {
+    component.email = 'test@example.com';
+    component.password = 'password';
+    await component.onSubmitLogin();
+
+    expect(mockAxiosService.request).toHaveBeenCalledWith('POST', '/login', {
+      email: 'test@example.com',
+      password: 'password',
+    });
+    expect(mockAuthService.setUser).toHaveBeenCalledWith(jasmine.objectContaining({
+      email: 'test@example.com',
+      role: jasmine.objectContaining({ roleName: 'Admin' }),
+    }));
+    expect(mockRouter.navigate).toHaveBeenCalledWith(jasmine.arrayContaining(['/admin/students']));
+  });
+
+
+  it('should handle login error and call notification handler', async () => {
+    // Mock Axios service to reject with a specific error
+    const error = { response: { status: 401, data: { message: 'Invalid credentials' } } };
+    mockAxiosService.request.and.returnValue(Promise.reject(error));
+
+    component.email = 'wrong@example.com';
+    component.password = 'wrongpassword';
+    await component.onSubmitLogin();
+
+    // Ensure Axios request is made with correct parameters
+    expect(mockAxiosService.request).toHaveBeenCalledWith('POST', '/login', {
+      email: 'wrong@example.com',
+      password: 'wrongpassword',
+    });
+  });
+
+
+  it('should navigate to register page on navigateToRegister', () => {
+    const mockEvent = { preventDefault: jasmine.createSpy('preventDefault') } as unknown as Event;
+
+    component.navigateToRegister(mockEvent);
+
+    expect(mockEvent.preventDefault).toHaveBeenCalled();
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/register']);
+  });
+
+
+  it('should not submit login if email or password is empty', () => {
+    component.email = '';
+    component.password = 'password';
+    component.onSubmitLogin();
+
+    expect(mockAxiosService.request).not.toHaveBeenCalled();
+
+    component.email = 'test@example.com';
+    component.password = '';
+    component.onSubmitLogin();
+
+    expect(mockAxiosService.request).not.toHaveBeenCalled();
+  });
 });

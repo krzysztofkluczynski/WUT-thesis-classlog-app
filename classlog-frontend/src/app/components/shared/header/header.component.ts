@@ -75,35 +75,46 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.roleId = this.authService.getUser()?.role.id;
+    this.roleId = this.authService.getUser()?.role?.id;
 
-    this.headerService.selectedOption$.subscribe(option => {
-      this.selectedOption = option;
-    }); //Whenever selectedOption$ emits a new value (via HeaderService), it updates the selectedOption property in the component.
+    // Ensure subscription to `selectedOption$` has a fallback value
+    this.headerService.selectedOption$
+      ?.subscribe(option => {
+        this.selectedOption = option || HeaderOptions.Students; // Fallback value
+      });
 
-    this.router.events.pipe( //Updates the header state (selectedOption) based on the current URL whenever the route changes.
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: NavigationEnd) => {
-      const url = event.urlAfterRedirects;
-      const pathToHeaderOptionMap = new Map<string, HeaderOptions>([
-        ['/teacher/dashboard', HeaderOptions.ClassesTeacher],
-        ['/teacher/tasks', HeaderOptions.TasksTeacher],
-        ['/teacher/grades', HeaderOptions.GradesTeacher],
-        ['/student/dashboard', HeaderOptions.ClassesStudent],
-        ['/student/tasks', HeaderOptions.TasksStudent],
-        ['/student/grades', HeaderOptions.GradesStudent],
-        ['/admin/students', HeaderOptions.Students],
-        ['/admin/teachers', HeaderOptions.Teachers],
-        ['/admin/admins', HeaderOptions.Admins],
-        ['/admin/unassigned', HeaderOptions.Unassigned],
-      ]);
+    // Ensure router events subscription is safe
+    this.router.events
+      ?.pipe(
+        filter(event => event instanceof NavigationEnd)
+      )
+      .subscribe((event: NavigationEnd) => {
+        const url = event.urlAfterRedirects;
 
-      const foundOption = Array.from(pathToHeaderOptionMap.entries()).find(([path, option]) => url.includes(path));
-      if (foundOption) {
-        this.headerService.setSelectedOption(foundOption[1]);
-      }
-    });
+        // Simplified lookup logic
+        const pathToHeaderOptionMap = new Map<string, HeaderOptions>([
+          ['/teacher/dashboard', HeaderOptions.ClassesTeacher],
+          ['/teacher/tasks', HeaderOptions.TasksTeacher],
+          ['/teacher/grades', HeaderOptions.GradesTeacher],
+          ['/student/dashboard', HeaderOptions.ClassesStudent],
+          ['/student/tasks', HeaderOptions.TasksStudent],
+          ['/student/grades', HeaderOptions.GradesStudent],
+          ['/admin/students', HeaderOptions.Students],
+          ['/admin/teachers', HeaderOptions.Teachers],
+          ['/admin/admins', HeaderOptions.Admins],
+          ['/admin/unassigned', HeaderOptions.Unassigned],
+        ]);
+
+        const foundOption = Array.from(pathToHeaderOptionMap.entries()).find(([path, option]: [string, HeaderOptions]) =>
+          url.includes(path)
+        );
+
+        if (foundOption) {
+          this.headerService.setSelectedOption(foundOption[1]);
+        }
+      });
   }
+
   protected readonly HeaderOptions = HeaderOptions;
 
   goToProfile() {
