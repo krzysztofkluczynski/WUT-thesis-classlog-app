@@ -8,20 +8,13 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring", uses = {ClassMapper.class, UserMapper.class})
 public interface FileMapper {
 
-    @Mapping(target = "assignedClass", source = "classEntity")
-    @Mapping(target = "uploadedBy", source = "userEntity")
-    @Mapping(target = "filePath", expression = "java(normalizePath(entity.getFilePath()))")
-    FileDto toFileDto(File entity);
+  @Mapping(target = "assignedClass", source = "classEntity")
+  @Mapping(target = "uploadedBy", source = "userEntity")
+  @Mapping(target = "filePath", expression = "java(entity.getFilePath() == null ? null : entity.getFilePath().replace(\"\\\\\", \"/\"))")
+  FileDto toFileDto(File entity);
 
-    @Mapping(target = "classEntity", source = "assignedClass")
-    @Mapping(target = "userEntity", source = "uploadedBy")
-    @Mapping(target = "filePath", expression = "java(normalizePath(fileDto.getFilePath()))")
-    File toEntity(FileDto fileDto);
-
-    default String normalizePath(String path) {
-        if (path == null) {
-            return null;
-        }
-        return path.replace("\\", "/");
-    }
+  @Mapping(target = "classEntity", source = "assignedClass")
+  @Mapping(target = "userEntity", source = "uploadedBy")
+  @Mapping(target = "filePath", expression = "java(fileDto.getFilePath() == null ? null : fileDto.getFilePath().replace(\"\\\\\", \"/\"))")
+  File toEntity(FileDto fileDto);
 }

@@ -8,13 +8,18 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring", uses = {FileMapper.class})
 public interface QuestionMapper {
 
-    // Map Question entity to QuestionDto
-    @Mapping(target = "questionType", source = "questionType") // Maps QuestionType directly
-    @Mapping(target = "file", source = "file") // Use FileMapper for File to FileDto mapping
-    QuestionDto toQuestionDto(Question question);
+  // Map Question entity to QuestionDto
+  @Mapping(target = "questionType", source = "questionType") // Maps QuestionType directly
+  @Mapping(target = "file", source = "file") // Use FileMapper for File to FileDto mapping
+  @Mapping(target = "content", source = "content")
+  // Explicitly map content without any transformation
+  QuestionDto toQuestionDto(Question question);
 
-    // Map QuestionDto to Question entity
-    @Mapping(target = "questionType", source = "questionType") // Maps QuestionType directly
-    @Mapping(target = "file", source = "file") // Use FileMapper for FileDto to File mapping
-    Question toEntity(QuestionDto questionDto);
+  // Map QuestionDto to Question entity
+  @Mapping(target = "questionType", source = "questionType") // Maps QuestionType directly
+  @Mapping(target = "file", source = "file") // Use FileMapper for FileDto to File mapping
+  @Mapping(target = "content", source = "content")
+  // Explicitly map content without any transformation
+  Question toEntity(QuestionDto questionDto);
 }
+

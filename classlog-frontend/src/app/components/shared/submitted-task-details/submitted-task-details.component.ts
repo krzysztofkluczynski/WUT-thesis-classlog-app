@@ -133,7 +133,7 @@ export class SubmittedTaskDetailsComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/student/tasks']);
+    this.router.navigate(['/teacher/tasks']);
   }
 
   getCorrectAnswer(answers: AnswerDto[]): string | null {

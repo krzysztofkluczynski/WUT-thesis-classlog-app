@@ -1,14 +1,17 @@
 package com.example.classlog.dto;
 
-import com.example.classlog.entities.Question;
+import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-
-import java.util.List;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class QuestionWithAnswersDto {
-    private QuestionDto question;
-    private List<AnswerDto> answers;
+
+  private QuestionDto question;
+  private List<AnswerDto> answers;
 }

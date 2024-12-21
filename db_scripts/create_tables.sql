@@ -12,7 +12,7 @@ CREATE TABLE classlog_user (
     email VARCHAR(255) UNIQUE NOT NULL,
     password TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    role_id BIGINT REFERENCES role(role_id) ON DELETE RESTRICT
+    role_id BIGINT NOT NULL REFERENCES role(role_id) ON DELETE RESTRICT
 );
 
 -- Creating the CLASS table
@@ -55,7 +55,7 @@ CREATE TABLE file (
 -- Creating the POST table
 CREATE TABLE post (
     post_id BIGSERIAL PRIMARY KEY,
-    class_id BIGINT REFERENCES class(class_id) ON DELETE CASCADE, -- Cascade delete for class
+    class_id BIGINT NOT REFERENCES class(class_id) ON DELETE CASCADE, -- Cascade delete for class
     user_id BIGINT REFERENCES classlog_user(user_id) ON DELETE CASCADE, -- Cascade delete for user
     title VARCHAR(255),
     content TEXT,

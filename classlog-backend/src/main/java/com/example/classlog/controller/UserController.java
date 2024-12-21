@@ -3,12 +3,17 @@ package com.example.classlog.controller;
 import com.example.classlog.dto.ChangePasswordDto;
 import com.example.classlog.dto.UserDto;
 import com.example.classlog.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class UserController {
@@ -41,13 +46,15 @@ public class UserController {
     }
 
     @PutMapping("/users/{userId}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable Long userId, @RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> updateUser(@PathVariable Long userId,
+        @RequestBody UserDto userDto) {
         UserDto updatedUser = userService.updateUser(userId, userDto);
         return ResponseEntity.ok(updatedUser);
     }
 
     @PostMapping("/users/change-password")
-    public ResponseEntity<UserDto> changePassword(@RequestBody ChangePasswordDto changePasswordDto) {
+    public ResponseEntity<UserDto> changePassword(
+        @RequestBody ChangePasswordDto changePasswordDto) {
         UserDto updatedUser = userService.changePassword(changePasswordDto);
         return ResponseEntity.ok(updatedUser);
     }
@@ -67,13 +74,13 @@ public class UserController {
 
     @GetMapping("/users/class/{classId}/role/{roleId}")
     public ResponseEntity<List<UserDto>> getUsersByClassAndRole(
-            @PathVariable long classId,
-            @PathVariable long roleId) {
+        @PathVariable long classId,
+        @PathVariable long roleId) {
         List<UserDto> users = userService.getUsersByClass(classId);
 
         List<UserDto> filteredUsers = users.stream()
-                .filter(user -> user.getRole() != null && user.getRole().getId() == roleId)
-                .collect(Collectors.toList());
+            .filter(user -> user.getRole() != null && user.getRole().getId() == roleId)
+            .collect(Collectors.toList());
 
         return ResponseEntity.ok(filteredUsers);
     }

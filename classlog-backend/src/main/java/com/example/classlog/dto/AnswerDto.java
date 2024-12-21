@@ -1,14 +1,18 @@
 package com.example.classlog.dto;
 
-import com.example.classlog.entities.Question;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class AnswerDto {
-    private Long id; // Primary key (answer_id)
-    private QuestionDto question; // Foreign key reference to question
-    private Boolean isCorrect; // Indicates if the answer is correct
-    private String content; // Content of the answer
+
+  private Long id;
+  private QuestionDto question;
+  private Boolean isCorrect;
+  private String content;
 }

@@ -8,21 +8,21 @@ export class AuthService {
   private user: UserDto | null = null;
 
   constructor() {
-    const userData = window.localStorage.getItem('user_data');
+    const userData = window.sessionStorage.getItem('user_data');
     this.user = userData ? JSON.parse(userData) : null;
   }
 
   setUser(user: UserDto | null): void {
     this.user = user;
     if (user !== null) {
-      window.localStorage.setItem('user_data', JSON.stringify(user));
+      window.sessionStorage.setItem('user_data', JSON.stringify(user));
     } else {
-      window.localStorage.removeItem('user_data');
+      window.sessionStorage.removeItem('user_data');
     }
   }
 
   getUser(): UserDto | null {
-    const userData = window.localStorage.getItem('user_data');
+    const userData = window.sessionStorage.getItem('user_data');
     this.user = userData ? JSON.parse(userData) : null;
     return this.user;
   }

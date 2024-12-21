@@ -4,10 +4,10 @@ import com.example.classlog.dto.GradeDto;
 import com.example.classlog.entities.Grade;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {ClassMapper.class, UserMapper.class})
 public interface GradeMapper {
 
-    GradeDto toGradeDto(Grade grade);   // No custom mappings required since field types match directly
+  GradeDto toGradeDto(Grade grade);
 
-    Grade toEntity(GradeDto gradeDto);
+  Grade toEntity(GradeDto gradeDto);
 }
