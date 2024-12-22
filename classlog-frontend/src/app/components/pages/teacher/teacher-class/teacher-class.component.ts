@@ -18,7 +18,6 @@ import {FormsModule} from "@angular/forms";
 import {ClassDto} from "../../../../model/entities/class-dto";
 import {CreateClassWindowComponent} from "../popup-window/create-class-window/create-class-window.component";
 import {ShowClassCodeWindowComponent} from "../popup-window/show-class-code-window/show-class-code-window.component";
-import {ClassService} from "../../../../service/class-service/class-service.service";
 import {LessonInfoWindowComponent} from "../../../shared/lesson-info-window/lesson-info-window.component";
 
 @Component({
@@ -65,7 +64,6 @@ export class TeacherClassComponent implements OnInit {
     private router: Router,
     private globalNotificationHandler: GlobalNotificationHandler,
     private route: ActivatedRoute,
-    private classService: ClassService
   ) {}
 
   ngOnInit(): void {

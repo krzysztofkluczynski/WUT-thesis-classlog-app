@@ -11,7 +11,6 @@ import {AxiosService} from "../../../service/axios/axios.service";
 import {AuthService} from "../../../service/auth/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {GlobalNotificationHandler} from "../../../service/notification/global-notification-handler.service";
-import {ClassService} from "../../../service/class-service/class-service.service";
 import {FileDto} from "../../../model/entities/file-dto";
 import {parseDate} from "../../../utils/date-utils";
 import {

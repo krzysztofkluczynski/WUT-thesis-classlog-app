@@ -41,7 +41,6 @@ export class AddQuestionWindowComponent {
   constructor(
     private axiosService: AxiosService,
     private globalNotificationHandler: GlobalNotificationHandler,
-    private route: ActivatedRoute
   ) {}
 
   setActiveTab(tab: 'open' | 'close' | 'ready'): void {

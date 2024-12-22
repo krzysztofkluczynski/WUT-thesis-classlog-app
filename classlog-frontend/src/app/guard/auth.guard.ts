@@ -1,8 +1,8 @@
 import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { AuthService } from '../service/auth/auth.service';
-import { ErrorResponse } from '../model/error-response';
 import {GlobalNotificationHandler} from "../service/notification/global-notification-handler.service";
+import {ErrorResponse} from "../model/error/error-response";
 
 export const authGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);

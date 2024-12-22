@@ -24,7 +24,6 @@ export class JoinClassWindowComponent {
     private axiosService: AxiosService,
     private router: Router,
     private globalNotificationHandler: GlobalNotificationHandler,
-    private route: ActivatedRoute
   ) {}
 
 

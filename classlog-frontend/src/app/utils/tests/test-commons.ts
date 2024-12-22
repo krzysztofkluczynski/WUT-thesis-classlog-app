@@ -1,5 +1,7 @@
-import { of } from 'rxjs';
+import {EMPTY, Observable, of, Subject} from 'rxjs';
 import { Component } from '@angular/core';
+import {createMockUserDto} from "../create-mock-user";
+import {HeaderOptions} from "../header-options";
 
 // Mock HeaderComponent
 @Component({
@@ -10,14 +12,19 @@ export class MockHeaderComponent {}
 
 // Mock HeaderService
 export class MockHeaderService {
-  selectedOption$ = of(null);
+  selectedOption$ = of<HeaderOptions | null>(null); // Allow HeaderOptions or null
   setSelectedOption = jasmine.createSpy('setSelectedOption').and.stub();
   getSelectedOption = jasmine.createSpy('getSelectedOption').and.returnValue(null);
 }
 
+
 // Mock Router
 export class MockRouter {
   navigate = jasmine.createSpy('navigate').and.callFake((commands: any[], extras?: any) => {});
+  navigateByUrl = jasmine.createSpy('navigateByUrl').and.callFake((url: string, extras?: any) => {
+    return Promise.resolve(true); // Simulate successful navigation
+  });
+  events: Observable<any> = EMPTY; // Provide a default empty observable
 }
 
 // Mock AuthService
@@ -32,6 +39,7 @@ export class MockAuthService {
   });
   getAuthToken = jasmine.createSpy('getAuthToken').and.returnValue('mock-token');
   logout = jasmine.createSpy('logout').and.stub();
+  getUserWithoutToken = jasmine.createSpy('getUserWithoutToken').and.returnValue(createMockUserDto(1, 'Mock User', 'Mock Surname'));
 }
 
 // Mock AxiosService
@@ -49,6 +57,6 @@ export class MockAxiosService {
 
 // Mock GlobalNotificationHandler
 export class MockGlobalNotificationHandler {
-  handleMessage = jasmine.createSpy('handleMessage').and.stub();
-  handleError = jasmine.createSpy('handleError').and.stub();
+  handleMessage = jasmine.createSpy('handleMessage');
+  handleError = jasmine.createSpy('handleError');
 }

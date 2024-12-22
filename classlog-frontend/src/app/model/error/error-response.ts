@@ -9,7 +9,6 @@ export class ErrorResponse {
     this.details = details;
   }
 
-  // Optional: Add methods to set and get properties if needed
   setStatusCode(statusCode: number): void {
     this.statusCode = statusCode;
   }

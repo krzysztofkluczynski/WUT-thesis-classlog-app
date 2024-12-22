@@ -242,7 +242,7 @@ export class TaskCreatorComponent implements OnInit {
 
 
 // Helper function for sending closed question
-  private sendClosedQuestion(closedQuestion: ClosedQuestion, fileDto: FileDto | null): void {
+  protected sendClosedQuestion(closedQuestion: ClosedQuestion, fileDto: FileDto | null): void {
     const payload = [
       {
         question: {
@@ -271,7 +271,7 @@ export class TaskCreatorComponent implements OnInit {
   }
 
 // Helper function for sending open question
-  private sendOpenQuestion(openQuestion: OpenQuestion, fileDto: FileDto | null): void {
+  protected sendOpenQuestion(openQuestion: OpenQuestion, fileDto: FileDto | null): void {
     const payload = [{
       question: {
         questionId: null,
@@ -365,7 +365,7 @@ export class TaskCreatorComponent implements OnInit {
     console.log(`Removed open question from base at index ${index}, ID: ${removedQuestionId}`);
   }
 
-  private removeQuestionIdFromBase(questionId: number): void {
+  protected removeQuestionIdFromBase(questionId: number): void {
     const index = this.questionIdsFromBase.indexOf(questionId);
     if (index !== -1) {
       this.questionIdsFromBase.splice(index, 1);
@@ -376,7 +376,7 @@ export class TaskCreatorComponent implements OnInit {
   }
 
 
-  private calculateScore(): number {
+  protected calculateScore(): number {
     let score = 0;
 
     [

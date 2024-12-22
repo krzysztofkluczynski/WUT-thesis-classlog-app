@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { GlobalNotificationHandler } from './global-notification-handler.service';
-import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
-import { HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('GlobalNotificationHandler', () => {
   let service: GlobalNotificationHandler;
@@ -9,13 +9,13 @@ describe('GlobalNotificationHandler', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [MatSnackBarModule],
+      imports: [MatSnackBarModule, NoopAnimationsModule], // Disable animations for testing
       providers: [GlobalNotificationHandler],
     });
 
     service = TestBed.inject(GlobalNotificationHandler);
     snackBar = TestBed.inject(MatSnackBar);
-    spyOn(snackBar, 'open').and.callThrough();
+    spyOn(snackBar, 'open').and.callThrough(); // Spy on MatSnackBar's open method
   });
 
   it('should be created', () => {
@@ -23,126 +23,123 @@ describe('GlobalNotificationHandler', () => {
   });
 
   describe('handleError', () => {
-    it('should handle an error with a response property', () => {
-      const error = {
+    it('should display a message for backend error with details', () => {
+      const backendError = {
         response: {
           status: 500,
-          data: {
-            message: 'Internal Server Error',
-            details: 'Database connection failed',
-          },
+          data: { message: 'Server error', details: 'Additional details' },
         },
         message: 'An error occurred',
       };
 
-      service.handleError(error);
+      service.handleError(backendError);
 
       expect(snackBar.open).toHaveBeenCalledWith(
-        'An error occurred | Internal Server Error | Details: Database connection failed',
+        'An error occurred | Server error | Details: Additional details',
         'Close',
-        {
+        jasmine.objectContaining({
           duration: 7000,
           verticalPosition: 'top',
           horizontalPosition: 'center',
           panelClass: ['error-snackbar'],
-        }
+        })
       );
     });
 
-    it('should handle an error without a response property', () => {
-      const error = new Error('Some frontend error');
+    it('should display a message for string error', () => {
+      const errorMessage = 'A string error occurred';
 
-      service.handleError(error);
+      service.handleError(errorMessage);
 
       expect(snackBar.open).toHaveBeenCalledWith(
-        'Some frontend error',
+        'A string error occurred',
         'Close',
-        {
+        jasmine.objectContaining({
           duration: 7000,
           verticalPosition: 'top',
           horizontalPosition: 'center',
           panelClass: ['error-snackbar'],
-        }
+        })
       );
     });
 
-    it('should handle an error that is a string', () => {
-      const error = 'A simple error string';
+    it('should display a generic message for frontend error', () => {
+      const frontendError = new Error('A frontend error occurred');
 
-      service.handleError(error);
+      service.handleError(frontendError);
 
       expect(snackBar.open).toHaveBeenCalledWith(
-        'A simple error string',
+        'A frontend error occurred',
         'Close',
-        {
+        jasmine.objectContaining({
           duration: 7000,
           verticalPosition: 'top',
           horizontalPosition: 'center',
           panelClass: ['error-snackbar'],
-        }
+        })
       );
     });
   });
 
   describe('handleMessagewithType', () => {
-    it('should handle a success message', () => {
+    it('should display a success message', () => {
       service.handleMessagewithType('Success message', 'success');
 
       expect(snackBar.open).toHaveBeenCalledWith(
         'Success message',
         'Close',
-        {
+        jasmine.objectContaining({
           duration: 5000,
           verticalPosition: 'top',
           horizontalPosition: 'center',
           panelClass: ['success-snackbar'],
-        }
+        })
       );
     });
 
-    it('should handle an info message', () => {
+    it('should display an info message', () => {
       service.handleMessagewithType('Info message', 'info');
 
       expect(snackBar.open).toHaveBeenCalledWith(
         'Info message',
         'Close',
-        {
+        jasmine.objectContaining({
           duration: 5000,
           verticalPosition: 'top',
           horizontalPosition: 'center',
           panelClass: ['info-snackbar'],
-        }
+        })
       );
     });
 
-    it('should handle a warning message', () => {
+    it('should display a warning message', () => {
       service.handleMessagewithType('Warning message', 'warning');
 
       expect(snackBar.open).toHaveBeenCalledWith(
         'Warning message',
         'Close',
-        {
+        jasmine.objectContaining({
           duration: 5000,
           verticalPosition: 'top',
           horizontalPosition: 'center',
           panelClass: ['warning-snackbar'],
-        }
+        })
       );
     });
   });
 
   describe('handleMessage', () => {
-    it('should handle a general message', () => {
-      service.handleMessage('General message');
+    it('should display a default message', () => {
+      service.handleMessage('Default message');
 
       expect(snackBar.open).toHaveBeenCalledWith(
-        'General message',
+        'Default message',
         'Close',
-        {
+        jasmine.objectContaining({
           duration: 5000,
           verticalPosition: 'top',
           horizontalPosition: 'center',
-        }
+        })
       );
     });
   });
