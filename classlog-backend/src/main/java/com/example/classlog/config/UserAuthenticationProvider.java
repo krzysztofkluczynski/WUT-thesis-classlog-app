@@ -39,7 +39,7 @@ public class UserAuthenticationProvider {
 
   public String createToken(UserDto user) {
     Date now = new Date();
-    Date validity = new Date(now.getTime() + 3 * 3600000); // 3 hours
+    Date validity = new Date(now.getTime() + 45000); // 3 hours
 
     Algorithm algorithm = Algorithm.HMAC256(secretKey);
     return JWT.create()
@@ -54,47 +54,77 @@ public class UserAuthenticationProvider {
 
 
   public Authentication validateToken(String token) {
-    try {
-      Algorithm algorithm = Algorithm.HMAC256(secretKey);
+    Algorithm algorithm = Algorithm.HMAC256(secretKey);
 
-      JWTVerifier verifier = JWT.require(algorithm).build();
-      DecodedJWT decoded = verifier.verify(token);
+    JWTVerifier verifier = JWT.require(algorithm).build();
+    DecodedJWT decoded = verifier.verify(token);
 
-      UserDto user = UserDto.builder()
-          .email(decoded.getSubject())
-          .name(decoded.getClaim("name").asString())
-          .surname(decoded.getClaim("surname").asString())
-          .role(roleRepository.getByRoleName(decoded.getClaim("role").asString()))
-          .build();
+    UserDto user = UserDto.builder()
+        .email(decoded.getSubject())
+        .name(decoded.getClaim("name").asString())
+        .surname(decoded.getClaim("surname").asString())
+        .role(roleRepository.getByRoleName(decoded.getClaim("role").asString()))
+        .build();
 
-      SimpleGrantedAuthority authority = new SimpleGrantedAuthority(
-          "ROLE_" + user.getRole().getRoleName());
+    SimpleGrantedAuthority authority = new SimpleGrantedAuthority(
+        "ROLE_" + user.getRole().getRoleName());
 
-      return new UsernamePasswordAuthenticationToken(user, null, Collections.singleton(authority));
-    } catch (com.auth0.jwt.exceptions.TokenExpiredException e) {
-      throw new AppException("Token has expired", HttpStatus.INTERNAL_SERVER_ERROR);
-    } catch (Exception e) {
-      throw new RuntimeException("Invalid token", e);
-    }
+    return new UsernamePasswordAuthenticationToken(user, null, Collections.singleton(authority));
   }
 
   public Authentication validateTokenStrongly(String token) {
+    Algorithm algorithm = Algorithm.HMAC256(secretKey);
+
+    JWTVerifier verifier = JWT.require(algorithm).build();
+    DecodedJWT decoded = verifier.verify(token);
+
+    UserDto user = userService.findByEmail(decoded.getSubject());
+
+    SimpleGrantedAuthority authority = new SimpleGrantedAuthority(
+        "ROLE_" + user.getRole().getRoleName());
+
+    return new UsernamePasswordAuthenticationToken(user, null, Collections.singleton(authority));
+  }
+
+  public UserDto refreshToken(UserDto userDto) {
+    String oldToken = userDto.getToken();
+    if (oldToken == null || oldToken.isEmpty()) {
+      throw new AppException("Token is required", HttpStatus.BAD_REQUEST);
+    }
+
     try {
+      DecodedJWT decodedJWT = JWT.decode(oldToken);
+
       Algorithm algorithm = Algorithm.HMAC256(secretKey);
+      algorithm.verify(decodedJWT);
 
-      JWTVerifier verifier = JWT.require(algorithm).build();
-      DecodedJWT decoded = verifier.verify(token);
+      String email = decodedJWT.getSubject();
+      String name = decodedJWT.getClaim("name").asString();
+      String surname = decodedJWT.getClaim("surname").asString();
+      String roleName = decodedJWT.getClaim("role").asString();
 
-      UserDto user = userService.findByEmail(decoded.getSubject());
+      UserDto existingUser = userService.findByEmail(email);
+      if (existingUser == null) {
+        throw new AppException("User not found", HttpStatus.NOT_FOUND);
+      }
 
-      SimpleGrantedAuthority authority = new SimpleGrantedAuthority(
-          "ROLE_" + user.getRole().getRoleName());
+      String newToken = createToken(existingUser);
+      System.out.println("new token: " + newToken);
 
-      return new UsernamePasswordAuthenticationToken(user, null, Collections.singleton(authority));
+      return UserDto.builder()
+          .id(existingUser.getId())
+          .name(name)
+          .surname(surname)
+          .email(email)
+          .role(existingUser.getRole())
+          .token(newToken)
+          .createdAt(existingUser.getCreatedAt())
+          .build();
+
     } catch (com.auth0.jwt.exceptions.TokenExpiredException e) {
-      throw new AppException("Token has expired", HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new AppException("Token has expired", HttpStatus.UNAUTHORIZED);
     } catch (Exception e) {
-      throw new RuntimeException("Invalid token", e);
+      throw new AppException("Invalid token", HttpStatus.UNAUTHORIZED);
     }
   }
 
