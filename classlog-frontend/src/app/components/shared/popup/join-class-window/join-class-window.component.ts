@@ -38,7 +38,6 @@ export class JoinClassWindowComponent {
     }).then((response: { data: string }) => {
       this.globalNotificationHandler.handleMessage(response.data);
     }).catch((error: any) => {
-      console.error('Failed to add user to class');
       this.globalNotificationHandler.handleError(error);
     });
     this.closeWindow();

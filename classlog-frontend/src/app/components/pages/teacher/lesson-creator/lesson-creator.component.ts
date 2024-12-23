@@ -58,7 +58,6 @@ export class LessonCreatorComponent implements OnInit {
     const lessonId: number = Number(this.route.snapshot.queryParams['lessonId']);
 
     this.editMode = this.route.snapshot.queryParams['editMode'] === 'true';
-    console.log('Edit mode: ' + this.editMode);
 
     // Fetch all students in the class
     this.axiosService.request('GET', `/users/class/${this.classId}/role/2`, {}).then(
@@ -66,7 +65,7 @@ export class LessonCreatorComponent implements OnInit {
         this.studentListFromOneClass = response.data.map(student => ({
           ...student,
           createdAt: parseDate(student.createdAt),
-          isPresent: false, // Default to false initially
+          isPresent: false,
         }));
         this.filterStudents();
 
@@ -132,13 +131,11 @@ export class LessonCreatorComponent implements OnInit {
   }
 
   createLesson() {
-    // Combine date and time into a single Date object
-    console.log(this.lessonDate, this.lessonTime);
-    const [hours, minutes] = this.lessonTime.split(':').map(Number); // Extract hours and minutes
-    const date = new Date(this.lessonDate); // Initialize date from lessonDate
-    date.setHours(hours+1, minutes, 0, 0); // Set hours, minutes, and seconds
+    const [hours, minutes] = this.lessonTime.split(':').map(Number);
+    const date = new Date(this.lessonDate);
+    date.setHours(hours+1, minutes, 0, 0);
 
-    const formattedDateTime = date.toISOString().slice(0, -1); // '2024-10-31T14:30:00'
+    const formattedDateTime = date.toISOString().slice(0, -1);
     console.log('Formatted date:', formattedDateTime);
 
 
@@ -156,7 +153,6 @@ export class LessonCreatorComponent implements OnInit {
       this.axiosService.request('POST', '/lessons', lessonPayload)
         .then((response: { data: LessonDto }) => {
           this.createdLesson = response.data;
-          console.log('Lesson created:', this.createdLesson);
 
           this.globalNotificationHandler.handleMessage("Lesson created successfully");
 
@@ -165,10 +161,8 @@ export class LessonCreatorComponent implements OnInit {
             .map(({ isPresent, ...rest }) => rest);
 
           if (!this.createdLesson?.lessonId) {
-            console.error('Lesson ID is missing or invalid:', this.createdLesson);
             return;
           }
-          console.log(this.createdLesson)
 
           this.axiosService.request('POST', '/presence/add/students', {
             lessonId: this.createdLesson?.lessonId,
@@ -176,14 +170,12 @@ export class LessonCreatorComponent implements OnInit {
           }).then((response: { data: string }) => {
             this.globalNotificationHandler.handleMessage(response.data);
           }).catch((error: any) => {
-            console.error('Failed to add users to class');
             this.globalNotificationHandler.handleError('Failed to add users to class. Please try again.');
           });
 
 
         })
         .catch((error: any) => {
-          console.error('Failed to create class:', error);
           this.globalNotificationHandler.handleError(error);
         });
       } else {
@@ -197,8 +189,6 @@ export class LessonCreatorComponent implements OnInit {
         content: this.lessonNotes
       }
 
-      console.log(lessonPayload);
-
       this.axiosService.request('PUT', '/lessons/update', lessonPayload)
         .then((response: { data: string }) => {
         this.globalNotificationHandler.handleMessage(response.data);
@@ -207,19 +197,13 @@ export class LessonCreatorComponent implements OnInit {
         this.axiosService.request('PUT', `/presence/update/${this.editModeLessonDto?.lessonId}`,
           this.studentListFromOneClass
             .filter(student => student.isPresent)
-            .map(student => student.id) // Send the array directly
+            .map(student => student.id)
         ).then((response: { data: string }) => {
           this.globalNotificationHandler.handleMessage(response.data);
         }).catch((error: any) => {
           console.error('Failed to update presence list');
           this.globalNotificationHandler.handleError(error);
         });
-
-
-
-
-
-
       }).catch((error: any) => {
         console.error('Failed to update lesson');
         this.globalNotificationHandler.handleError(error);

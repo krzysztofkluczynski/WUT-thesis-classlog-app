@@ -64,7 +64,6 @@ export class TeacherGradesComponent implements OnInit {
       }
     ).catch((error: any) => {
       this.globalNotificationHandler.handleError(error);
-      console.error('Failed to fetch classes:', error);
     });
 
     // Fetch all students
@@ -78,15 +77,12 @@ export class TeacherGradesComponent implements OnInit {
       }
     ).catch((error: any) => {
       this.globalNotificationHandler.handleError(error);
-      console.error('Failed to fetch all users:', error);
     });
   }
 
-  // Load students based on selected class
   loadStudents(): void {
 
     if (this.selectedClassId === null) {
-      console.log("Selected class ID is null, not fetching students");
       this.studentListFromOneClass = [];
       return;
     }
@@ -101,7 +97,6 @@ export class TeacherGradesComponent implements OnInit {
       }
     ).catch((error: any) => {
       this.globalNotificationHandler.handleError(error);
-      console.error('Failed to fetch students:', error);
     });
 
     this.axiosService.request('GET', `/grades/class/${this.selectedClassId}`, {}).then(
@@ -110,16 +105,13 @@ export class TeacherGradesComponent implements OnInit {
           ...grade,
           createdAt: parseDate(grade.createdAt)
         }));
-        console.log('Grades from one class:', this.gradesFromOneClass);
       }
     ).catch((error: any) => {
       this.globalNotificationHandler.handleError(error);
-      console.error('Failed to fetch grades:', error);
     });
 
   }
 
-  // Filter students based on search query
   filterStudents(): void {
     const searchQueryLower = this.searchQuery.toLowerCase();
 
@@ -140,7 +132,6 @@ export class TeacherGradesComponent implements OnInit {
   protected readonly getFullName = getFullName;
 
   addGradeToList(newGrade: GradeDto): void {
-    console.log('Adding new grade to list:', newGrade);
     this.gradesFromOneClass.push(newGrade);
 
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {

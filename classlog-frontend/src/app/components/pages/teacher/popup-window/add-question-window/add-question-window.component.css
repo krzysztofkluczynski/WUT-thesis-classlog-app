@@ -1,19 +1,18 @@
-/* Modal Overlay */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Dim background */
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
 }
 
-/* Modal Container */
+
 .modal-container {
   position: fixed;
-  top: 50%; /* Center vertically */
-  left: 50%; /* Center horizontally */
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fffde6;
   padding: 20px;
@@ -22,11 +21,10 @@
   z-index: 1000;
   width: 90vh;
   max-height: 80vh;
-  overflow-y: auto; /* Enable scrolling for content */
+  overflow-y: auto;
   box-sizing: border-box;
 }
 
-/* Modal Header */
 .modal-header {
   display: flex;
   justify-content: space-between;
@@ -52,7 +50,6 @@
   color: #000;
 }
 
-/* Modal Footer */
 .modal-footer {
   display: flex;
   justify-content: flex-end;
@@ -75,7 +72,6 @@
   background-color: #218838;
 }
 
-/* Tab Navigation */
 .tab-navigation {
   display: flex;
   justify-content: space-between;
@@ -105,27 +101,24 @@
   background-color: #ffd54f;
 }
 
-/* Tab Content */
 .tab-content {
   padding: 20px;
 }
 
-/* Option Container */
 .option-container {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
-  gap: 10px; /* Add spacing between elements */
+  gap: 10px;
 }
 
-/* Correct Option Checkbox */
+
 .option-container input[type="radio"] {
   margin-right: 10px;
 }
 
-/* Answer Input Field */
 .option-container input[type="text"] {
-  flex: 1; /* Input expands to fill available space */
+  flex: 1;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -133,7 +126,6 @@
   box-sizing: border-box;
 }
 
-/* Remove Button */
 .remove-button {
   background-color: #ff6666;
   border: none;
@@ -150,7 +142,6 @@
   background-color: #ff3333;
 }
 
-/* Add Option Button */
 .yellow-button {
   background-color: #f5c000;
   border: none;
@@ -173,7 +164,6 @@
   transform: scale(0.95);
 }
 
-/* Form Fields */
 textarea,
 input[type="text"] {
   width: 100%;
@@ -193,7 +183,6 @@ input[type="file"] {
   margin-top: 10px;
 }
 
-/* Utility Classes */
 .flex {
   display: flex;
 }
@@ -206,10 +195,9 @@ input[type="file"] {
   justify-content: space-between;
 }
 
-/* Ready Questions Container */
 .ready-questions-container {
-  max-height: 200px; /* Limit height for scrolling */
-  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: 200px;
+  overflow-y: auto;
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 10px;
@@ -217,14 +205,12 @@ input[type="file"] {
   background-color: #f9f9f9;
 }
 
-/* Ready Questions List */
 .ready-questions-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-/* Ready Question Item */
 .ready-question-item {
   padding: 10px;
   margin-bottom: 5px;
@@ -245,10 +231,9 @@ input[type="file"] {
 }
 
 
-/* Highlight selected question */
 .ready-question-item.selected {
-  background-color: #f5c000; /* Highlight color */
-  color: white; /* Text color for the highlight */
+  background-color: #f5c000;
+  color: white;
   font-weight: bold;
-  border-color: #ffa500; /* Border color for highlight */
+  border-color: #ffa500;
 }

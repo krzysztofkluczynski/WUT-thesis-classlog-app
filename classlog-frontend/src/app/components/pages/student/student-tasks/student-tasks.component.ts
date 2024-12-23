@@ -30,7 +30,7 @@ export class StudentTasksComponent {
   waitingTasks: TaskDto[] = [];
   submittedTasks: TaskDto[] = [];
   notSubmittedTasks: TaskDto[] = [];
-  overdueTasks: ExtendedTaskDto[] = []; // Combined and processed list
+  overdueTasks: ExtendedTaskDto[] = [];
 
   constructor(
     private axiosService: AxiosService,
@@ -57,7 +57,6 @@ export class StudentTasksComponent {
       })
       .catch((error: any) => {
         this.globalNotificationHandler.handleError(error);
-        console.error('Failed to fetch waiting tasks:', error);
       });
   }
 
@@ -74,7 +73,6 @@ export class StudentTasksComponent {
       })
       .catch((error: any) => {
         this.globalNotificationHandler.handleError(error);
-        console.error('Failed to fetch submitted tasks:', error);
       });
   }
 
@@ -91,7 +89,6 @@ export class StudentTasksComponent {
       })
       .catch((error: any) => {
         this.globalNotificationHandler.handleError(error);
-        console.error('Failed to fetch not submitted tasks:', error);
       });
   }
 
@@ -117,7 +114,6 @@ export class StudentTasksComponent {
   }
 
   onToDoTaskClick(task: TaskDto): void {
-    console.log('Task clicked:', task);
     this.router.navigate(['/student/task/solve/', task.id]);
   }
 

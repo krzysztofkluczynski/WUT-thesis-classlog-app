@@ -3,13 +3,11 @@
 <div class="full-screen-container">
   <div class="tiles-container">
 
-    <!-- Big tile for To Do tasks -->
     <div class="big-tile">
       <h1>Tasks</h1>
       <h5>To Do</h5>
       <hr class="divider">
 
-      <!-- Waiting Tasks Table -->
       <div class="table-responsive">
         <table class="table table-hover table-bordered">
           <thead class="table-dark">
@@ -32,13 +30,11 @@
       </div>
     </div>
 
-    <!-- Yellow box for all tasks (submitted and not submitted) -->
     <div class="small-tiles-container">
       <h1>Task Status</h1>
       <hr class="divider">
 
       <div class="submitted-not-submitted-container">
-        <!-- Combined tasks -->
         <div *ngFor="let task of overdueTasks" [ngClass]="getTaskStatusClass(task)" class="task-card" (click)="onSubmittedTaskClick(task)">
           <div class="task-title">{{ task.taskName }}</div>
           <div class="task-due-date">Due: {{ task.dueDate | date: 'dd.MM.yyyy HH:mm' }}</div>

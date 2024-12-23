@@ -9,7 +9,7 @@ import {NgForOf} from "@angular/common";
     NgForOf
   ],
   templateUrl: './class-tile.component.html',
-  styleUrls: ['./class-tile.component.css'] // Corrected to "styleUrls"
+  styleUrls: ['./class-tile.component.css']
 })
 export class ClassTileComponent {
   @Input() title: string | undefined = 'Class Title';

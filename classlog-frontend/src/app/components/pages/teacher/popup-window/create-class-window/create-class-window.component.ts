@@ -72,20 +72,18 @@ export class CreateClassWindowComponent {
     }
     this.axiosService.request('POST', '/classes', requestPayload)
       .then((response: { data: ClassDto }) => {
-        const createdClass = response.data; // Retrieve the created class object
-        console.log('Class created:', createdClass);
+        const createdClass = response.data;
 
-        this.classCreated.emit(createdClass); // Assuming you have a classList array
+        this.classCreated.emit(createdClass);
 
         // Notify the user of success
         this.globalNotificationHandler.handleMessage("Class created successfully");
       })
       .catch((error: any) => {
-        console.error('Failed to create class:', error);
         this.globalNotificationHandler.handleError(error);
       })
       .finally(() => {
-        this.closeWindow(); // Close the modal regardless of success or failure
+        this.closeWindow();
       });
   }
 }

@@ -55,7 +55,6 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
         this.loadQuestionsWithAnswers(taskId);
       },
       (error: any) => {
-        console.error('Failed to fetch task:', error);
         this.globalNotificationHandler.handleError(error);
       }
     );
@@ -75,7 +74,6 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
         this.fetchFiles();
       },
       (error: any) => {
-        console.error('Failed to fetch questions and answers data:', error);
         this.globalNotificationHandler.handleError(error);
       }
     );
@@ -90,7 +88,6 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
           (response) => {
             const contentType = response.headers["content-type"];
             if (contentType !== "audio/mpeg") {
-              console.warn(`File ID ${fileId} is not an MP3 file.`);
               this.globalNotificationHandler.handleError("Some files are not in MP3 format.");
               return;
             }
@@ -102,7 +99,6 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
             this.questionsWithAnswers[index].file = new File([blob], `question_${fileId}.mp3`, { type: contentType });
           },
           (error) => {
-            console.error(`Failed to download file ID ${fileId}:`, error);
             this.globalNotificationHandler.handleError("Failed to download some files.");
           }
         );

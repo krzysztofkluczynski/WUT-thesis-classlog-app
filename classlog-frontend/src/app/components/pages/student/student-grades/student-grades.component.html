@@ -20,16 +20,12 @@
         </div>
       </div>
 
-      <!-- Right Section: Grades -->
       <div class="grades-container">
         <h2>User Grades</h2>
 
-        <!-- Loop over grouped grades -->
         <div *ngFor="let group of groupedGrades" class="class-grades">
-          <!-- Class Name -->
           <h3>{{ group.className }}</h3>
           <div class="grades-grid">
-            <!-- Grades under the class -->
             <div *ngFor="let grade of group.grades" class="grade-item">
               <p><strong>Grade: </strong>{{ grade.grade }}</p>
               <p><strong>Wage: </strong>{{ grade.wage }}</p>

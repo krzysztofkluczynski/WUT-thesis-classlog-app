@@ -1,53 +1,48 @@
-/* Parent container to hold all tiles */
 .class-tiles-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 equal-width tiles in a row */
-  gap: 1rem; /* Space between tiles */
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
 }
 
-/* Individual tiles */
 .class-tile {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Distribute content evenly */
-  width: 100%; /* Ensures the tile uses all its grid cell */
-  height: 200px; /* Fixed height to make tiles consistent */
+  justify-content: space-between;
+  width: 100%;
+  height: 200px;
   padding: 1rem;
   border: 2px solid #f1c40f;
   border-radius: 10px;
   background-color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden; /* Ensures no overflow */
-  transition: background-color 0.3s, transform 0.2s; /* Smooth hover effect */
+  overflow: hidden;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
-/* Hover effect */
 .class-tile:hover {
-  background-color: #f5c000; /* Change to yellow on hover */
-  opacity: 0.8; /* Slight opacity for hover effect */
-  transform: translateY(-5px); /* Lift the tile slightly on hover */
+  background-color: #f5c000;
+  opacity: 0.8;
+  transform: translateY(-5px);
 }
 
-/* Tile title */
+
 .class-title {
   font-size: 1.2rem;
-  font-weight: bold; /* Make title bold */
+  font-weight: bold;
   margin-bottom: 0.5rem;
   color: #000;
 }
 
-/* Scrollable and truncated description container */
 .class-description-container {
-  max-height: 80px; /* Adjust height for consistency */
-  overflow: hidden; /* Hide overflowing content */
-  text-overflow: ellipsis; /* Add ellipsis for truncated content */
-  white-space: nowrap; /* Prevent text wrapping */
+  max-height: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 0.9rem;
-  color: #555; /* Slightly muted text for description */
-  margin: 0; /* Remove any unnecessary margin */
+  color: #555;
+  margin: 0;
 }
 
-/* Teacher section */
 .teacher-text {
   font-size: 1rem;
   font-weight: bold;

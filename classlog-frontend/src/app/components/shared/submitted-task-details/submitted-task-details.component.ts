@@ -92,11 +92,9 @@ export class SubmittedTaskDetailsComponent implements OnInit {
             fileUrl: null,
           })),
         } as SubmittedTaskDto;
-        console.log('Submitted task details:', this.submittedTask);
         this.fetchFiles();
       },
       (error: any) => {
-        console.error('Failed to fetch submitted task details:', error);
         this.globalNotificationHandler.handleError(error);
       }
     );
@@ -105,14 +103,12 @@ export class SubmittedTaskDetailsComponent implements OnInit {
   private fetchFiles() {
     this.submittedTask.questionsWithAnswers.forEach((questionWithAnswers, index) => {
       const fileDto = questionWithAnswers.question.file;
-      console.log('File DTO:', fileDto);
       if (fileDto) {
         const fileId = fileDto.fileId;
         this.axiosService.requestDownload(`/files/download/${fileId}`, {}).then(
           (response) => {
             const contentType = response.headers["content-type"];
             if (contentType !== "audio/mpeg") {
-              console.warn(`File ID ${fileId} is not an MP3 file.`);
               this.globalNotificationHandler.handleError("Some files are not in MP3 format.");
               return;
             }
@@ -124,7 +120,6 @@ export class SubmittedTaskDetailsComponent implements OnInit {
             this.submittedTask.questionsWithAnswers[index].file = new File([blob], `question_${fileId}.mp3`, { type: contentType });
           },
           (error) => {
-            console.error(`Failed to download file ID ${fileId}:`, error);
             this.globalNotificationHandler.handleError("Failed to download some files.");
           }
         );
@@ -152,7 +147,6 @@ export class SubmittedTaskDetailsComponent implements OnInit {
   confirmEditScore() {
     this.isEditingScore = false;
 
-    console.log("submittedTask", this.submittedTask);
 
     if (this.newScore !== null && this.newScore >= 0 && this.newScore <= this.submittedTask.task.score) {
       const taskId = this.submittedTask.task.id;
@@ -171,7 +165,6 @@ export class SubmittedTaskDetailsComponent implements OnInit {
           this.newScore = null; // Reset the new score
         })
         .catch((error: any) => {
-          console.error("Failed to update score:", error);
           this.globalNotificationHandler.handleError("Failed to update score. Please try again.");
           this.newScore = null; // Reset the new score on error
         });

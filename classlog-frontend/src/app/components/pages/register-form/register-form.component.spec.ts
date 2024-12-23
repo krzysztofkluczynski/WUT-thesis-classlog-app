@@ -9,13 +9,12 @@ import { GlobalNotificationHandler } from '../../../service/notification/global-
 import {RegisterFormComponent} from "./register-form.component";
 import {createMockUserDto} from "../../../utils/create-mock-user";
 import {Component} from "@angular/core";
-import {LoginFormComponent} from "../login-form/login-form.component";
 import {HeaderService} from "../../../service/header/header.service";
 
 
 @Component({
   selector: 'app-header',
-  template: '' // Empty template as a mock
+  template: ''
 })
 class MockHeaderComponent {}
 

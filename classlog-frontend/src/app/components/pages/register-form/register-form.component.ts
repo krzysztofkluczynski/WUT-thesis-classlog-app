@@ -61,7 +61,6 @@ export class RegisterFormComponent {
         this.router.navigate(['/unknown']);
 
     }).catch((error: any) => {
-      console.error('Registration failed:', error);
         this.globalNotificationHandler.handleError('Registration failed. Please try again.');
     });
   });

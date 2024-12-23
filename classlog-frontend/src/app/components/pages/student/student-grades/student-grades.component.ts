@@ -60,13 +60,11 @@ export class StudentGradesComponent implements OnInit {
           };
         }).catch((error: any) => {
         this.globalNotificationHandler.handleError(error);
-        console.error('Failed to fetch user data:', error);
       });
 
       // Fetch grades data
       this.axiosService.request('GET', `/grades/user/${this.studentId}`, {}).then(
         (response: { data: GradeDto[] }) => {
-          console.log(response.data);
           const grades = response.data.map(grade => ({
             ...grade,
             createdAt: parseDate(grade.createdAt)
@@ -89,7 +87,6 @@ export class StudentGradesComponent implements OnInit {
           }));
         }).catch((error: any) => {
         this.globalNotificationHandler.handleError(error);
-        console.error('Failed to fetch grades:', error);
       });
     });
 
@@ -99,7 +96,6 @@ export class StudentGradesComponent implements OnInit {
           this.teacherClassesIds = response.data.map(classDto => classDto.id);
         }).catch((error: any) => {
         this.globalNotificationHandler.handleError(error);
-        console.error('Failed to fetch teacher classes:', error);
       });
     }
 

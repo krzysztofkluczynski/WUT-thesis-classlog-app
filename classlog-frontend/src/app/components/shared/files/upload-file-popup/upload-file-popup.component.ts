@@ -32,20 +32,16 @@ export class UploadFilePopupComponent {
     private globalNotificationHandler: GlobalNotificationHandler
   ) {}
 
-  ngOnInit(): void {
-    console.log('Class DTO:', this.classDto);
-  }
+  ngOnInit(): void {}
 
   closeWindow() {
     this.close.emit();
   }
 
-  // Capture the file selected by the user
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
   }
 
-  // Handle the confirm button click
   confirmSelection() {
     if (!this.selectedFile) {
       this.globalNotificationHandler.handleMessage('File or class data is missing!');
@@ -57,22 +53,19 @@ export class UploadFilePopupComponent {
       return;
     }
 
-    // Check file size (20MB = 20 * 1024 * 1024 bytes)
     const maxSizeInBytes = 20 * 1024 * 1024; // 20MB
     if (this.selectedFile.size > maxSizeInBytes) {
       this.globalNotificationHandler.handleMessage('File size exceeds 20MB. Please select a smaller file.');
       return;
     }
 
-    // Prepare fileDto payload
     const fileDto = {
       uploadedBy: this.authService.getUserWithoutToken(),
       assignedClass: this.classDto
     };
 
-    // Create FormData
     const formData = new FormData();
-    formData.append('file', this.selectedFile); // Add the file
+    formData.append('file', this.selectedFile);
     formData.append('fileDto', new Blob([JSON.stringify(fileDto)], { type: 'application/json' })); // Add the JSON as a Blob
 
     // Make the request
@@ -80,16 +73,14 @@ export class UploadFilePopupComponent {
       .then((response: { data: FileDto }) => {
         const responseData = response.data;
 
-        // Parse the date and construct a new FileDto object
         const newFileDto = {
           ...responseData,
-          createdAt: parseDate(responseData.createdAt), // Use your date parsing function
+          createdAt: parseDate(responseData.createdAt),
         };
 
         console.log('File uploaded successfully:', newFileDto);
         this.globalNotificationHandler.handleMessage("File uploaded successfully");
 
-        // Emit the parsed FileDto
         this.fileAdded.emit(newFileDto);
       })
       .catch((error) => {

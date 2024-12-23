@@ -1,25 +1,24 @@
-/* Ensure the HTML and body are taking full height */
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  overflow: hidden; /* Prevent scrolling for the full page */
+  overflow: hidden;
 }
 
 .full-screen-container {
   display: flex;
   flex-direction: column;
-  height: 90vh; /* Fill the remaining 90% of the viewport below the header */
-  overflow: hidden; /* Prevent scrolling */
+  height: 90vh;
+  overflow: hidden;
   padding-bottom: 20px;
 }
 
 .tiles-container {
   display: flex;
   gap: 20px;
-  flex: 1; /* Fill the remaining space below the header */
-  padding: 20px 20px 20px; /* Remove top padding to avoid overflow */
+  flex: 1;
+  padding: 20px 20px 20px;
   box-sizing: border-box;
   border-radius: 20px;
   overflow: hidden;
@@ -62,27 +61,25 @@ html, body {
 }
 
 .yellow-button {
-  background-color: #F5C000; /* Match the yellow button color */
+  background-color: #F5C000;
   border: none;
   color: black;
-  padding: 25px 40px; /* Further increase padding for a larger button */
-  font-size: 20px; /* Further increase font size */
+  padding: 25px 40px;
+  font-size: 20px;
   font-weight: bold;
-  border-radius: 30px; /* Adjust border-radius for a larger button */
+  border-radius: 30px;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+  transition: background-color 0.3s, transform 0.2s;
 }
 
-/* Hover effect for Yellow button */
 .yellow-button:hover {
-  background-color: #FFD54F; /* Lighter yellow on hover */
-  transform: scale(1.1); /* Enlarge more on hover */
+  background-color: #FFD54F;
+  transform: scale(1.1);
 }
 
-/* Active effect for Yellow button */
 .yellow-button:active {
-  background-color: #FBC02D; /* Slightly darker yellow on click */
-  transform: scale(0.95); /* Slightly shrink on click */
+  background-color: #FBC02D;
+  transform: scale(0.95);
 }
 
 

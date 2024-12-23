@@ -20,19 +20,19 @@ import {QuestionDto} from "../../../../../model/entities/question-dto";
   styleUrl: './add-question-window.component.css'
 })
 export class AddQuestionWindowComponent {
-  @Input() isOpen = false; // Modal visibility
+  @Input() isOpen = false;
   @Output() close = new EventEmitter<void>();
 
-  activeTab: 'open' | 'close' | 'ready' = 'close'; // Current tab
-  openQuestionText = ''; // Open question text
-  closeQuestionText = ''; // Close question text
-  closeOptions: string[] = ['']; // Options for close-ended questions
-  correctOption: number | null = null; // Index of the correct option
+  activeTab: 'open' | 'close' | 'ready' = 'close';
+  openQuestionText = '';
+  closeQuestionText = '';
+  closeOptions: string[] = [''];
+  correctOption: number | null = null;
   points: number | null = null;
-  readyQuestions: QuestionDto[] = []; // Ready questions
+  readyQuestions: QuestionDto[] = [];
 
-  selectedFile: File | null = null; // File attachment
-  openAnswer: string | null = null; // Open question answer
+  selectedFile: File | null = null;
+  openAnswer: string | null = null;
 
   readyQuestionId: number | null = null;
   @Output() questionSelected = new EventEmitter<OpenQuestion | ClosedQuestion | number>();
@@ -53,7 +53,6 @@ export class AddQuestionWindowComponent {
 
   onFileSelected(event: any, type: 'open' | 'close'): void {
     this.selectedFile = event.target.files[0];
-    console.log(`${type} question file selected:`, this.selectedFile);
   }
 
   addCloseOption(): void {
@@ -124,17 +123,14 @@ export class AddQuestionWindowComponent {
     this.axiosService.request('GET', '/questions', {}).then(
       (response: { data: QuestionDto[] }) => {
         this.readyQuestions = response.data;
-        console.log('Fetched ready questions:', this.readyQuestions);
       }
     ).catch((error: any) => {
       this.globalNotificationHandler.handleError(error);
-      console.error('Failed to fetch ready questions:', error);
   });
 }
 
   selectReadyQuestion(question: QuestionDto): void {
     this.readyQuestionId = question.questionId; // Set the selected question ID
-    console.log('Selected Ready Question:', question);
   }
 
 }

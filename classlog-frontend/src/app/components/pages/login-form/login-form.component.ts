@@ -46,14 +46,12 @@ export class LoginFormComponent implements OnInit{
       password: this.password
     }).then((response: { data: UserDto }) => {
       const user: UserDto = response.data;
-      console.log(user);
 
       this.authService.setUser(user);
 
       const userRole = this.authService.getUserRole();
       switch (userRole) {
         case 'Admin':
-          console.log('Admin');
           this.router.navigate(['/admin/students']);
           break;
         case 'Student':
@@ -66,7 +64,6 @@ export class LoginFormComponent implements OnInit{
           this.router.navigate(['/unknown']);
           break;
         default:
-          console.error('Unknown role:', userRole);
           this.router.navigate(['/login']);
           break;
       }

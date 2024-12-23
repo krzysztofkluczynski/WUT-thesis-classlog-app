@@ -1,23 +1,22 @@
 .full-screen-container {
   display: flex;
   flex-direction: column;
-  height: 90vh; /* Fill the remaining 90% of the viewport below the header */
-  overflow: hidden; /* Prevent scrolling */
+  height: 90vh;
+  overflow: hidden;
 }
 
-/* Content container below header */
 .tiles-container {
   display: flex;
   gap: 20px;
-  flex: 1; /* Take the remaining space below the header */
-  padding: 20px 20px 20px; /* Remove top padding to avoid overflow */
+  flex: 1;
+  padding: 20px 20px 20px;
   box-sizing: border-box;
-  overflow: hidden; /* Prevent scrolling for the container */
+  overflow: hidden;
 }
 
 .big-tile {
   background-color: #FFFDE0;
-  flex: 2; /* Occupy 2/3 of the space */
+  flex: 2;
   border-radius: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -25,7 +24,7 @@
   flex-direction: column;
   gap: 20px;
   box-sizing: border-box;
-  position: relative; /* Enable positioning for child elements */
+  position: relative;
 }
 
 .big-tile h1 {
@@ -33,17 +32,17 @@
 }
 
 .big-tile-content {
-  flex-grow: 1; /* Take up remaining space */
-  overflow-y: auto; /* Allow scrolling for content */
+  flex-grow: 1;
+  overflow-y: auto;
 }
 
 .button-container {
-  position: absolute; /* Place container relative to the big-tile */
-  bottom: 20px; /* Offset from the bottom */
-  left: 20px; /* Add some padding from left */
-  right: 20px; /* Add padding from right */
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
   display: flex;
-  justify-content: space-between; /* Spread buttons to opposite corners */
+  justify-content: space-between;
 }
 
 .yellow-button {
@@ -68,107 +67,97 @@
   transform: scale(0.95);
 }
 
-/* Right section: Small tiles container */
 .small-tiles-container {
-  flex: 1; /* Occupy 1/3 of the space */
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  height: 100%; /* Match the full height */
+  height: 100%;
   box-sizing: border-box;
   overflow: hidden;
 }
 
 .attendance-list {
   background-color: #FFFDE0;
-  flex: 1; /* Fill the available space */
+  flex: 1;
   border-radius: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 20px;
   display: flex;
   flex-direction: column;
-  overflow-y: auto; /* Allow scrolling for overflow content */
+  overflow-y: auto;
   box-sizing: border-box;
 }
 
-/* Divider line below General Information */
 .divider {
   border: 0;
   height: 2px;
   background: black;
-  margin: 0px 0 30px; /* Add spacing around the line */
+  margin: 0px 0 30px;
 }
 
-/* Form container styles */
 .form-container {
   width: 80%;
   display: flex;
   flex-direction: column;
-  gap: 15px; /* Space between form elements */
+  gap: 15px;
 }
 
-/* Subject Field Custom Styling */
 .custom-subject {
-  max-width: 300px; /* Limit the width */
-  margin: 0; /* Center the subject input */
+  max-width: 300px;
+  margin: 0;
 }
 
 .custom-subject .form-control {
-  background-color: white; /* Light yellow background */
+  background-color: white;
   border: 1px solid black;
   border-radius: 5px;
 }
 
-/* Date Field Custom Styling */
 .custom-date {
-  max-width: 250px; /* Limit the width */
+  max-width: 250px;
 }
 
 .custom-date .input-group {
-  background-color: white; /* Light yellow background */
+  background-color: white;
   border: 1px solid black;
   border-radius: 5px;
 }
 
-/* Time Field Custom Styling */
 .custom-time {
-  max-width: 250px; /* Limit the width */
+  max-width: 250px;
 }
 
 .custom-date .input-group {
-  background-color: white; /* Light yellow background */
+  background-color: white;
   border: 1px solid black;
   border-radius: 5px;
 }
 
-/* Shared Styles for Date and Time Fields */
 .custom-time .input-group {
-  background-color: white; /* Light yellow background */
+  background-color: white;
   border: 1px solid black;
   border-radius: 5px;
 }
 
-/* Notes Field Styling */
 .custom-notes .form-control {
-  background-color: white; /* Light yellow background */
+  background-color: white;
   border: 1px solid black;
   border-radius: 5px;
   height: 15vh;
 }
 
 
-/* Right section: Small tiles container */
 .small-tiles-container {
-  flex: 1; /* Occupy 1x the space of the left section */
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  height: 100%; /* Match the full height */
+  height: 100%;
   box-sizing: border-box;
   overflow: hidden;
 }
 
-/* Search bar styles */
 .search-bar {
   background-color: #FFFDE0;
   flex: 1;
@@ -181,18 +170,15 @@
   box-sizing: border-box;
 }
 
-/* Student list container */
 .student-list {
   margin-top: 20px;
   display: flex;
   flex-direction: column;
-  gap: 10px; /* Spacing between student tiles */
+  gap: 10px;
   overflow-y: auto;
-  max-height: 300px; /* Limit height for scrollable content */
+  max-height: 300px;
 }
 
-/* Individual student tile */
-/* Individual student tile */
 .student-tile {
   background-color: #ffffff;
   padding: 15px;
@@ -202,7 +188,7 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Move content and checkbox to opposite ends */
+  justify-content: space-between;
 }
 
 .student-tile:hover {
@@ -211,8 +197,8 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Checkbox styling */
+
 .student-tile .form-check-input {
   margin-left: 10px;
-  border: 3px solid #F5C000; /* Yellow border */
+  border: 3px solid #F5C000;
 }

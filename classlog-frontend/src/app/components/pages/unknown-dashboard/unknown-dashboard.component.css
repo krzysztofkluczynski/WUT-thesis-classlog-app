@@ -1,0 +1,16 @@
+.role-assignment-container {
+  text-align: center;
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.role-assignment-message {
+  font-size: 1.25rem;
+  color: #333;
+  font-weight: 500;
+  line-height: 1.5;
+}

@@ -43,11 +43,9 @@ export class LessonInfoWindowComponent implements OnInit {
       (response: { data: LessonDto }) => {
         this.lessonDto = response.data;
         this.lessonDto.lessonDate = parseDate(this.lessonDto.lessonDate);
-        console.log('Fetched lesson:', this.lessonDto);
       }
     ).catch((error: any) => {
       this.globalNotificationHandler.handleError(error);
-      console.error('Failed to fetch students:', error);
     });
   }
 
@@ -60,7 +58,6 @@ export class LessonInfoWindowComponent implements OnInit {
       .then((response: { data: string }) => {
       this.globalNotificationHandler.handleMessage(response.data);
     }).catch((error: any) => {
-      console.error('Failed to delete lesson');
       this.globalNotificationHandler.handleError(error);
     });
     this.closeWindow();

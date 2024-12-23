@@ -44,7 +44,6 @@ export class DeleteUserFromClassWindowComponent implements OnInit {
       })
       .catch((error: any) => {
         this.globalNotificationHandler.handleError(error);
-        console.error('Failed to fetch users:', error);
       });
   }
 
@@ -74,7 +73,6 @@ export class DeleteUserFromClassWindowComponent implements OnInit {
     }).then((response: { data: string }) => {
       this.globalNotificationHandler.handleMessage(response.data);
     }).catch((error: any) => {
-      console.error('Failed to delete users');
       this.globalNotificationHandler.handleError('Failed to delete users');
     });
     this.closeWindow();

@@ -2,12 +2,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px; /* Removed vertical padding to keep height consistent */
+  padding: 0 20px;
   background-color: #FBFBD2;
   border-bottom: 2px solid #eaeaea;
 
-  height: 10vh; /* Header occupies 10% of the viewport height */
-  max-height: 100px; /* Optional: Limit header height on very large screens */
+  height: 10vh;
+  max-height: 100px;
   box-sizing: border-box;
 }
 .menu-active {
@@ -33,7 +33,7 @@
 
 .nav-links-container {
   display: flex;
-  justify-content: flex-start; /* Aligns links to the left */
+  justify-content: flex-start;
   flex-grow: 1;
   font-weight: bold;
   gap: 80px;
@@ -42,7 +42,6 @@
 }
 
 .nav-link {
-  font-size: 18px;
   color: black;
   text-decoration: none;
   font-size: 1.6rem;
@@ -57,39 +56,39 @@
 }
 
 .dropdown-menu {
-  width: 200px; /* Increase the width of the dropdown menu */
-  padding: 8px 12px; /* Increase padding for a bigger look */
-  font-size: 16px; /* Increase font size for larger text */
-  background-color: #f8f9fa; /* Optional: Set background color */
+  width: 200px;
+  padding: 8px 12px;
+  font-size: 16px;
+  background-color: #f8f9fa;
 }
 
 .dropdown-item {
-  font-size: 16px; /* Increase the size of dropdown items */
-  padding: 10px 15px; /* Increase padding to make items bigger */
+  font-size: 16px;
+  padding: 10px 15px;
 }
 
 .profile-btn {
-  background-color: #F5C000; /* Match the yellow button color */
+  background-color: #F5C000;
   border: none;
   color: black;
   padding: 10px 20px;
   font-size: 24px;
   font-weight: bold;
-  border-radius: 20px; /* Rounded corners */
+  border-radius: 20px;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+  transition: background-color 0.3s, transform 0.2s;
 }
 
-/* Hover effect for New Grade button */
+
 .profile-btn:hover {
-  background-color: #FFD54F; /* Lighter yellow on hover */
-  transform: scale(1.05); /* Slightly enlarge the button */
+  background-color: #FFD54F;
+  transform: scale(1.05);
 }
 
-/* Active effect for New Grade button */
+
 .profile-btn:active {
-  background-color: #FBC02D; /* Slightly darker yellow on click */
-  transform: scale(0.95); /* Slightly shrink on click */
+  background-color: #FBC02D;
+  transform: scale(0.95);
 }
 
 .profile-btn i {

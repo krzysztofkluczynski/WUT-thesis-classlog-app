@@ -3,7 +3,6 @@
 <div class="full-screen-container">
   <div class="tiles-container">
 
-    <!-- Big tile on the left -->
     <div class="big-tile">
       <h1>Lesson creator</h1>
 
@@ -12,7 +11,6 @@
 
       <div class="form-container">
         <form>
-          <!-- Subject Input -->
           <div class="form-group mb-3 custom-subject">
             <label for="subject" class="form-label">Subject</label>
             <input
@@ -25,9 +23,7 @@
             >
           </div>
 
-          <!-- Date and Time Inputs -->
           <div class="row mb-3">
-            <!-- Date Input -->
             <div class="col-md-6 custom-date">
               <label for="date" class="form-label">Date</label>
               <div class="input-group">
@@ -42,7 +38,6 @@
               </div>
             </div>
 
-            <!-- Time Input -->
             <div class="col-md-6 custom-time">
               <label for="time" class="form-label">Time</label>
               <div class="input-group">
@@ -58,7 +53,6 @@
             </div>
           </div>
 
-          <!-- Notes Textarea -->
           <div class="form-group mb-3 custom-notes">
             <label for="notes" class="form-label">Notes</label>
             <textarea
@@ -73,7 +67,6 @@
         </form>
       </div>
 
-      <!-- Buttons -->
       <div class="button-container">
         <button
           class="yellow-button"
@@ -90,7 +83,6 @@
       </div>
     </div>
 
-    <!-- Small Tiles Container -->
     <div class="small-tiles-container">
       <div class="search-bar">
 
@@ -104,7 +96,6 @@
           (input)="filterStudents()"
         />
 
-        <!-- Check All Option -->
         <div class="form-check mb-2">
           <input
             type="checkbox"
@@ -115,7 +106,6 @@
           <label class="form-check-label" for="checkAll">Check All</label>
         </div>
 
-        <!-- Student List with Checkboxes -->
         <div class="student-list">
           <div *ngFor="let student of filteredStudentList" (click)="toggleStudentPresence(student)" class="form-check student-tile">
             <label class="form-check-label" for="checkbox-{{student.id}}">

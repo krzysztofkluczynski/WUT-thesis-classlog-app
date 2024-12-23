@@ -8,10 +8,6 @@ import { MockRouter, MockGlobalNotificationHandler, MockAuthService } from '../.
 import { TaskDto } from '../../../../model/entities/task-dto';
 import { QuestionWithAnswersDto } from '../../teacher/task-details/task-details.component';
 import { createMockUserDto } from '../../../../utils/create-mock-user';
-import { QuestionDto } from '../../../../model/entities/question-dto';
-import { AnswerDto } from '../../../../model/entities/answer-dto';
-import {QuestionType} from "../../../../model/entities/question-type-dto";
-import {FileDto} from "../../../../model/entities/file-dto";
 
 describe('TaskResolverComponent', () => {
   let component: TaskResolverComponent;

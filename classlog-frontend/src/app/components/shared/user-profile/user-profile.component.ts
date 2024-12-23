@@ -65,7 +65,6 @@ export class UserProfileComponent implements OnInit {
       })
       .catch((error: any) => {
         this.globalNotificationHandler.handleError(error);
-        console.error('Failed to fetch user data:', error);
       });
   }
 
@@ -113,14 +112,12 @@ export class UserProfileComponent implements OnInit {
     this.axiosService.request('PUT', `/users/${this.userId}`, updatedUser)
       .then((response: any) => {
         this.globalNotificationHandler.handleMessage(`User updated successfully`);
-        console.log(`User with ID ${this.userId} updated successfully. Response:`, response);
         this.editButtonClicked = false;
         this.changePasswordClicked = false;
         this.ngOnInit();
       })
       .catch((error: any) => {
         this.globalNotificationHandler.handleError(error);
-        console.error('Failed to update user data:', error);
         this.ngOnInit();
       });
   }
@@ -129,11 +126,9 @@ export class UserProfileComponent implements OnInit {
     this.axiosService.request('DELETE', `/users/${this.userId}`, {}).then(
       (response: any) => {
         this.globalNotificationHandler.handleMessage(`User deleted successfully`);
-        console.log(`User with ID ${this.userId} deleted successfully. Response:`, response);
       }
     ).catch((error: any) => {
       this.globalNotificationHandler.handleError(error);
-      console.error('Failed to delete user:', error);
     });
   }
 

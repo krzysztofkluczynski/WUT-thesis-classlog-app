@@ -17,7 +17,7 @@ import {GradeDto} from "../../../../../model/entities/grade-dto";
   styleUrls: ['./new-grade-window.component.css']
 })
 export class NewGradeWindowComponent implements OnInit {
-  @Input() isOpen = false; // Controls modal visibility
+  @Input() isOpen = false;
   @Input() studentListFromOneClass: UserDto[] = []; // List of students to filter
   @Input() selectedClassId: number | null = null; // Selected class ID for context
   @Output() close = new EventEmitter<void>(); // Emit event to close modal
@@ -39,19 +39,16 @@ export class NewGradeWindowComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Initialize filtered student list with all students
     this.filteredStudentList = [...this.studentListFromOneClass];
   }
 
   closeWindow(): void {
-    // Emit close event to parent component
     this.close.emit();
   }
 
   filterStudents(): void {
     const searchQueryLower = this.studentSearchQuery.trim().toLowerCase();
 
-    // Filter students based on name or surname (ignores order)
     this.filteredStudentList = this.studentListFromOneClass.filter(student => {
       const fullName = `${student.name} ${student.surname}`.toLowerCase();
       const reverseFullName = `${student.surname} ${student.name}`.toLowerCase();
@@ -66,7 +63,6 @@ export class NewGradeWindowComponent implements OnInit {
   }
 
   confirmSelection(): void {
-    // Ensure all fields are valid before submission
     if (this.selectedStudent && this.gradeValue !== null && this.gradeValue >= 0 && this.gradeValue <= 100) {
       const gradePayload = {
         assignedClass: {

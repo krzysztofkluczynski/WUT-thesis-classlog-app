@@ -1,25 +1,24 @@
-/* Ensure the HTML and body are taking full height */
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  overflow: hidden; /* Prevent scrolling for the full page */
+  overflow: hidden;
 }
 
 .full-screen-container {
   display: flex;
   flex-direction: column;
-  height: 90vh; /* Fill the remaining 90% of the viewport below the header */
-  overflow: hidden; /* Prevent scrolling */
+  height: 90vh;
+  overflow: hidden;
   padding-bottom: 20px;
 }
 
 .tiles-container {
   display: flex;
   gap: 20px;
-  flex: 1; /* Fill the remaining space below the header */
-  padding: 20px 20px 20px; /* Remove top padding to avoid overflow */
+  flex: 1;
+  padding: 20px 20px 20px;
   box-sizing: border-box;
   border-radius: 20px;
   overflow: hidden;
@@ -70,14 +69,14 @@ html, body {
 }
 
 .profile-details {
-  width: 100%; /* Ensure it takes full width */
-  max-width: 25%; /* Set maximum width to 25% of the container */
+  width: 100%;
+  max-width: 25%;
   background-color: #fff;
   padding: 20px;
   border-radius: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
-  font-size: 12px; /* Adjust font size */
+  font-size: 12px;
 }
 
 .button-group {
@@ -101,7 +100,7 @@ html, body {
 
 .profile-details p {
   margin: 5px 0;
-  font-size:12px; /* Adjust font size */
+  font-size:12px;
 }
 
 .profile-details strong {
@@ -127,11 +126,10 @@ html, body {
   border: none;
   color: black;
   padding: 10px 20px;
-  font-size: 12px; /* Adjust font size */
+  font-size: 12px;
   font-weight: bold;
   cursor: pointer;
   border-radius: 20px;
-  color: black;
 }
 
 .button-group {

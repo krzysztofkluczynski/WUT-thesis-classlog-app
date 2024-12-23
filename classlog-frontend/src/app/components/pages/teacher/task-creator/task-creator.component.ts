@@ -8,7 +8,6 @@ import {HeaderComponent} from "../../../shared/header/header.component";
 import {NgForOf, NgIf} from "@angular/common";
 import {ClassDto} from "../../../../model/entities/class-dto";
 import {parseDate} from "../../../../utils/date-utils";
-import {UserDto} from "../../../../model/entities/user-dto";
 import {NewGradeWindowComponent} from "../popup-window/new-grade-window/new-grade-window.component";
 import {AddQuestionWindowComponent} from "../popup-window/add-question-window/add-question-window.component";
 import {TaskDto} from "../../../../model/entities/task-dto";
@@ -16,7 +15,7 @@ import {FileDto} from "../../../../model/entities/file-dto";
 import {QuestionDto} from "../../../../model/entities/question-dto";
 
 export interface ClassDtoWithSelect extends ClassDto {
-  selected: boolean; // Field to track attendance
+  selected: boolean;
 }
 
 export interface ClosedQuestion {
@@ -48,10 +47,10 @@ export interface OpenQuestion {
   styleUrl: './task-creator.component.css'
 })
 export class TaskCreatorComponent implements OnInit {
-  taskName: string = ''; // Task name input (string)
-  taskDescription: string = ''; // Task description input (string)
-  taskTime: string = ''; // Time input (string in "HH:mm" format)
-  taskDate: string = ''; // Date input (string in "YYYY-MM-DD" format)
+  taskName: string = '';
+  taskDescription: string = '';
+  taskTime: string = '';
+  taskDate: string = '';
   classList: ClassDtoWithSelect[] = [];
   showAddQuestionModal: boolean = false;
 
@@ -70,7 +69,6 @@ export class TaskCreatorComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Fetch classes for the current teacher
     this.axiosService.request('GET', `/classes/user/${this.authService.getUser()?.id}`, {}).then(
       (response: { data: ClassDto[] }) => {
         this.classList = response.data.map(classDto => ({
@@ -81,7 +79,6 @@ export class TaskCreatorComponent implements OnInit {
       }
     ).catch((error: any) => {
       this.globalNotificationHandler.handleError(error);
-      console.error('Failed to fetch classes:', error);
     });
   }
 
@@ -90,19 +87,17 @@ export class TaskCreatorComponent implements OnInit {
   }
 
   createTask() {
-    console.log(`${this.taskDate}T${this.taskTime}`);
 
     let score: number = this.calculateScore();
 
     const taskData = {
       taskName: this.taskName,
       description: this.taskDescription,
-      dueDate: `${this.taskDate}T${this.taskTime}`, // Combine date and time
+      dueDate: `${this.taskDate}T${this.taskTime}`,
       createdBy: this.authService.getUserWithoutToken(),
       score: score
     };
 
-    // Send task creation request to the backend
     this.axiosService.request('POST', '/tasks', taskData).then(
       (response: { data: TaskDto }) => {
         this.createdTask = response.data;
@@ -110,7 +105,6 @@ export class TaskCreatorComponent implements OnInit {
           'Task created successfully: ' + response.data.taskName
         );
 
-        // Assign users to the task
         this.axiosService
           .request(
             'POST',
@@ -118,7 +112,6 @@ export class TaskCreatorComponent implements OnInit {
             this.classList.filter((classItem) => classItem.selected)
           )
           .then(() => {
-            console.log('Task created and users assigned successfully');
 
             // Handle Closed Questions
             this.closedQuestions.forEach((closedQuestion) => {
@@ -145,8 +138,6 @@ export class TaskCreatorComponent implements OnInit {
                       createdAt: parseDate(response.data.createdAt),
                     };
 
-                    console.log('File uploaded successfully:', fileDtoResponse);
-
                     this.globalNotificationHandler.handleMessage(
                       'File uploaded successfully'
                     );
@@ -155,7 +146,6 @@ export class TaskCreatorComponent implements OnInit {
                     this.sendClosedQuestion(closedQuestion, fileDtoResponse);
                   })
                   .catch((error) => {
-                    console.error('Failed to upload file:', error);
                     this.globalNotificationHandler.handleError(error);
                   });
               } else {
@@ -189,8 +179,6 @@ export class TaskCreatorComponent implements OnInit {
                       createdAt: parseDate(response.data.createdAt),
                     };
 
-                    console.log('File uploaded successfully:', fileDtoResponse);
-
                     this.globalNotificationHandler.handleMessage(
                       'File uploaded successfully'
                     );
@@ -199,7 +187,6 @@ export class TaskCreatorComponent implements OnInit {
                     this.sendOpenQuestion(openQuestion, fileDtoResponse);
                   })
                   .catch((error) => {
-                    console.error('Failed to upload file:', error);
                     this.globalNotificationHandler.handleError(error);
                   });
               } else {
@@ -221,27 +208,22 @@ export class TaskCreatorComponent implements OnInit {
                 )
                 .catch((error: any) => {
                   this.globalNotificationHandler.handleError(error);
-                  console.error('Failed to assign ready questions to the task:', error);
                 });
             }
           })
 
           .catch((error: any) => {
             this.globalNotificationHandler.handleError(error);
-            console.error('Failed to assign users to the task:', error);
           });
       }
     ).catch((error: any) => {
       this.globalNotificationHandler.handleError(error);
-      console.error('Failed to create task:', error);
     }).finally(() => {
-      console.log('Task creation process completed.'); // Execute regardless of success or error
       this.returnToDashboard();
     });
   }
 
 
-// Helper function for sending closed question
   protected sendClosedQuestion(closedQuestion: ClosedQuestion, fileDto: FileDto | null): void {
     const payload = [
       {
@@ -266,24 +248,22 @@ export class TaskCreatorComponent implements OnInit {
       )
       .catch((error: any) => {
         this.globalNotificationHandler.handleError(error);
-        console.error('Failed to add closed question:', error);
       });
   }
 
-// Helper function for sending open question
   protected sendOpenQuestion(openQuestion: OpenQuestion, fileDto: FileDto | null): void {
     const payload = [{
       question: {
         questionId: null,
         questionType: { questionTypeId: 2, typeName: 'Open Question' },
-        points: openQuestion.points, // Adjust points as needed
+        points: openQuestion.points,
         content: openQuestion.question,
-        fileId: fileDto, // Attach the uploaded file if present
+        fileId: fileDto,
       },
       answers: [
         {
           content: openQuestion.answer,
-          isCorrect: true, // Open question has a single correct answer
+          isCorrect: true,
         },
       ],
     }];
@@ -295,15 +275,10 @@ export class TaskCreatorComponent implements OnInit {
       )
       .catch((error: any) => {
         this.globalNotificationHandler.handleError(error);
-        console.error('Failed to add open question:', error);
       });
   }
 
 
-
-  onClassSelected(classItem: ClassDto) {
-    console.log('Selected class:', classItem);
-  }
 
   toggleAddQuestionModal() {
     this.showAddQuestionModal = !this.showAddQuestionModal;
@@ -324,52 +299,43 @@ export class TaskCreatorComponent implements OnInit {
           }
         ).catch((error: any) => {
           this.globalNotificationHandler.handleError(error);
-          console.error('Failed to fetch classes:', error);
         });
 
         this.questionIdsFromBase.push(question);
-        console.log('Ready Question ID:', question);
       } else {
         console.log('Duplicate Question ID skipped:', question);
       }
     } else if ('answer' in question && question.answer instanceof Map) {
       this.closedQuestions.push(question as ClosedQuestion);
-      console.log('Closed Question:', question);
     } else {
       this.openQuestions.push(question as OpenQuestion);
-      console.log('Open Question:', question);
     }
   }
 
   removeClosedQuestion(index: number): void {
     this.closedQuestions.splice(index, 1);
-    console.log(`Removed closed question at index ${index}`);
   }
 
   removeOpenQuestion(index: number): void {
     this.openQuestions.splice(index, 1);
-    console.log(`Removed open question at index ${index}`);
   }
 
   removeReadyClosedQuestion(index: number): void {
     const removedQuestionId = this.ReadyClosedQuestionsFromTheBase[index].questionId;
     this.ReadyClosedQuestionsFromTheBase.splice(index, 1);
     this.removeQuestionIdFromBase(removedQuestionId);
-    console.log(`Removed closed question from base at index ${index}, ID: ${removedQuestionId}`);
   }
 
   removeReadyOpenQuestion(index: number): void {
     const removedQuestionId = this.ReadyOpenQuestionsFromTheBase[index].questionId;
     this.ReadyOpenQuestionsFromTheBase.splice(index, 1);
     this.removeQuestionIdFromBase(removedQuestionId);
-    console.log(`Removed open question from base at index ${index}, ID: ${removedQuestionId}`);
   }
 
   protected removeQuestionIdFromBase(questionId: number): void {
     const index = this.questionIdsFromBase.indexOf(questionId);
     if (index !== -1) {
       this.questionIdsFromBase.splice(index, 1);
-      console.log(`Removed question ID ${questionId} from questionIdsFromBase.`);
     } else {
       console.warn(`Question ID ${questionId} not found in questionIdsFromBase.`);
     }

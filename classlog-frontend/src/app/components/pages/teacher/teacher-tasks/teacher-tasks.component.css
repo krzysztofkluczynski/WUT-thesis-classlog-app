@@ -1,51 +1,49 @@
-/* General styles */
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  overflow: hidden; /* Prevent page scrolling */
+  overflow: hidden;
 }
 
 .full-screen-container {
   display: flex;
   flex-direction: column;
-  height: 90vh; /* Fill 90% of the viewport */
+  height: 90vh;
   overflow: hidden;
 }
 
 .tiles-container {
   display: flex;
   gap: 20px;
-  flex: 1; /* Take the remaining space below the header */
+  flex: 1;
   padding: 20px;
   box-sizing: border-box;
   overflow: hidden;
 }
 
-/* Big tile (left content) */
 .big-tile {
   background-color: #FFFDE0;
-  flex: 1.5; /* Slightly larger than the right tile */
+  flex: 1.5;
   border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 10px; /* Reduced gap for tighter layout */
+  gap: 10px;
   overflow: hidden;
   position: relative;
 }
 
 .big-tile h1 {
-  margin-bottom: 10px; /* Reduced margin to bring header closer to other elements */
+  margin-bottom: 10px;
   font-size: 28px;
   color: #333;
 }
 
 .big-tile h5 {
-  margin-top: 0; /* Remove extra space above */
-  margin-bottom: 5px; /* Bring "Created" closer to the divider */
+  margin-top: 0;
+  margin-bottom: 5px;
   font-size: 18px;
 }
 
@@ -53,10 +51,9 @@ html, body {
   border: 0;
   height: 2px;
   background-color: #333;
-  margin: 5px 0 10px; /* Adjust spacing around the divider */
+  margin: 5px 0 10px;
 }
 
-/* Table container for Created Tasks */
 .created-tasks {
   flex: 1;
   overflow-y: auto;
@@ -67,10 +64,9 @@ html, body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Responsive table */
 .table-responsive {
-  max-height: 80%; /* Limit table height */
-  overflow-y: auto; /* Scroll when overflowing */
+  max-height: 80%;
+  overflow-y: auto;
   border-radius: 10px;
 }
 
@@ -81,10 +77,10 @@ html, body {
 }
 
 .table thead {
-  position: sticky; /* Sticky header for scrolling */
+  position: sticky;
   top: 0;
   z-index: 2;
-  background-color: #333; /* Dark background for the header */
+  background-color: #333;
   color: white;
 }
 
@@ -95,20 +91,18 @@ html, body {
 }
 
 .table-hover tbody tr:hover {
-  background-color: #f5f5f5; /* Light gray on hover */
+  background-color: #f5f5f5;
 }
 
-/* Clickable rows */
 .clickable-row {
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
 .clickable-row:hover {
-  background-color: #f9f9f9; /* Subtle highlight on hover */
+  background-color: #f9f9f9;
 }
 
-/* Small tiles container (right content) */
 .small-tiles-container {
   flex: 1;
   background-color: #FFFDE0;
@@ -120,7 +114,6 @@ html, body {
   overflow-y: auto;
 }
 
-/* Yellow button */
 .yellow-button {
   background-color: #F5C000;
   border: none;
@@ -146,21 +139,18 @@ html, body {
   transform: scale(0.95);
 }
 
-/* General styles for table */
 .table th,
 .table td {
-  text-align: center; /* Center-align all table content */
-  vertical-align: middle; /* Vertically center-align the content */
+  text-align: center;
+  vertical-align: middle;
   padding: 10px;
 }
 
-/* Actions Cell */
 .actions-cell {
-  text-align: center; /* Center-align content in the Actions cell */
-  width: 60px; /* Adjust the width of the Actions column */
+  text-align: center;
+  width: 60px;
 }
 
-/* Delete icon styles */
 .delete-icon {
   color: #ff4d4f;
   font-size: 20px;
@@ -184,7 +174,6 @@ html, body {
   gap: 10px;
 }
 
-/* Task card styles */
 .task-card {
   background-color: #fff;
   border-radius: 10px;
@@ -200,17 +189,14 @@ html, body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Green border for submitted tasks */
 .green-border {
   border: 2px solid #66BB6A;
 }
 
-/* Red border for not submitted tasks */
 .red-border {
   border: 2px solid #EF5350;
 }
 
-/* Task card content */
 .task-title {
   font-weight: bold;
   color: #333;

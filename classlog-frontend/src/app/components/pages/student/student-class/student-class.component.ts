@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {UserDto} from "../../../../model/entities/user-dto";
 import {parseDate} from "../../../../utils/date-utils";
 import {AuthService} from "../../../../service/auth/auth.service";
 import {AxiosService} from "../../../../service/axios/axios.service";
@@ -68,7 +67,6 @@ export class StudentClassComponent implements OnInit {
       }
     ).catch((error: any) => {
       this.globalNotificationHandler.handleError(error);
-      console.error('Failed to fetch class data:', error);
     });
 
 
@@ -83,7 +81,6 @@ export class StudentClassComponent implements OnInit {
       }
     ).catch((error: any) => {
       this.globalNotificationHandler.handleError(error);
-      console.error('Failed to fetch posts:', error);
     });
 
     // Fetch Lessons
@@ -97,7 +94,6 @@ export class StudentClassComponent implements OnInit {
       }
     ).catch((error: any) => {
       this.globalNotificationHandler.handleError(error);
-      console.error('Failed to fetch lessons:', error);
     });
   }
 
@@ -113,7 +109,6 @@ export class StudentClassComponent implements OnInit {
         }
       ).catch((error: any) => {
         this.globalNotificationHandler.handleError(error);
-        console.error(`Failed to fetch comments for post ${post.id}:`, error);
       });
     });
   }
@@ -126,7 +121,6 @@ export class StudentClassComponent implements OnInit {
 
   sendPost(): void {
     if (!this.topic.trim() || !this.message.trim()) {
-      console.log('Both fields are required!');
       this.globalNotificationHandler.handleMessage('Both fields are required!');
       return;
     }
@@ -144,14 +138,12 @@ export class StudentClassComponent implements OnInit {
         const createdPost: PostDto = response.data;
 
         this.posts.unshift(createdPost);
-        console.log('Post created successfully:', createdPost);
 
         this.topic = '';
         this.message = '';
       })
       .catch((error: any) => {
         this.globalNotificationHandler.handleError(error);
-        console.error('Failed to create post:', error.response?.data || error);
       });
 
     this.topic = '';
@@ -170,7 +162,6 @@ export class StudentClassComponent implements OnInit {
   sendComment(post: PostDto): void {
     const commentContent = this.commentDrafts[post.id]?.trim();
     if (!commentContent) {
-      console.log('Comment cannot be empty.');
       this.globalNotificationHandler.handleMessage('Comment cannot be empty.');
       return;
     }
@@ -185,20 +176,16 @@ export class StudentClassComponent implements OnInit {
       .request('POST', `/comments`, commentPayload)
       .then((response: { data: CommentDto }) => {
         const createdComment: CommentDto = response.data;
-        console.log('Created comment:', createdComment);
 
         if (!this.postCommentsMap.has(post.id)) {
           this.postCommentsMap.set(post.id, []);
         }
         this.postCommentsMap.get(post.id)!.push(createdComment);
 
-        console.log('Comment created successfully:', createdComment);
-
         this.commentDrafts[post.id] = '';
       })
       .catch((error: any) => {
         this.globalNotificationHandler.handleError(error);
-        console.error('Failed to create comment:', error.response?.data || error);
       });
   }
 
@@ -215,7 +202,6 @@ export class StudentClassComponent implements OnInit {
       }
     ).catch((error: any) => {
       this.globalNotificationHandler.handleError(error);
-      console.error('Failed to delete post:', error);
     });
   }
 
@@ -226,7 +212,6 @@ export class StudentClassComponent implements OnInit {
       }
     ).catch((error: any) => {
       this.globalNotificationHandler.handleError(error);
-      console.error('Failed to delete comment:', error);
     });
   }
 }

@@ -25,17 +25,17 @@
 }
 
 .class-list {
-  max-height: 200px; /* Restrict height and enable scrolling for overflow */
-  overflow-y: auto; /* Add vertical scrolling if the list exceeds max height */
-  background-color: #fff; /* White background for contrast */
-  border: 1px solid #ddd; /* Light border for a clean look */
-  border-radius: 10px; /* Rounded corners */
-  padding: 10px; /* Space around the list items */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .class-list ul {
-  list-style-type: none; /* Remove default list bullets */
+  list-style-type: none;
   padding: 0;
   margin: 0;
 }
@@ -44,28 +44,28 @@
   display: flex;
   align-items: center;
   padding: 8px;
-  border-bottom: 1px solid #eee; /* Light divider between items */
+  border-bottom: 1px solid #eee;
   transition: background-color 0.2s;
 }
 
 .class-item:last-child {
-  border-bottom: none; /* Remove border for the last item */
+  border-bottom: none;
 }
 
 .class-item label {
   display: flex;
   align-items: center;
-  cursor: pointer; /* Indicate clickability */
+  cursor: pointer;
   font-size: 14px;
-  color: #333; /* Darker text color for better readability */
+  color: #333;
 }
 
 .class-item input[type="checkbox"] {
-  margin-right: 10px; /* Add spacing between checkbox and text */
+  margin-right: 10px;
 }
 
 .class-item:hover {
-  background-color: #f9f9f9; /* Subtle hover effect for better UX */
+  background-color: #f9f9f9;
 }
 
 
@@ -99,31 +99,31 @@
   border-radius: 10px;
   background-color: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  max-height: 100px; /* Limit height */
+  max-height: 100px;
   overflow: hidden;
-  position: relative; /* Position elements properly */
+  position: relative;
 }
 
 .question-content {
-  flex: 1; /* Allow content to expand */
-  white-space: nowrap; /* Prevent wrapping */
-  overflow: hidden; /* Hide overflowing text */
-  text-overflow: ellipsis; /* Show ellipsis for overflow */
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .action-icons {
-  margin-left: 10px; /* Add space between content and icons */
+  margin-left: 10px;
 }
 
 .action-icons i {
   font-size: 18px;
-  color: #ff0000; /* Red for delete icon */
+  color: #ff0000;
   cursor: pointer;
 }
 
 .action-icons i:hover {
-  color: #d00000; /* Darker red on hover */
-  transform: scale(1.1); /* Slightly larger on hover */
+  color: #d00000;
+  transform: scale(1.1);
 }
 
 
@@ -135,9 +135,9 @@
 .question-box p {
   margin: 0 0 10px 0;
   font-size: 14px;
-  white-space: nowrap; /* Prevent text wrapping */
-  overflow: hidden; /* Hide overflowing text */
-  text-overflow: ellipsis; /* Add "..." for overflowing text */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .question-box ul {
@@ -181,7 +181,7 @@
 .section-divider {
   border: 0;
   height: 1px;
-  background-color: #ccc; /* Light gray for a subtle look */
+  background-color: #ccc;
   margin: 20px 0;
 }
 
@@ -195,16 +195,16 @@
 
 .tile-header {
   display: flex;
-  justify-content: space-between; /* Align buttons on opposite sides */
-  align-items: flex-end; /* Align buttons to the bottom */
-  margin-top: auto; /* Push the container to the bottom */
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: auto;
   position: relative;
 }
 
 .button-container {
   display: flex;
-  justify-content: space-between; /* Align buttons on opposite sides */
-  align-items: flex-end; /* Align buttons to the bottom */
-  margin-top: auto; /* Push the container to the bottom */
-  padding-top: 20px; /* Add some space above the buttons */
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: auto;
+  padding-top: 20px;
 }

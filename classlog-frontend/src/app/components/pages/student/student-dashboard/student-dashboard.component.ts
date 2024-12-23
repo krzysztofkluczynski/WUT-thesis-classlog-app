@@ -1,8 +1,8 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import { HeaderComponent } from "../../../shared/header/header.component";
-import { AuthService } from "../../../../service/auth/auth.service";
-import { AxiosService } from "../../../../service/axios/axios.service";
-import { UserDto } from "../../../../model/entities/user-dto";
+import {Component, OnInit} from '@angular/core';
+import {HeaderComponent} from "../../../shared/header/header.component";
+import {AuthService} from "../../../../service/auth/auth.service";
+import {AxiosService} from "../../../../service/axios/axios.service";
+import {UserDto} from "../../../../model/entities/user-dto";
 import {DatePipe, NgForOf, NgIf} from "@angular/common";
 import {LessonDto} from "../../../../model/entities/lesson.dto";
 import {parseDate} from "../../../../utils/date-utils";
@@ -13,9 +13,6 @@ import {Router} from "@angular/router";
 import {JoinClassWindowComponent} from "../../../shared/popup/join-class-window/join-class-window.component";
 import {LessonInfoWindowComponent} from "../../../shared/lesson-info-window/lesson-info-window.component";
 
-interface UserResponse {
-  data: string[];
-}
 @Component({
   selector: 'app-student-components',
   standalone: true,
@@ -78,18 +75,15 @@ export class StudentDashboardComponent implements OnInit {
             }
           ).catch((error: any) => {
             this.globalNotificationHandler.handleError(error);
-            console.error(`Failed to fetch users for class ${classDto.id}:`, error);
           });
         });
       }
     ).catch((error: any) => {
       this.globalNotificationHandler.handleError(error);
-      console.error('Failed to fetch classes:', error);
     });
 
     this.axiosService.request('GET', `/lessons/user/${this.authService.getUser()?.id}/recent/${this.numberOfLessonsToLoad}`, {}).then(
       (response: { data: LessonDto[] }) => {
-        console.log(response.data);
         this.lessons = response.data.map(lesson => ({
           ...lesson,
           lessonDate: parseDate(lesson.lessonDate)
@@ -97,13 +91,11 @@ export class StudentDashboardComponent implements OnInit {
       }
     ).catch((error: any) => {
       this.globalNotificationHandler.handleError(error);
-      console.error('Failed to fetch lessons:', error);
     });
   }
 
   getTeachersForClass(classItem: ClassDto) {
-    const teachers = this.teachersMap.get(classItem) || [];
-    return teachers;
+    return this.teachersMap.get(classItem) || [];
   }
 
   onClassTileClick(classItem: ClassDto) {

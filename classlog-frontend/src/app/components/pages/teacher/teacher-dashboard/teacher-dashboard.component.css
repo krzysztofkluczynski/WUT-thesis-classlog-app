@@ -1,30 +1,29 @@
-/* Ensure the HTML and body occupy the full height */
+
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  overflow: hidden; /* Prevent scrolling for the full page */
+  overflow: hidden;
 }
 
 .full-screen-container {
   display: flex;
   flex-direction: column;
-  height: 90vh; /* Fill the remaining 90% of the viewport below the header */
-  overflow: hidden; /* Prevent scrolling */
+  height: 90vh;
+  overflow: hidden;
 }
 
-/* Content container below header */
+
 .tiles-container {
   display: flex;
   gap: 20px;
-  flex: 1; /* Take the remaining space below the header */
-  padding: 20px 20px 20px; /* Remove top padding to avoid overflow */
+  flex: 1;
+  padding: 20px 20px 20px;
   box-sizing: border-box;
-  overflow: hidden; /* Prevent scrolling for the container */
+  overflow: hidden;
 }
 
-/* Big tile (left content) */
 .big-tile {
   background-color: #FFFDE0;
   flex: 3;
@@ -32,76 +31,73 @@ html, body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 20px;
   display: flex;
-  flex-direction: column; /* Stack buttons and content */
+  flex-direction: column;
   gap: 20px;
-  overflow: hidden; /* Prevent big tile overflow */
+  overflow: hidden;
   box-sizing: border-box;
 }
 
-/* Buttons inside big tile */
 .button-container {
   display: flex;
   gap: 30px;
-  flex-shrink: 0; /* Ensure buttons don't shrink */
+  flex-shrink: 0;
   padding-bottom: 20px;
 }
 
 .yellow-button {
-  background-color: #F5C000; /* Match the yellow button color */
+  background-color: #F5C000;
   border: none;
   color: black;
   padding: 10px 20px;
   font-size: 16px;
   font-weight: bold;
-  border-radius: 20px; /* Rounded corners */
+  border-radius: 20px;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+  transition: background-color 0.3s, transform 0.2s;
 }
 
-/* Hover effect for New Grade button */
 .yellow-button:hover {
-  background-color: #FFD54F; /* Lighter yellow on hover */
-  transform: scale(1.05); /* Slightly enlarge the button */
+  background-color: #FFD54F;
+  transform: scale(1.05);
 }
 
-/* Active effect for New Grade button */
 .yellow-button:active {
-  background-color: #FBC02D; /* Slightly darker yellow on click */
-  transform: scale(0.95); /* Slightly shrink on click */
+  background-color: #FBC02D;
+  transform: scale(0.95);
 }
 
-/* Scrollable content inside big tile */
+
 .big-tile-content {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Increase minimum width to 250px */
-  grid-auto-rows: 300px; /* Increase row height to 250px */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-auto-rows: 300px;
   gap: 20px;
-  overflow-y: auto; /* Allow scrolling for content */
-  flex-grow: 1; /* Take the remaining vertical space */
-  padding-right: 10px; /* Add space for scrollbar */
+  overflow-y: auto;
+  flex-grow: 1;
+  padding-right: 10px;
   box-sizing: border-box;
 }
 
-/* Right section: Small tiles container */
+
 .small-tiles-container {
-  flex: 1; /* Occupy 1x the space of the left section */
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  height: 100%; /* Match the full height */
+  height: 100%;
   box-sizing: border-box;
   overflow: hidden;
 }
 
 .class-history {
   background-color: #FFFDE0;
-  flex: 1; /* Fill the available space */
+  flex: 1;
   border-radius: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 20px;
   display: flex;
   flex-direction: column;
-  overflow-y: auto; /* Allow scrolling for overflow content */
+  overflow-y: auto;
   box-sizing: border-box;
 }
 
@@ -115,9 +111,9 @@ html, body {
 }
 
 .lesson-tile:hover {
-  transform: translateY(-5px); /* Slight elevation effect */
-  background-color: #f9f9f9; /* Slightly darker shade for contrast */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Increase shadow for a lifted look */
+  transform: translateY(-5px);
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 .lesson-title {
   font-weight: bold;

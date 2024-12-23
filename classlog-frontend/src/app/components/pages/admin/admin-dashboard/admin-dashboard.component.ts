@@ -56,7 +56,6 @@ export class AdminDashboardComponent implements OnInit {
           this.pickedRole = 'Unassigned';
           break;
         default:
-          console.error('Unknown section:', section);
           break;
       }
     });
@@ -76,7 +75,6 @@ export class AdminDashboardComponent implements OnInit {
       }
     ).catch((error: any) => {
       this.globalNotificationHandler.handleError(error);
-      console.error('Failed to fetch users:', error);
     });
   }
 
@@ -87,11 +85,9 @@ export class AdminDashboardComponent implements OnInit {
       (response: any) => {
         this.usersList = this.usersList.filter(user => user.id !== userId);
         this.globalNotificationHandler.handleMessagewithType(`User with ID ${userId} deleted successfully.`, 'success');
-        console.log(`User with ID ${userId} deleted successfully. Response:`, response);
       }
     ).catch((error: any) => {
       this.globalNotificationHandler.handleError(error);
-      console.error('Failed to delete user:', error);
     });  }
 
 }

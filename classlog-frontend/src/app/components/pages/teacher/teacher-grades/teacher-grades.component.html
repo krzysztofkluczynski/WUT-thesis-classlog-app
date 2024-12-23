@@ -3,10 +3,8 @@
 <div class="full-screen-container">
   <div class="tiles-container">
 
-    <!-- Left Section -->
     <div class="big-tile">
       <div class="button-container">
-        <!-- Class Selector -->
         <div class="select-container">
           <label for="class-select" class="select-label">Pick a class:</label>
           <select id="class-select" class="form-select" [(ngModel)]="selectedClassId" (change)="loadStudents()">
@@ -15,7 +13,6 @@
           </select>
         </div>
 
-        <!-- Add New Grade Button -->
         <button class="new-grade-button" *ngIf="selectedClassId" (click)="toggleShowNewGradeModal()">New Grade</button>
         <app-new-grade-window
           *ngIf="showNewGradeModal"
@@ -27,7 +24,6 @@
         </app-new-grade-window>
       </div>
 
-      <!-- Scrollable Student Grades Table -->
       <div class="big-tile-content">
         <div class="table-responsive">
           <table class="table table-hover table-bordered">
@@ -54,7 +50,6 @@
       </div>
     </div>
 
-    <!-- Right Section -->
     <div class="small-tiles-container">
       <div class="search-bar">
         <h3>Search bar and students list</h3>

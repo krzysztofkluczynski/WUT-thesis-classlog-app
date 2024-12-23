@@ -12,7 +12,7 @@ import {AuthService} from "../../../../service/auth/auth.service";
 
 
 export interface QuestionWithUserAnswerDto extends QuestionWithAnswersDto {
-  userAnswer: string | null; // For closed questions: selected answer ID or null
+  userAnswer: string | null;
 }
 @Component({
   selector: 'app-task-resolver',
@@ -42,8 +42,6 @@ export class TaskResolverComponent implements OnInit, OnDestroy {
     const taskId = this.route.snapshot.paramMap.get('taskId');
     if (taskId) {
       this.loadTaskDetails(taskId);
-    } else {
-      console.error('No taskId provided in the route.');
     }
   }
 
@@ -58,7 +56,6 @@ export class TaskResolverComponent implements OnInit, OnDestroy {
         this.loadQuestionsWithAnswers(taskId);
       },
       (error: any) => {
-        console.error('Failed to fetch task:', error);
         this.globalNotificationHandler.handleError(error);
       }
     );
@@ -79,7 +76,6 @@ export class TaskResolverComponent implements OnInit, OnDestroy {
         this.fetchFiles();
       },
       (error: any) => {
-        console.error('Failed to fetch questions and answers data:', error);
         this.globalNotificationHandler.handleError(error);
       }
     );
@@ -94,7 +90,6 @@ export class TaskResolverComponent implements OnInit, OnDestroy {
           (response) => {
             const contentType = response.headers["content-type"];
             if (contentType !== "audio/mpeg") {
-              console.warn(`File ID ${fileId} is not an MP3 file.`);
               this.globalNotificationHandler.handleError("Some files are not in MP3 format.");
               return;
             }
@@ -105,7 +100,6 @@ export class TaskResolverComponent implements OnInit, OnDestroy {
             this.questionsWithAnswers[index].fileUrl = url;
           },
           (error) => {
-            console.error(`Failed to download file ID ${fileId}:`, error);
             this.globalNotificationHandler.handleError("Failed to download some files.");
           }
         );
@@ -123,7 +117,6 @@ export class TaskResolverComponent implements OnInit, OnDestroy {
 
   submitAnswers() {
     if (!this.task) {
-      console.error("No task loaded to submit answers for.");
       return;
     }
 
@@ -138,16 +131,13 @@ export class TaskResolverComponent implements OnInit, OnDestroy {
       })),
     };
 
-    console.log("Submitting answers payload:", payload);
 
     this.axiosService.request('POST', '/tasks/submit', payload).then(
       (response: any) => {
-        console.log("Answers submitted successfully:", response);
         this.globalNotificationHandler.handleMessage("Answers submitted successfully.");
         this.router.navigate(['/student/tasks']);
       },
       (error: any) => {
-        console.error("Failed to submit answers:", error);
         this.globalNotificationHandler.handleError("Failed to submit answers. Please try again.");
       }
     );
