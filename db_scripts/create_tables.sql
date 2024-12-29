@@ -1,10 +1,8 @@
--- Creating the ROLE table
 CREATE TABLE role (
     role_id BIGSERIAL PRIMARY KEY,
     role_name VARCHAR(255) NOT NULL
 );
 
--- Creating the CLASSLOG_USER table
 CREATE TABLE classlog_user (
     user_id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -15,29 +13,27 @@ CREATE TABLE classlog_user (
     role_id BIGINT NOT NULL REFERENCES role(role_id) ON DELETE RESTRICT
 );
 
--- Creating the CLASS table
 CREATE TABLE class (
     class_id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description TEXT,
-    code VARCHAR(255) UNIQUE,  -- Will be generated later
+    code VARCHAR(255) UNIQUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Creating the USER_CLASS table
 CREATE TABLE user_class (
-    class_id BIGINT REFERENCES class(class_id) ON DELETE CASCADE, -- Cascade delete
+    class_id BIGINT REFERENCES class(class_id) ON DELETE CASCADE,
     user_id BIGINT REFERENCES classlog_user(user_id),
     PRIMARY KEY (class_id, user_id)
 );
 
  CREATE TABLE grade (
     grade_id BIGSERIAL PRIMARY KEY,
-    class_id BIGINT REFERENCES class(class_id),
-    student_id BIGINT REFERENCES classlog_user(user_id),
-    teacher_id BIGINT REFERENCES classlog_user(user_id),
-    grade INT,
-    wage INT,
+    class_id BIGINT REFERENCES class(class_id) NOT NULL ,
+    student_id BIGINT REFERENCES classlog_user(user_id) NOT NULL ,
+    teacher_id BIGINT REFERENCES classlog_user(user_id) NOT NULL ,
+    grade INT NOT NULL,
+    wage INT NOT NULL,
     description TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -47,30 +43,30 @@ CREATE TABLE file (
     file_id BIGSERIAL PRIMARY KEY,
     class_id BIGINT REFERENCES class(class_id),
     user_id BIGINT REFERENCES classlog_user(user_id),
-    file_path VARCHAR(255), -- Full file path
+    file_path VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 
--- Creating the POST table
 CREATE TABLE post (
     post_id BIGSERIAL PRIMARY KEY,
-    class_id BIGINT NOT REFERENCES class(class_id) ON DELETE CASCADE, -- Cascade delete for class
-    user_id BIGINT REFERENCES classlog_user(user_id) ON DELETE CASCADE, -- Cascade delete for user
-    title VARCHAR(255),
-    content TEXT,
+    class_id BIGINT NOT NULL REFERENCES class(class_id) ON DELETE CASCADE,
+    user_id BIGINT NOT NULL REFERENCES classlog_user(user_id) ON DELETE CASCADE,
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 
--- Creating the COMMENT table
+
 CREATE TABLE comment (
     comment_id BIGSERIAL PRIMARY KEY,
-    post_id BIGINT REFERENCES post(post_id) ON DELETE CASCADE, -- Cascade delete for post
-    user_id BIGINT REFERENCES classlog_user(user_id) ON DELETE CASCADE, -- Cascade delete for user
-    content TEXT,
+    post_id BIGINT NOT NULL REFERENCES post(post_id) ON DELETE CASCADE,
+    user_id BIGINT NOT NULL REFERENCES classlog_user(user_id) ON DELETE CASCADE,
+    content TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
 
 -- Creating the QUESTION_TYPE table
 CREATE TABLE question_type (
@@ -78,21 +74,21 @@ CREATE TABLE question_type (
     type_name VARCHAR(255) NOT NULL
 );
 
--- Creating the LESSON table
 CREATE TABLE lesson (
     lesson_id BIGSERIAL PRIMARY KEY,
-    created_by BIGINT REFERENCES classlog_user(user_id),
-    class_id BIGINT REFERENCES class(class_id),
+    created_by BIGINT NOT NULL REFERENCES classlog_user(user_id),
+    class_id BIGINT NOT NULL REFERENCES class(class_id) ON DELETE CASCADE,
     lesson_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    subject VARCHAR(255),
-    content TEXT
+    subject VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL
 );
+
 
 
 -- Recreate the TASK table
 CREATE TABLE task (
     task_id BIGSERIAL PRIMARY KEY,
-    created_by BIGINT REFERENCES classlog_user(user_id) ON DELETE SET NULL, -- If the user is deleted, retain tasks with null creator
+    created_by BIGINT REFERENCES classlog_user(user_id) ON DELETE SET NULL,
     task_name VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     due_date TIMESTAMP,
@@ -104,7 +100,7 @@ CREATE TABLE question (
     question_id BIGSERIAL PRIMARY KEY,
     question_type_id BIGINT REFERENCES question_type(question_type_id) ON DELETE SET NULL, -- Retain questions with null type
     edited_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    points INT,
+    points INT NOT NULL,
     content TEXT NOT NULL,
     file_id BIGINT REFERENCES file(file_id) ON DELETE SET NULL -- If the file is deleted, retain the question but set file_id to NULL
 );
@@ -122,30 +118,29 @@ CREATE TABLE answer (
     answer_id BIGSERIAL PRIMARY KEY,
     question_id BIGINT REFERENCES question(question_id) ON DELETE CASCADE, -- If the question is deleted, remove its answers
     is_correct BOOLEAN,
-    content TEXT
+    content TEXT NOT NULL
 );
 
--- Recreate the SUBMITTED_ANSWER table
 CREATE TABLE submitted_answer (
     submitted_answer_id BIGSERIAL PRIMARY KEY,
-    task_question_id BIGINT REFERENCES task_question(task_question_id) ON DELETE CASCADE, -- Reference task_question table
-    user_id BIGINT REFERENCES classlog_user(user_id) ON DELETE CASCADE, -- If the user is deleted, remove their submissions
+    task_question_id BIGINT NOT NULL REFERENCES task_question(task_question_id) ON DELETE CASCADE,
+    user_id BIGINT NOT NULL REFERENCES classlog_user(user_id) ON DELETE CASCADE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    content TEXT
+    content TEXT NOT NULL
 );
 
--- Recreate the TASK_USER table
+
 CREATE TABLE user_task (
     user_task_id BIGSERIAL PRIMARY KEY, -- Surrogate primary key for unique identification
-    task_id BIGINT REFERENCES task(task_id) ON DELETE CASCADE, -- If the task is deleted, remove user-task assignments
-    user_id BIGINT REFERENCES classlog_user(user_id) ON DELETE CASCADE, -- If the user is deleted, remove task-user assignments
-    score INT DEFAULT NULL -- Allow NULL values for score
+    task_id BIGINT NOT NULL REFERENCES task(task_id) ON DELETE CASCADE, -- Task is required
+    user_id BIGINT NOT NULL REFERENCES classlog_user(user_id) ON DELETE CASCADE, -- User is required
+    score INT DEFAULT NULL -- Score can remain NULL if not yet assigned
 );
 
 
--- Creating the PRESENCE table
+
 CREATE TABLE presence (
     presence_id BIGSERIAL PRIMARY KEY,
-    student_id BIGINT REFERENCES classlog_user(user_id) ON DELETE CASCADE, -- Cascade delete for user
-    lesson_id BIGINT REFERENCES lesson(lesson_id) ON DELETE CASCADE        -- Cascade delete for lesson
+    student_id BIGINT NOT NULL REFERENCES classlog_user(user_id) ON DELETE CASCADE, -- Student is required
+    lesson_id BIGINT NOT NULL REFERENCES lesson(lesson_id) ON DELETE CASCADE       -- Lesson is required
 );
