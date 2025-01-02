@@ -5,9 +5,9 @@ import static org.mockito.Mockito.when;
 
 import com.example.classlog.dto.AnswerDto;
 import com.example.classlog.dto.QuestionDto;
-import com.example.classlog.entities.Answer;
-import com.example.classlog.entities.Question;
-import com.example.classlog.entities.QuestionType;
+import com.example.classlog.entity.Answer;
+import com.example.classlog.entity.Question;
+import com.example.classlog.entity.QuestionType;
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;

@@ -2,10 +2,10 @@ package com.example.classlog.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.example.classlog.entities.Class;
-import com.example.classlog.entities.User;
-import com.example.classlog.entities.UserClass;
-import com.example.classlog.entities.UserClassId;
+import com.example.classlog.entity.Class;
+import com.example.classlog.entity.User;
+import com.example.classlog.entity.UserClass;
+import com.example.classlog.entity.UserClassId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

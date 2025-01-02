@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { AuthService } from './../auth/auth.service';
-import { UserDto } from "../../model/entities/user-dto";
-import { GlobalNotificationHandler } from "../notification/global-notification-handler.service";
+import {Injectable} from '@angular/core';
+import axios, {AxiosRequestConfig, AxiosResponse} from "axios";
+import {AuthService} from './../auth/auth.service';
+import {UserDto} from "../../model/entities/user-dto";
+import {GlobalNotificationHandler} from "../notification/global-notification-handler.service";
 
 @Injectable({
   providedIn: 'root'
@@ -15,25 +15,22 @@ export class AxiosService {
     axios.defaults.baseURL = "http://localhost:8080";
     axios.defaults.headers.post['Content-Type'] = 'application/json';
 
-    // Add Axios interceptor
     axios.interceptors.response.use(
-      (response) => response, // Return response if successful
+      (response) => response,
       async (error) => {
         const originalRequest = error.config;
 
-        // Check if the error is related to an expired token
         if (
           error.response &&
           error.response.status === 401 &&
           error.response.data.error &&
           error.response.data.error.includes("Token has expired") &&
-          !originalRequest._isRetryAttempt // Ensure we retry only once
+          !originalRequest._isRetryAttempt
         ) {
-          originalRequest._isRetryAttempt = true; // Mark this request as retried
+          originalRequest._isRetryAttempt = true;
           return this.handleTokenExpiration(originalRequest);
         }
 
-        // If the error is not related to token expiration or retry already attempted, reject it
         return Promise.reject(error);
       }
     );
@@ -65,7 +62,7 @@ export class AxiosService {
 
     headers["Content-Type"] = "multipart/form-data";
 
-    return axios.post(url, formData, { headers });
+    return axios.post(url, formData, {headers});
   }
 
   async requestDownload(url: string, params: any): Promise<any> {
@@ -98,25 +95,21 @@ export class AxiosService {
         const refreshedUser: UserDto = response.data;
         this.authService.setUser(refreshedUser);
 
-        // Upewnij się, że nagłówki istnieją
         if (!originalRequest.headers) {
-          originalRequest.headers = {}; // Inicjalizuj nagłówki jako pusty obiekt
+          originalRequest.headers = {};
         }
 
-        // Retry original request with new token
         originalRequest.headers["Authorization"] = "Bearer " + refreshedUser.token;
         return axios(originalRequest);
       } catch (error) {
-        // Notify user and clear session if token refresh fails
         this.globalNotificationHandler.handleMessage("Could not refresh token. Please log in again.");
         this.authService.setUser(null);
-        return Promise.reject(error); // Reject the request
+        return Promise.reject(error);
       } finally {
         this.isRefreshing = false;
       }
     }
 
-    // Kolejkowanie żądań w czasie odświeżania tokena
     return new Promise((resolve, reject) => {
       this.failedRequestsQueue.push(() => {
         axios(originalRequest)

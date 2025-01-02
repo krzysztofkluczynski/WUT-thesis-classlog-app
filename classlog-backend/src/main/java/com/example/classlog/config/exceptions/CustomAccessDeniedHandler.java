@@ -15,20 +15,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
   public void handle(HttpServletRequest request, HttpServletResponse response,
       AccessDeniedException accessDeniedException)
       throws IOException {
-    Throwable cause = accessDeniedException.getCause();
-
-    response.setContentType("application/json");
-
-    // Check if the exception was caused by a token expiration
-    if (cause instanceof com.auth0.jwt.exceptions.TokenExpiredException) {
-      // Token expired
-      response.setStatus(HttpStatus.UNAUTHORIZED.value());
-      response.getWriter()
-          .write("{\"error\": \"Token has expired. Please refresh your session.\"}");
-    } else {
-      // Generic unauthorized response
-      response.setStatus(HttpStatus.UNAUTHORIZED.value());
-      response.getWriter().write("{\"error\": \"Unauthorized access.\"}");
-    }
+    throw new AppException("You do not have permission to access this resource.",
+        HttpStatus.FORBIDDEN);
   }
 }

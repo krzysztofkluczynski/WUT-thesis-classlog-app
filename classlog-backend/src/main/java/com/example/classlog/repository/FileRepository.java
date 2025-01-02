@@ -1,7 +1,7 @@
 package com.example.classlog.repository;
 
 
-import com.example.classlog.entities.File;
+import com.example.classlog.entity.File;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

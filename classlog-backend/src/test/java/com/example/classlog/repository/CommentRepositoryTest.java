@@ -4,10 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.example.classlog.entities.Class;
-import com.example.classlog.entities.Comment;
-import com.example.classlog.entities.Post;
-import com.example.classlog.entities.User;
+import com.example.classlog.entity.Class;
+import com.example.classlog.entity.Comment;
+import com.example.classlog.entity.Post;
+import com.example.classlog.entity.User;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;

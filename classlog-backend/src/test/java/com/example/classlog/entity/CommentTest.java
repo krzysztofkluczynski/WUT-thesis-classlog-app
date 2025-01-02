@@ -1,4 +1,4 @@
-package com.example.classlog.entities;
+package com.example.classlog.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -10,14 +10,13 @@ class CommentTest {
 
   private Post post;
   private User user;
-  private Comment comment;
 
   @BeforeEach
   void setUp() {
     // Setting up test data for Post and User entities
     post = Post.builder().id(1L).title("Sample Post").content("This is a sample post.").build();
     user = User.builder().id(1L).name("John").surname("Doe").email("john.doe@example.com").build();
-    comment = Comment.builder()
+    Comment comment = Comment.builder()
         .id(1L)
         .post(post)
         .user(user)

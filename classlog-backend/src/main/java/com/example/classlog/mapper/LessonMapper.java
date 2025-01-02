@@ -2,7 +2,7 @@ package com.example.classlog.mapper;
 
 
 import com.example.classlog.dto.LessonDto;
-import com.example.classlog.entities.Lesson;
+import com.example.classlog.entity.Lesson;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

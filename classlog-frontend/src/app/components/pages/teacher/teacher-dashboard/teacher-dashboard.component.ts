@@ -46,14 +46,15 @@ export class TeacherDashboardComponent implements OnInit {
   classIdForSelectedLesson: number | null = null;
 
 
-
   teachersMap: Map<ClassDto, UserDto[]> = new Map();
+
   constructor(
     private axiosService: AxiosService,
     private authService: AuthService,
     private router: Router,
     private globalNotificationHandler: GlobalNotificationHandler
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.fetchData();
@@ -75,7 +76,7 @@ export class TeacherDashboardComponent implements OnInit {
     this.showJoinClassModal = !this.showJoinClassModal;
     if (!this.showJoinClassModal) {
       this.fetchData();
-      window.location.reload(); //TODO, Think of the better way to refresh the page
+      window.location.reload();
     }
   }
 

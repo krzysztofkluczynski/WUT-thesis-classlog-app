@@ -2,7 +2,7 @@ package com.example.classlog.dto;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.example.classlog.entities.QuestionType;
+import com.example.classlog.entity.QuestionType;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 

@@ -39,7 +39,7 @@ public class UserAuthenticationProvider {
 
   public String createToken(UserDto user) {
     Date now = new Date();
-    Date validity = new Date(now.getTime() + 45000); // 3 hours
+    Date validity = new Date(now.getTime() + 3 * 3600000); // 3 hours
 
     Algorithm algorithm = Algorithm.HMAC256(secretKey);
     return JWT.create()

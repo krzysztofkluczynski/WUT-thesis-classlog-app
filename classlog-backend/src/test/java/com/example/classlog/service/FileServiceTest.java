@@ -8,9 +8,9 @@ import static org.mockito.Mockito.when;
 
 import com.example.classlog.config.exceptions.AppException;
 import com.example.classlog.dto.FileDto;
-import com.example.classlog.entities.Class;
-import com.example.classlog.entities.File;
-import com.example.classlog.entities.User;
+import com.example.classlog.entity.Class;
+import com.example.classlog.entity.File;
+import com.example.classlog.entity.User;
 import com.example.classlog.mapper.FileMapper;
 import com.example.classlog.repository.FileRepository;
 import java.io.IOException;
@@ -41,7 +41,7 @@ class FileServiceTest {
   private Class assignedClass;
   private User uploadedBy;
 
-  private final String mockFilePath = "classlog-backend/src/test/testUploads/julia_set_with_axes.png";
+  private final String mockFilePath = "src/test/testUploads/julia_set_with_axes.png";
   private ArgumentCaptor<File> fileCaptor;
   private ArgumentCaptor<Long> idCaptor;
 

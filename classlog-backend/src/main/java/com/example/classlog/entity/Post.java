@@ -1,4 +1,4 @@
-package com.example.classlog.entities;
+package com.example.classlog.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,32 +13,30 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "task")
-public class Task {
+@Table(name = "post")
+public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "task_id")
+    @Column(name = "post_id")
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "created_by", nullable = true) // Allows NULL if the creator is deleted
-    private User createdBy;
+    @JoinColumn(name = "class_id", nullable = false)
+    private Class assignedClass;
 
-    @Column(name = "task_name", nullable = false, length = 255)
-    private String taskName;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    @Column(name = "description", columnDefinition = "TEXT")
-    private String description;
+    @Column(name = "title", nullable = false, length = 255)
+    private String title;
 
-    @Column(name = "due_date")
-    private LocalDateTime dueDate;
+    @Column(name = "content", columnDefinition = "TEXT")
+    private String content;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
-
-    @Column(name = "score")
-    private Integer score;
 
     @PrePersist
     protected void onCreate() {

@@ -12,9 +12,9 @@ import com.example.classlog.dto.ClassDto;
 import com.example.classlog.dto.CreateClassDto;
 import com.example.classlog.dto.ManageUserClassRequestDto;
 import com.example.classlog.dto.ManageUserClassWithCodeDto;
-import com.example.classlog.entities.Class;
-import com.example.classlog.entities.Role;
-import com.example.classlog.entities.User;
+import com.example.classlog.entity.Class;
+import com.example.classlog.entity.Role;
+import com.example.classlog.entity.User;
 import com.example.classlog.mapper.UserMapper;
 import com.example.classlog.repository.ClassRepository;
 import com.example.classlog.repository.RoleRepository;
@@ -96,7 +96,7 @@ public class ClassControllerIntegrationTest {
   void shouldAddClass() throws Exception {
     CreateClassDto createClassDto = CreateClassDto.builder()
         .classDto(ClassDto.builder()
-            .name("Science Class")
+            .name("English Class")
             .build())
         .createdBy(userMapper.toUserDto(testUser))
         .build();
@@ -106,11 +106,11 @@ public class ClassControllerIntegrationTest {
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(createClassDto)))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.name").value("Science Class"));
+        .andExpect(jsonPath("$.name").value("English Class"));
 
     List<Class> classes = classRepository.findAll();
     assertThat(classes).hasSize(2);
-    assertThat(classes.get(1).getName()).isEqualTo("Science Class");
+    assertThat(classes.get(1).getName()).isEqualTo("English Class");
   }
 
   @Test

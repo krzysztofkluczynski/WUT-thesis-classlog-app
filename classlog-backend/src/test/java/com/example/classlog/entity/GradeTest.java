@@ -1,4 +1,4 @@
-package com.example.classlog.entities;
+package com.example.classlog.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

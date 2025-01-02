@@ -1,6 +1,6 @@
 package com.example.classlog.repository;
 
-import com.example.classlog.entities.Answer;
+import com.example.classlog.entity.Answer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

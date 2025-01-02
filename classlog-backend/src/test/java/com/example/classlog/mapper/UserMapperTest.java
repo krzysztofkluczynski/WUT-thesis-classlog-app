@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.example.classlog.dto.SignUpDto;
 import com.example.classlog.dto.UserDto;
-import com.example.classlog.entities.Role;
-import com.example.classlog.entities.User;
+import com.example.classlog.entity.Role;
+import com.example.classlog.entity.User;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

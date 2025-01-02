@@ -8,7 +8,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.example.classlog.dto.UserDto;
-import com.example.classlog.entities.User;
+import com.example.classlog.entity.User;
 import com.example.classlog.mapper.UserMapper;
 import com.example.classlog.repository.PresenceRepository;
 import java.util.Collections;

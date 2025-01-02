@@ -1,4 +1,4 @@
-package com.example.classlog.entities;
+package com.example.classlog.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,22 +14,26 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Builder
-@Table(name = "presence")
-public class Presence {
+@Table(name = "user_task")
+public class UserTask {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "presence_id")
-  private Long presenceId;
+  @Column(name = "user_task_id")
+  private Long id;
 
   @ManyToOne
-  @JoinColumn(name = "student_id", nullable = false)
-  private User student;
+  @JoinColumn(name = "task_id", nullable = false)
+  private Task task;
+
   @ManyToOne
-  @JoinColumn(name = "lesson_id", nullable = false)
-  private Lesson lesson;
+  @JoinColumn(name = "user_id", nullable = false)
+  private User user;
+
+  @Column(name = "score", nullable = true)
+  private Integer score = null; // Default score is 0
 }

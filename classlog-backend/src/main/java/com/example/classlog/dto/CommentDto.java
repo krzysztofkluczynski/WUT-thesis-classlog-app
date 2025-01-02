@@ -1,6 +1,5 @@
 package com.example.classlog.dto;
 
-import com.example.classlog.entities.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

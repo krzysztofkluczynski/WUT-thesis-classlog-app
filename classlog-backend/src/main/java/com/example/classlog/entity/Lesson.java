@@ -1,4 +1,4 @@
-package com.example.classlog.entities;
+package com.example.classlog.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,22 +19,27 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Builder
-@Table(name = "user_task")
-public class UserTask {
+@Table(name = "lesson")
+public class Lesson {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "user_task_id")
-  private Long id;
+  private Long lessonId;
 
   @ManyToOne
-  @JoinColumn(name = "task_id", nullable = false)
-  private Task task;
+  @JoinColumn(name = "created_by", nullable = false)
+  private User createdBy;
 
   @ManyToOne
-  @JoinColumn(name = "user_id", nullable = false)
-  private User user;
+  @JoinColumn(name = "class_id", nullable = false)
+  private Class classEntity;
 
-  @Column(name = "score", nullable = true)
-  private Integer score = null; // Default score is 0
+  @Column(name = "lesson_date", nullable = false)
+  private LocalDateTime lessonDate;
+
+  @Column(name = "subject", length = 255)
+  private String subject;
+
+  @Column(name = "content")
+  private String content;
 }

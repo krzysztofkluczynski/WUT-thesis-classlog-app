@@ -1,9 +1,9 @@
 package com.example.classlog.service;
 
 import com.example.classlog.dto.GradeDto;
-import com.example.classlog.entities.Class;
-import com.example.classlog.entities.Grade;
-import com.example.classlog.entities.User;
+import com.example.classlog.entity.Class;
+import com.example.classlog.entity.Grade;
+import com.example.classlog.entity.User;
 import com.example.classlog.mapper.GradeMapper;
 import com.example.classlog.repository.ClassRepository;
 import com.example.classlog.repository.GradeRepository;

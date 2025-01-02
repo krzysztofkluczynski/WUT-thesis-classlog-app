@@ -32,7 +32,6 @@ public class SecurityConfig {
             .authenticationEntryPoint(customAuthenticationEntryPoint)
             .accessDeniedHandler(customAccessDeniedHandler)
         )
-
         .authorizeHttpRequests((requests) -> requests
             .requestMatchers(HttpMethod.POST, "/login", "/register", "/refresh-token").permitAll()
             .anyRequest().hasAnyRole("Teacher", "Student", "Admin"));

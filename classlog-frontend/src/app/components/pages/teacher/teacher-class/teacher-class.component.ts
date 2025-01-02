@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import { HeaderComponent } from '../../../shared/header/header.component';
-import { PostDto } from '../../../../model/entities/post-dto';
-import { parseDate } from '../../../../utils/date-utils';
-import { CommentDto } from '../../../../model/entities/comment-dto';
-import { LessonDto } from '../../../../model/entities/lesson.dto';
-import { AuthService } from '../../../../service/auth/auth.service';
-import { AxiosService } from '../../../../service/axios/axios.service';
-import { GlobalNotificationHandler } from '../../../../service/notification/global-notification-handler.service';
+import {HeaderComponent} from '../../../shared/header/header.component';
+import {PostDto} from '../../../../model/entities/post-dto';
+import {parseDate} from '../../../../utils/date-utils';
+import {CommentDto} from '../../../../model/entities/comment-dto';
+import {LessonDto} from '../../../../model/entities/lesson.dto';
+import {AuthService} from '../../../../service/auth/auth.service';
+import {AxiosService} from '../../../../service/axios/axios.service';
+import {GlobalNotificationHandler} from '../../../../service/notification/global-notification-handler.service';
 import {DatePipe, NgClass, NgForOf, NgIf} from "@angular/common";
-import { getFullName } from "../../../../utils/user-utils";
-import {AddUserToClassWindowComponent} from "../popup-window/add-user-to-class-window/add-user-to-class-window.component";
+import {getFullName} from "../../../../utils/user-utils";
+import {
+  AddUserToClassWindowComponent
+} from "../popup-window/add-user-to-class-window/add-user-to-class-window.component";
 import {
   DeleteUserFromClassWindowComponent
 } from "../popup-window/delete-user-from-class-window/delete-user-from-class-window.component";
@@ -64,7 +66,8 @@ export class TeacherClassComponent implements OnInit {
     private router: Router,
     private globalNotificationHandler: GlobalNotificationHandler,
     private route: ActivatedRoute,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.classId = Number(this.route.snapshot.paramMap.get('id'));
@@ -132,7 +135,7 @@ export class TeacherClassComponent implements OnInit {
   protected readonly getFullName = getFullName;
 
   navigateToFiles() {
-      this.router.navigate([`/files/${this.classId}`]);
+    this.router.navigate([`/files/${this.classId}`]);
   }
 
   toggleAddUserModal() {
@@ -176,8 +179,6 @@ export class TeacherClassComponent implements OnInit {
         this.globalNotificationHandler.handleError(error);
         console.error('Failed to create post:', error.response?.data || error);
       });
-
-
 
     this.topic = '';
     this.message = '';
@@ -231,7 +232,7 @@ export class TeacherClassComponent implements OnInit {
 
 
   navigateToLessonCreation() {
-    this.router.navigate([`/teacher/lessonCreator/${this.classId}`], { queryParams: { editMode: false } });
+    this.router.navigate([`/teacher/lessonCreator/${this.classId}`], {queryParams: {editMode: false}});
   }
 
   toggleLessonWindow(lessonId: number | null, classId: number | null) {

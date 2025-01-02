@@ -1,7 +1,7 @@
 package com.example.classlog.mapper;
 
 import com.example.classlog.dto.UserTaskDto;
-import com.example.classlog.entities.UserTask;
+import com.example.classlog.entity.UserTask;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

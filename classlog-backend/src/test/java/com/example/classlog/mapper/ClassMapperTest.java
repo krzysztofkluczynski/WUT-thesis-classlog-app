@@ -3,7 +3,7 @@ package com.example.classlog.mapper;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.example.classlog.dto.ClassDto;
-import com.example.classlog.entities.Class;
+import com.example.classlog.entity.Class;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

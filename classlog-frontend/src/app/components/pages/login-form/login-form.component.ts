@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import { FormsModule } from "@angular/forms";
+import {FormsModule} from "@angular/forms";
 import {NgClass, NgIf} from "@angular/common";
-import { Router } from '@angular/router';
-import { UserDto } from "../../../model/entities/user-dto";
-import { AxiosService } from "../../../service/axios/axios.service";
-import { AuthService } from "../../../service/auth/auth.service";
-import { HeaderComponent } from "../../shared/header/header.component";
+import {Router} from '@angular/router';
+import {UserDto} from "../../../model/entities/user-dto";
+import {AxiosService} from "../../../service/axios/axios.service";
+import {AuthService} from "../../../service/auth/auth.service";
+import {HeaderComponent} from "../../shared/header/header.component";
 import {GlobalNotificationHandler} from "../../../service/notification/global-notification-handler.service";
 
 @Component({
@@ -20,7 +20,7 @@ import {GlobalNotificationHandler} from "../../../service/notification/global-no
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.css']
 })
-export class LoginFormComponent implements OnInit{
+export class LoginFormComponent implements OnInit {
   email: string = "";
   password: string = "";
 
@@ -29,12 +29,12 @@ export class LoginFormComponent implements OnInit{
     private authService: AuthService,
     private router: Router,
     private globalNotificationHandler: GlobalNotificationHandler
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.authService.logout()
   }
-
 
   onSubmitLogin(): void {
     if (this.email === '' || this.password === '') {

@@ -6,7 +6,7 @@ import static org.mockito.ArgumentMatchers.eq;
 
 import com.example.classlog.dto.ChangePasswordDto;
 import com.example.classlog.dto.UserDto;
-import com.example.classlog.entities.Role;
+import com.example.classlog.entity.Role;
 import com.example.classlog.service.UserService;
 import java.time.LocalDateTime;
 import java.util.Arrays;

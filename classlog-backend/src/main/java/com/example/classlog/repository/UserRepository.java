@@ -1,7 +1,7 @@
 package com.example.classlog.repository;
 
 
-import com.example.classlog.entities.User;
+import com.example.classlog.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

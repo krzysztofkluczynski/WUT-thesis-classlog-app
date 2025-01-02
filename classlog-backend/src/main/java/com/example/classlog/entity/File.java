@@ -1,4 +1,4 @@
-package com.example.classlog.entities;
+package com.example.classlog.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,30 +8,32 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
 @Entity
-@Table(name = "class")
-public class Class {
+@Table(name = "file")
+public class File {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "class_id")
-    private Long id;
+    private Long fileId;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "class_id", referencedColumnName = "class_id")
+    private Class classEntity;
 
-    @Column(name = "description")
-    private String description;
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private User userEntity;
 
-    @Column(name = "code", unique = true)
-    private String code;
+    @Column(name = "file_path", nullable = false)
+    private String filePath;
 
     @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @PrePersist
     protected void onCreate() {

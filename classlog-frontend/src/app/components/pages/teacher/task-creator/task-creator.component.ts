@@ -61,12 +61,14 @@ export class TaskCreatorComponent implements OnInit {
   ReadyClosedQuestionsFromTheBase: QuestionDto[] = [];
 
   createdTask: TaskDto | null = null;
+
   constructor(
     private axiosService: AxiosService,
     private authService: AuthService,
     private router: Router,
     private globalNotificationHandler: GlobalNotificationHandler
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.axiosService.request('GET', `/classes/user/${this.authService.getUser()?.id}`, {}).then(
@@ -120,13 +122,15 @@ export class TaskCreatorComponent implements OnInit {
                   uploadedBy: this.authService.getUserWithoutToken(),
                   assignedClass: null,
                 };
+                console.log("File before put request:", fileDto);
+
 
                 // Create FormData for file upload
                 const formData = new FormData();
                 formData.append('file', closedQuestion.file);
                 formData.append(
                   'fileDto',
-                  new Blob([JSON.stringify(fileDto)], { type: 'application/json' })
+                  new Blob([JSON.stringify(fileDto)], {type: 'application/json'})
                 );
 
                 // Upload the file
@@ -141,8 +145,10 @@ export class TaskCreatorComponent implements OnInit {
                     this.globalNotificationHandler.handleMessage(
                       'File uploaded successfully'
                     );
+                    console.log("Closed question before log: ", closedQuestion);
 
                     // Send the question payload with the uploaded file
+                    console.log("File before put request:", fileDto);
                     this.sendClosedQuestion(closedQuestion, fileDtoResponse);
                   })
                   .catch((error) => {
@@ -167,7 +173,7 @@ export class TaskCreatorComponent implements OnInit {
                 formData.append('file', openQuestion.file);
                 formData.append(
                   'fileDto',
-                  new Blob([JSON.stringify(fileDto)], { type: 'application/json' })
+                  new Blob([JSON.stringify(fileDto)], {type: 'application/json'})
                 );
 
                 // Upload the file
@@ -201,7 +207,7 @@ export class TaskCreatorComponent implements OnInit {
                 .request(
                   'POST',
                   `/questions/assignQuestionsToTask/${this.createdTask?.id}`,
-                   this.questionIdsFromBase // Send the entire list of IDs in an array
+                  this.questionIdsFromBase // Send the entire list of IDs in an array
                 )
                 .then(() =>
                   console.log('Questions assigned to the task successfully')
@@ -229,10 +235,10 @@ export class TaskCreatorComponent implements OnInit {
       {
         question: {
           questionId: null,
-          questionType: { questionTypeId: 1, typeName: 'Closed Question' },
+          questionType: {questionTypeId: 1, typeName: 'Closed Question'},
           points: closedQuestion.points,
           content: closedQuestion.question,
-          fileId: fileDto,
+          file: fileDto,
         },
         answers: Array.from(closedQuestion.answer).map(([content, isCorrect]) => ({
           content,
@@ -240,6 +246,8 @@ export class TaskCreatorComponent implements OnInit {
         })),
       },
     ];
+
+    console.log("Payload before request: ", payload);
 
     this.axiosService
       .request('POST', `/questions/withAnswers/${this.createdTask?.id}`, payload)
@@ -255,10 +263,10 @@ export class TaskCreatorComponent implements OnInit {
     const payload = [{
       question: {
         questionId: null,
-        questionType: { questionTypeId: 2, typeName: 'Open Question' },
+        questionType: {questionTypeId: 2, typeName: 'Open Question'},
         points: openQuestion.points,
         content: openQuestion.question,
-        fileId: fileDto,
+        file: fileDto,
       },
       answers: [
         {
@@ -277,7 +285,6 @@ export class TaskCreatorComponent implements OnInit {
         this.globalNotificationHandler.handleError(error);
       });
   }
-
 
 
   toggleAddQuestionModal() {

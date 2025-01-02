@@ -9,7 +9,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.classlog.dto.UserDto;
-import com.example.classlog.entities.Role;
+import com.example.classlog.entity.Role;
 import com.example.classlog.repository.RoleRepository;
 import com.example.classlog.service.UserService;
 import org.junit.jupiter.api.BeforeEach;

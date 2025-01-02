@@ -42,7 +42,7 @@ class FileControllerTest {
 
   private FileDto fileDto;
 
-  private final String testFilePath = "classlog-backend/src/test/testUploads/julia_set_with_axes.png";
+  private final String testFilePath = "src/test/testUploads/julia_set_with_axes.png";
 
   @BeforeEach
   void setUp() {

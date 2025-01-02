@@ -1,7 +1,7 @@
 package com.example.classlog.service;
 
 import com.example.classlog.dto.PostDto;
-import com.example.classlog.entities.Post;
+import com.example.classlog.entity.Post;
 import com.example.classlog.mapper.PostMapper;
 import com.example.classlog.repository.PostRepository;
 import lombok.RequiredArgsConstructor;

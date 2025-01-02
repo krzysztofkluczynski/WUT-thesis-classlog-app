@@ -1,4 +1,4 @@
-package com.example.classlog.entities;
+package com.example.classlog.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,32 +13,25 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 @Entity
-@Table(name = "classlog_user")
-public class User {
+@Table(name = "class")
+public class Class {
 
-    @jakarta.persistence.Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "class_id")
     private Long id;
 
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "surname", nullable = false)
-    private String surname;
+    @Column(name = "description")
+    private String description;
 
-    @Column(name = "email", nullable = false, unique = true)
-    private String email;
-
-    @Column(name = "password", nullable = false)
-    private String password;
+    @Column(name = "code", unique = true)
+    private String code;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id", referencedColumnName = "role_id", foreignKey = @ForeignKey(name = "classlog_user_role_id_fkey"))
-    private Role role;
 
     @PrePersist
     protected void onCreate() {

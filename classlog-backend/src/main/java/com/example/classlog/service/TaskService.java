@@ -3,7 +3,7 @@ package com.example.classlog.service;
 
 import com.example.classlog.config.exceptions.AppException;
 import com.example.classlog.dto.*;
-import com.example.classlog.entities.*;
+import com.example.classlog.entity.*;
 import com.example.classlog.mapper.*;
 import com.example.classlog.repository.*;
 import lombok.RequiredArgsConstructor;

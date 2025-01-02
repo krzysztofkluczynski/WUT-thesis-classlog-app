@@ -1,7 +1,7 @@
 package com.example.classlog.repository;
 
-import com.example.classlog.entities.Task;
-import com.example.classlog.entities.UserTask;
+import com.example.classlog.entity.Task;
+import com.example.classlog.entity.UserTask;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

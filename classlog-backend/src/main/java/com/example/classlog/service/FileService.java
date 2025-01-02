@@ -2,7 +2,7 @@ package com.example.classlog.service;
 
 import com.example.classlog.config.exceptions.AppException;
 import com.example.classlog.dto.FileDto;
-import com.example.classlog.entities.File;
+import com.example.classlog.entity.File;
 import com.example.classlog.mapper.FileMapper;
 import com.example.classlog.repository.FileRepository;
 import java.io.IOException;

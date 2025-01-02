@@ -2,7 +2,7 @@ package com.example.classlog.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.example.classlog.entities.Role;
+import com.example.classlog.entity.Role;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -8,7 +8,7 @@ import com.example.classlog.dto.AnswerDto;
 import com.example.classlog.dto.FileDto;
 import com.example.classlog.dto.QuestionDto;
 import com.example.classlog.dto.QuestionWithAnswersDto;
-import com.example.classlog.entities.QuestionType;
+import com.example.classlog.entity.QuestionType;
 import com.example.classlog.service.QuestionService;
 import java.time.LocalDateTime;
 import java.util.Arrays;

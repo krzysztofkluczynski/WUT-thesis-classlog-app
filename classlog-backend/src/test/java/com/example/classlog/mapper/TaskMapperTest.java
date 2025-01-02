@@ -5,8 +5,8 @@ import static org.mockito.Mockito.when;
 
 import com.example.classlog.dto.TaskDto;
 import com.example.classlog.dto.UserDto;
-import com.example.classlog.entities.Task;
-import com.example.classlog.entities.User;
+import com.example.classlog.entity.Task;
+import com.example.classlog.entity.User;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

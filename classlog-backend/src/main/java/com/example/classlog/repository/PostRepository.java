@@ -1,6 +1,6 @@
 package com.example.classlog.repository;
 
-import com.example.classlog.entities.Post;
+import com.example.classlog.entity.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

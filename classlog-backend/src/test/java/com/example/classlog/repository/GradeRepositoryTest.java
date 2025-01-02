@@ -2,9 +2,9 @@ package com.example.classlog.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.example.classlog.entities.Class;
-import com.example.classlog.entities.Grade;
-import com.example.classlog.entities.User;
+import com.example.classlog.entity.Class;
+import com.example.classlog.entity.Grade;
+import com.example.classlog.entity.User;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

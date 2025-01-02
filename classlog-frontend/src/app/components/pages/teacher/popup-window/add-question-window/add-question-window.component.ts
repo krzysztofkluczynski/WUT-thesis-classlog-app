@@ -1,10 +1,8 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
-import {UserDto} from "../../../../../model/entities/user-dto";
 import {AxiosService} from "../../../../../service/axios/axios.service";
 import {GlobalNotificationHandler} from "../../../../../service/notification/global-notification-handler.service";
-import {ActivatedRoute} from "@angular/router";
 import {ClosedQuestion, OpenQuestion} from "../../task-creator/task-creator.component";
 import {QuestionDto} from "../../../../../model/entities/question-dto";
 
@@ -41,7 +39,8 @@ export class AddQuestionWindowComponent {
   constructor(
     private axiosService: AxiosService,
     private globalNotificationHandler: GlobalNotificationHandler,
-  ) {}
+  ) {
+  }
 
   setActiveTab(tab: 'open' | 'close' | 'ready'): void {
     this.activeTab = tab;
@@ -66,7 +65,7 @@ export class AddQuestionWindowComponent {
   }
 
   confirmSelection(): void {
-    if (this.points === null || this.points <= 0) {
+    if ((this.points === null || this.points <= 0) && this.activeTab !== 'ready') {
       this.globalNotificationHandler.handleMessage('Please enter a valid points value.');
       return;
     }
@@ -126,8 +125,8 @@ export class AddQuestionWindowComponent {
       }
     ).catch((error: any) => {
       this.globalNotificationHandler.handleError(error);
-  });
-}
+    });
+  }
 
   selectReadyQuestion(question: QuestionDto): void {
     this.readyQuestionId = question.questionId; // Set the selected question ID

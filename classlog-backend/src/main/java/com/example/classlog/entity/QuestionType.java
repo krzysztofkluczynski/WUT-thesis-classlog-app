@@ -1,4 +1,4 @@
-package com.example.classlog.entities;
+package com.example.classlog.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,16 +14,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Builder
 @Entity
-@Table(name = "role")
-public class Role {
+@Builder
+@Table(name = "question_type")
+public class QuestionType {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "role_id")
-  private Long id;
+  @Column(name = "question_type_id")
+  private Long questionTypeId;
 
-  @Column(name = "role_name", nullable = false, unique = true)
-  private String roleName;
+  @Column(name = "type_name", nullable = false)
+  private String typeName;
 }

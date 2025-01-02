@@ -16,19 +16,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
       AuthenticationException authException)
       throws IOException {
     response.setContentType("application/json");
-
-    // Check the cause of the exception
-    Throwable cause = authException.getCause();
-    System.out.println("Cause" + cause.getClass());
-    if (cause instanceof com.auth0.jwt.exceptions.TokenExpiredException) {
-      // Token expired
-      response.setStatus(HttpStatus.UNAUTHORIZED.value());
-      response.getWriter()
-          .write("{\"error\": \"Token has expired. Please refresh your session.\"}");
-    } else {
-      // Generic unauthorized response
-      response.setStatus(HttpStatus.UNAUTHORIZED.value());
-      response.getWriter().write("{\"error\": \"Unauthorized access. Please log in.\"}");
-    }
+    response.setStatus(HttpStatus.UNAUTHORIZED.value());
+    response.getWriter().write("{\"error\": \"Unauthorized access. Please log in.\"}");
   }
 }

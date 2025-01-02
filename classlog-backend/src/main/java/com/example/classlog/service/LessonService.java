@@ -2,7 +2,7 @@ package com.example.classlog.service;
 
 import com.example.classlog.repository.LessonRepository;
 import com.example.classlog.dto.LessonDto;
-import com.example.classlog.entities.Lesson;
+import com.example.classlog.entity.Lesson;
 import com.example.classlog.mapper.LessonMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

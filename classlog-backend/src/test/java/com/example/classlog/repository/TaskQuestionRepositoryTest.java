@@ -2,10 +2,10 @@ package com.example.classlog.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.example.classlog.entities.Question;
-import com.example.classlog.entities.Task;
-import com.example.classlog.entities.TaskQuestion;
-import com.example.classlog.entities.User;
+import com.example.classlog.entity.Question;
+import com.example.classlog.entity.Task;
+import com.example.classlog.entity.TaskQuestion;
+import com.example.classlog.entity.User;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { AxiosService } from "../../../service/axios/axios.service";
-import { ActivatedRoute, Router } from "@angular/router";
-import { GlobalNotificationHandler } from "../../../service/notification/global-notification-handler.service";
-import { DatePipe, NgForOf, NgIf } from "@angular/common";
-import { QuestionDto } from "../../../model/entities/question-dto";
-import { AnswerDto } from "../../../model/entities/answer-dto";
-import { TaskDto } from "../../../model/entities/task-dto";
-import { UserDto } from "../../../model/entities/user-dto";
-import { parseDate } from "../../../utils/date-utils";
-import { FormsModule } from "@angular/forms";
-import { HeaderComponent } from "../header/header.component";
-import { AuthService } from "../../../service/auth/auth.service";
+import {Component, OnInit} from '@angular/core';
+import {AxiosService} from "../../../service/axios/axios.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {GlobalNotificationHandler} from "../../../service/notification/global-notification-handler.service";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
+import {QuestionDto} from "../../../model/entities/question-dto";
+import {AnswerDto} from "../../../model/entities/answer-dto";
+import {TaskDto} from "../../../model/entities/task-dto";
+import {UserDto} from "../../../model/entities/user-dto";
+import {parseDate} from "../../../utils/date-utils";
+import {FormsModule} from "@angular/forms";
+import {HeaderComponent} from "../header/header.component";
+import {AuthService} from "../../../service/auth/auth.service";
 
 export interface QuestionWithAnswersAndUserAnswerDto {
   question: QuestionDto;
@@ -47,7 +47,8 @@ export class SubmittedTaskDetailsComponent implements OnInit {
     private router: Router,
     private globalNotificationHandler: GlobalNotificationHandler,
     private route: ActivatedRoute
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     const taskId = this.route.snapshot.paramMap.get('taskId');
@@ -112,12 +113,12 @@ export class SubmittedTaskDetailsComponent implements OnInit {
               this.globalNotificationHandler.handleError("Some files are not in MP3 format.");
               return;
             }
-            const blob = new Blob([response.data], { type: contentType });
+            const blob = new Blob([response.data], {type: contentType});
             const url = URL.createObjectURL(blob);
 
             this.objectUrls.push(url);
             this.submittedTask.questionsWithAnswers[index].fileUrl = url;
-            this.submittedTask.questionsWithAnswers[index].file = new File([blob], `question_${fileId}.mp3`, { type: contentType });
+            this.submittedTask.questionsWithAnswers[index].file = new File([blob], `question_${fileId}.mp3`, {type: contentType});
           },
           (error) => {
             this.globalNotificationHandler.handleError("Failed to download some files.");
@@ -128,7 +129,11 @@ export class SubmittedTaskDetailsComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/teacher/tasks']);
+    if (this.authService.getUser()?.role.roleName === 'Teacher') {
+      this.router.navigate(['/teacher/tasks']);
+    } else {
+      this.router.navigate(['/student/tasks']);
+    }
   }
 
   getCorrectAnswer(answers: AnswerDto[]): string | null {
@@ -152,7 +157,7 @@ export class SubmittedTaskDetailsComponent implements OnInit {
       const taskId = this.submittedTask.task.id;
       const userId = this.submittedTask.user.id;
 
-     const payload = {
+      const payload = {
         newScore: this.newScore
       }
 

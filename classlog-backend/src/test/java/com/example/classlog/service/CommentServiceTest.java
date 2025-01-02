@@ -10,9 +10,9 @@ import static org.mockito.Mockito.when;
 
 import com.example.classlog.config.exceptions.AppException;
 import com.example.classlog.dto.CommentDto;
-import com.example.classlog.entities.Comment;
-import com.example.classlog.entities.Post;
-import com.example.classlog.entities.User;
+import com.example.classlog.entity.Comment;
+import com.example.classlog.entity.Post;
+import com.example.classlog.entity.User;
 import com.example.classlog.mapper.CommentMapper;
 import com.example.classlog.repository.CommentRepository;
 import java.time.LocalDateTime;

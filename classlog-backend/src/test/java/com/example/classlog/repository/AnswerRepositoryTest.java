@@ -3,8 +3,8 @@ package com.example.classlog.repository;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import com.example.classlog.entities.Answer;
-import com.example.classlog.entities.Question;
+import com.example.classlog.entity.Answer;
+import com.example.classlog.entity.Question;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

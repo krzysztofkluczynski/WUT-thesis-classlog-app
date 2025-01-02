@@ -1,12 +1,7 @@
 package com.example.classlog.controller;
 
 import com.example.classlog.dto.*;
-import com.example.classlog.entities.Task;
-import com.example.classlog.entities.User;
-import com.example.classlog.entities.UserTask;
-import com.example.classlog.repository.TaskRepository;
-import com.example.classlog.repository.UserRepository;
-import com.example.classlog.repository.UserTaskRepository;
+import com.example.classlog.entity.Task;
 import com.example.classlog.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
