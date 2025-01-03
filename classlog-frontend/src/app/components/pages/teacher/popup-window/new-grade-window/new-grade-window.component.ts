@@ -1,12 +1,11 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import { UserDto } from "../../../../../model/entities/user-dto";
-import { FormsModule } from '@angular/forms';
-import { NgForOf, NgIf } from '@angular/common';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {UserDto} from "../../../../../model/entities/user-dto";
+import {FormsModule} from '@angular/forms';
+import {NgForOf, NgIf} from '@angular/common';
 import {AxiosService} from "../../../../../service/axios/axios.service";
 import {AuthService} from "../../../../../service/auth/auth.service";
 import {Router} from "@angular/router";
 import {GlobalNotificationHandler} from "../../../../../service/notification/global-notification-handler.service";
-import {ClassDto} from "../../../../../model/entities/class-dto";
 import {GradeDto} from "../../../../../model/entities/grade-dto";
 
 @Component({
@@ -36,7 +35,8 @@ export class NewGradeWindowComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private globalNotificationHandler: GlobalNotificationHandler
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.filteredStudentList = [...this.studentListFromOneClass];
@@ -93,7 +93,7 @@ export class NewGradeWindowComponent implements OnInit {
         .finally(() => {
           this.closeWindow();
         });
-      } else {
+    } else {
       this.globalNotificationHandler.handleMessage('Please make sure all the fields are properly fullfilled.');
     }
     this.closeWindow();

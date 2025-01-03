@@ -1,12 +1,11 @@
 package com.example.classlog.dto;
 
 import com.example.classlog.entity.QuestionType;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -14,11 +13,11 @@ import java.time.LocalDateTime;
 @Builder
 public class QuestionDto {
 
-    private Long questionId;
-    private QuestionType questionType;
-    private LocalDateTime editedAt;
-    private Integer points;
-    private String content;
-    private FileDto file;
+  private Long questionId;
+  private QuestionType questionType;
+  private LocalDateTime editedAt;
+  private Integer points;
+  private String content;
+  private FileDto file;
 }
 

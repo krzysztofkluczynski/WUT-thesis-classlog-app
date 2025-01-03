@@ -1,21 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { HeaderComponent } from "../../../shared/header/header.component";
-import { ClassDto } from "../../../../model/entities/class-dto";
-import { UserDto } from "../../../../model/entities/user-dto";
-import { AxiosService } from "../../../../service/axios/axios.service";
-import { AuthService } from "../../../../service/auth/auth.service";
-import { Router } from "@angular/router";
-import { GlobalNotificationHandler } from "../../../../service/notification/global-notification-handler.service";
-import { parseDate } from "../../../../utils/date-utils";
-import { ClassTileComponent } from "../../../shared/class-tile/class-tile.component";
-import {DatePipe, NgForOf, NgIf} from "@angular/common";
-import { FormsModule } from '@angular/forms';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {HeaderComponent} from "../../../shared/header/header.component";
+import {ClassDto} from "../../../../model/entities/class-dto";
+import {UserDto} from "../../../../model/entities/user-dto";
+import {AxiosService} from "../../../../service/axios/axios.service";
+import {AuthService} from "../../../../service/auth/auth.service";
+import {Router} from "@angular/router";
+import {GlobalNotificationHandler} from "../../../../service/notification/global-notification-handler.service";
+import {parseDate} from "../../../../utils/date-utils";
+import {ClassTileComponent} from "../../../shared/class-tile/class-tile.component";
+import {AsyncPipe, DatePipe, NgForOf, NgIf} from "@angular/common";
+import {FormsModule} from '@angular/forms';
 import {
-    DeleteUserFromClassWindowComponent
+  DeleteUserFromClassWindowComponent
 } from "../popup-window/delete-user-from-class-window/delete-user-from-class-window.component";
 import {NewGradeWindowComponent} from "../popup-window/new-grade-window/new-grade-window.component";
 import {getFullName} from "../../../../utils/user-utils";
 import {GradeDto} from "../../../../model/entities/grade-dto";
+import {async, BehaviorSubject} from "rxjs";
 
 @Component({
   selector: 'app-teacher-grades',
@@ -28,7 +29,8 @@ import {GradeDto} from "../../../../model/entities/grade-dto";
     FormsModule,
     DeleteUserFromClassWindowComponent,
     NgIf,
-    NewGradeWindowComponent
+    NewGradeWindowComponent,
+    AsyncPipe
   ],
   templateUrl: './teacher-grades.component.html',
   styleUrls: ['./teacher-grades.component.css']
@@ -41,7 +43,7 @@ export class TeacherGradesComponent implements OnInit {
   filteredStudentList: UserDto[] = [];
   searchQuery: string = '';
 
-  gradesFromOneClass: GradeDto[] = [];
+  gradesFromOneClass$ = new BehaviorSubject<GradeDto[]>([]);
 
   showNewGradeModal: boolean = false;
 
@@ -50,10 +52,21 @@ export class TeacherGradesComponent implements OnInit {
     private axiosService: AxiosService,
     private authService: AuthService,
     private router: Router,
-    private globalNotificationHandler: GlobalNotificationHandler
-  ) {}
+    private globalNotificationHandler: GlobalNotificationHandler,
+    private cdr: ChangeDetectorRef
+  ) {
+  }
 
   ngOnInit(): void {
+    const storedClassId = sessionStorage.getItem('selectedClassId');
+    if (storedClassId) {
+      this.selectedClassId = parseInt(storedClassId, 10);
+      sessionStorage.removeItem('selectedClassId'); // Clean up after restoring
+
+      // Trigger the load for the restored class
+      this.loadStudents();
+    }
+
     // Fetch classes for the current teacher
     this.axiosService.request('GET', `/classes/user/${this.authService.getUser()?.id}`, {}).then(
       (response: { data: ClassDto[] }) => {
@@ -101,10 +114,11 @@ export class TeacherGradesComponent implements OnInit {
 
     this.axiosService.request('GET', `/grades/class/${this.selectedClassId}`, {}).then(
       (response: { data: GradeDto[] }) => {
-        this.gradesFromOneClass = response.data.map(grade => ({
+        const grades = response.data.map(grade => ({
           ...grade,
-          createdAt: parseDate(grade.createdAt)
+          createdAt: parseDate(grade.createdAt),
         }));
+        this.gradesFromOneClass$.next(grades); // Update grades stream
       }
     ).catch((error: any) => {
       this.globalNotificationHandler.handleError(error);
@@ -115,28 +129,52 @@ export class TeacherGradesComponent implements OnInit {
   filterStudents(): void {
     const searchQueryLower = this.searchQuery.toLowerCase();
 
-      this.filteredStudentList = this.allStudents.filter(student =>
-        `${student.name} ${student.surname}`.toLowerCase().includes(searchQueryLower)
-      );
-    }
+    this.filteredStudentList = this.allStudents.filter(student =>
+      `${student.name} ${student.surname}`.toLowerCase().includes(searchQueryLower)
+    );
+  }
 
   onStudentClick(student: UserDto) {
     this.router.navigate(['/teacher/grades', student.id]);
   }
 
-  toggleShowNewGradeModal() {
+  toggleShowNewGradeModal(): void {
     this.showNewGradeModal = !this.showNewGradeModal;
-    this.loadStudents();
+
+    if (!this.showNewGradeModal) {
+      // Save the selected class ID to sessionStorage
+      if (this.selectedClassId !== null) {
+        sessionStorage.setItem('selectedClassId', this.selectedClassId.toString());
+      }
+
+      // Reload the page
+      window.location.reload();
+    }
   }
+
 
   protected readonly getFullName = getFullName;
 
   addGradeToList(newGrade: GradeDto): void {
-    this.gradesFromOneClass.push(newGrade);
+    this.gradesFromOneClass$.next([...this.gradesFromOneClass$.getValue(), newGrade]);
+    console.log('Grade added to list:', this.gradesFromOneClass$);
 
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate([this.router.url]);
-    });
+    // Optionally fetch updated grades from the server
+    if (this.selectedClassId) {
+      this.axiosService.request('GET', `/grades/class/${this.selectedClassId}`, {}).then(
+        (response: { data: GradeDto[] }) => {
+          this.gradesFromOneClass$.next(response.data.map(grade => ({
+            ...grade,
+            createdAt: parseDate(grade.createdAt)
+          })));
+        }
+      ).catch((error: any) => {
+        this.globalNotificationHandler.handleError(error);
+      });
+    }
+
+    console.log('Grade added to list:', this.gradesFromOneClass$);
   }
 
+  protected readonly async = async;
 }

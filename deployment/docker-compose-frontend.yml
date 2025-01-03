@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: ../classlog-frontend
+      dockerfile: Dockerfile
+    ports:
+      - "${FRONTEND_PORT}:4200"
+    environment:
+      - API_URL=${BACKEND_ADDRESS}:${BACKEND_PORT}
+    env_file:
+      - .env

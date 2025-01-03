@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: ../classlog-backend
+      dockerfile: Dockerfile
+    environment:
+      SPRING_PROFILES_ACTIVE: custom
+      SPRING_ALLOWED_ORIGIN: http://${FRONTEND_ADDRESS}:${FRONTEND_PORT}
+      DB_URL: ${DB_URL}                                
+      DB_USERNAME: ${DB_USERNAME}                      
+      DB_PASSWORD: ${DB_PASSWORD}                     
+    ports:
+      - "${BACKEND_PORT}:8080" 
+    env_file:
+      - .env 

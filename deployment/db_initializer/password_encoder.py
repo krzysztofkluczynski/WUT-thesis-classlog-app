@@ -5,7 +5,7 @@ import bcrypt
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Genearatew password hashed with bcrypt."
+        description="Generate a password hashed with bcrypt."
     )
     parser.add_argument(
         "password",
@@ -14,9 +14,7 @@ def main():
     args = parser.parse_args()
 
     password_bytes = args.password.encode("utf-8")
-
     hashed = bcrypt.hashpw(password_bytes, bcrypt.gensalt())
-
     print(hashed.decode("utf-8"))
 
 if __name__ == "__main__":

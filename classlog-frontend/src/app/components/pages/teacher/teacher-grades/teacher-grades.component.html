@@ -37,7 +37,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let grade of gradesFromOneClass">
+            <tr *ngFor="let grade of gradesFromOneClass$ | async">
               <td>{{ getFullName(grade.student) }}</td>
               <td>{{ grade.grade }}</td>
               <td>{{ grade.wage }}</td>
