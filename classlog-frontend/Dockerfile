@@ -1,20 +1,19 @@
 FROM node:alpine AS build
 
-# Set up working directory
 WORKDIR /project
 
-# Install Angular CLI globally
 RUN npm install -g @angular/cli
 
-# Copy package files and install dependencies
 COPY package.json package-lock.json ./
 RUN npm ci
 
-# Copy the rest of the application files
 COPY . .
 
-# Expose the development server port
+ARG BACKEND_URL
+RUN sed -i "s|BACKEND_URL_PLACEHOLDER|${BACKEND_URL}|g" src/environment/environment.prod.ts
+
+RUN ng build --configuration production
+
 EXPOSE 4200
 
-# Start the Angular development server
-CMD ["ng", "serve", "--host", "0.0.0.0"]
+CMD ["ng", "serve", "--host", "0.0.0.0", "--configuration", "production"]

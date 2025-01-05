@@ -3,6 +3,7 @@ import axios, {AxiosRequestConfig, AxiosResponse} from "axios";
 import {AuthService} from './../auth/auth.service';
 import {UserDto} from "../../model/entities/user-dto";
 import {GlobalNotificationHandler} from "../notification/global-notification-handler.service";
+import {environment} from "../../../environment/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,12 @@ export class AxiosService {
   private failedRequestsQueue: Array<() => void> = [];
 
   constructor(private authService: AuthService, private globalNotificationHandler: GlobalNotificationHandler) {
-    axios.defaults.baseURL = "http://localhost:8080";
+    const baseURL = environment.backend_url.startsWith('http://') || environment.backend_url.startsWith('https://')
+      ? environment.backend_url
+      : `http://${environment.backend_url}`;
+
+    // Set base URL for Axios
+    axios.defaults.baseURL = baseURL;
     axios.defaults.headers.post['Content-Type'] = 'application/json';
 
     axios.interceptors.response.use(
