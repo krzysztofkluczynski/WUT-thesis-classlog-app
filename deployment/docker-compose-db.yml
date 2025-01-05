@@ -9,15 +9,20 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
     ports:
-      - "5432:5432"
+      - "${DB_PORT}:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
     networks:
       - classlog-network
     env_file:
       - .env
-
-
+    healthcheck:
+      test: ["CMD", "pg_isready", "-h", "localhost", "-p", "${DB_PORT}", "-U", "${DB_USERNAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    
+    
   initializer:
     build:
       context: ./db_initializer

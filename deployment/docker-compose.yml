@@ -16,7 +16,12 @@ services:
       - classlog-network
     env_file:
       - .env
-
+    healthcheck:
+      test: ["CMD", "pg_isready", "-h", "localhost", "-p", "${DB_PORT}", "-U", "${DB_USERNAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    
   initializer:
     build:
       context: ./db_initializer
@@ -58,10 +63,10 @@ services:
     build:
       context: ../classlog-frontend
       dockerfile: Dockerfile
+      args:
+        API_URL: http://${BACKEND_ADDRESS}:${BACKEND_PORT}
     ports:
       - "${FRONTEND_PORT}:4200"
-    environment:
-      - API_URL=${BACKEND_ADDRESS}:${BACKEND_PORT}
     depends_on:
       - backend
       - db
@@ -69,6 +74,7 @@ services:
       - classlog-network
     env_file:
       - .env
+
 
 volumes:
   db_data:

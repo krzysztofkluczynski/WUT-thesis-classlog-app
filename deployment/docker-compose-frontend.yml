@@ -5,9 +5,10 @@ services:
     build:
       context: ../classlog-frontend
       dockerfile: Dockerfile
+      args:
+        API_URL: http://${BACKEND_ADDRESS}:${BACKEND_PORT}
     ports:
       - "${FRONTEND_PORT}:4200"
-    environment:
-      - API_URL=${BACKEND_ADDRESS}:${BACKEND_PORT}
     env_file:
       - .env
+
