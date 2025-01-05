@@ -9,8 +9,8 @@ RUN npm ci
 
 COPY . .
 
-ARG BACKEND_URL
-RUN sed -i "s|BACKEND_URL_PLACEHOLDER|${BACKEND_URL}|g" src/environment/environment.prod.ts
+ARG API_URL
+RUN sed -i "s|BACKEND_URL_PLACEHOLDER|${API_URL}|g" src/environment/environment.prod.ts
 
 RUN ng build --configuration production
 

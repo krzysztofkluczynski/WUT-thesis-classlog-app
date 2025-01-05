@@ -13,6 +13,7 @@ export class AxiosService {
   private failedRequestsQueue: Array<() => void> = [];
 
   constructor(private authService: AuthService, private globalNotificationHandler: GlobalNotificationHandler) {
+    console.log(environment.backend_url)
     const baseURL = environment.backend_url.startsWith('http://') || environment.backend_url.startsWith('https://')
       ? environment.backend_url
       : `http://${environment.backend_url}`;

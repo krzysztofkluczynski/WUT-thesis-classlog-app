@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  backend_url: (window as any).env?.API_URL || 'http://localhost:8080',
+  backend_url: 'BACKEND_URL_PLACEHOLDER',
 };
