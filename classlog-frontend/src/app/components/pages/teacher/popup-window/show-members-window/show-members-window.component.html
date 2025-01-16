@@ -1,0 +1,15 @@
+<div class="modal-overlay" (click)="closeWindow()"></div>
+<div class="modal-container">
+  <div class="modal-header">
+    <h2>Class members</h2>
+    <button class="close-button" (click)="closeWindow()">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+
+  <div class="user-list">
+    <div *ngFor="let user of members" class="user-tile">
+      <span class="user-name">{{ user.name }} {{ user.surname }}</span>
+    </div>
+  </div>
+</div>

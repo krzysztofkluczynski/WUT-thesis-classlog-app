@@ -29,6 +29,12 @@
             [classDto]="classDto"
             (close)="toggleShowClassCodeModal()">
           </app-show-class-code-window>
+          <button class="yellow-button" (click)="toggleShowMembersModal()">Show Members</button>
+          <app-show-members-window
+            *ngIf="showMembersModal"
+            [isOpen]="showMembersModal"
+            (close)="toggleShowMembersModal()">
+          </app-show-members-window>
         </div>
       </div>
 

@@ -21,6 +21,7 @@ import {ClassDto} from "../../../../model/entities/class-dto";
 import {CreateClassWindowComponent} from "../popup-window/create-class-window/create-class-window.component";
 import {ShowClassCodeWindowComponent} from "../popup-window/show-class-code-window/show-class-code-window.component";
 import {LessonInfoWindowComponent} from "../../../shared/lesson-info-window/lesson-info-window.component";
+import {ShowMembersWindowComponent} from "../popup-window/show-members-window/show-members-window.component";
 
 @Component({
   selector: 'app-teacher-class',
@@ -36,7 +37,8 @@ import {LessonInfoWindowComponent} from "../../../shared/lesson-info-window/less
     NgClass,
     CreateClassWindowComponent,
     ShowClassCodeWindowComponent,
-    LessonInfoWindowComponent
+    LessonInfoWindowComponent,
+    ShowMembersWindowComponent
   ],
   templateUrl: './teacher-class.component.html',
   styleUrl: './teacher-class.component.css'
@@ -52,6 +54,7 @@ export class TeacherClassComponent implements OnInit {
   showDeleteUserModal: boolean = false;
   showClassCodeModal: boolean = false;
   showLessonModal: boolean = false;
+  showMembersModal: boolean = false;
   selectedLessonId: number | null = null;
   topic: string = '';
   message: string = '';
@@ -133,6 +136,7 @@ export class TeacherClassComponent implements OnInit {
   }
 
   protected readonly getFullName = getFullName;
+
 
   navigateToFiles() {
     this.router.navigate([`/files/${this.classId}`]);
@@ -266,5 +270,9 @@ export class TeacherClassComponent implements OnInit {
       this.globalNotificationHandler.handleError(error);
       console.error('Failed to delete comment:', error);
     });
+  }
+
+  toggleShowMembersModal() {
+    this.showMembersModal = !this.showMembersModal;
   }
 }

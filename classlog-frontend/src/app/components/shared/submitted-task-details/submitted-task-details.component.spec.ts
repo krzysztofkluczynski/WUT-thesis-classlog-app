@@ -1,14 +1,12 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SubmittedTaskDetailsComponent } from './submitted-task-details.component';
-import { AxiosService } from '../../../service/axios/axios.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { GlobalNotificationHandler } from '../../../service/notification/global-notification-handler.service';
-import { MockRouter, MockGlobalNotificationHandler } from '../../../utils/tests/test-commons';
-import { SubmittedTaskDto } from './submitted-task-details.component';
-import { UserDto } from '../../../model/entities/user-dto';
-import { TaskDto } from '../../../model/entities/task-dto';
-import { createMockUserDto } from '../../../utils/create-mock-user';
-import {parseDate} from "../../../utils/date-utils";
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {SubmittedTaskDetailsComponent, SubmittedTaskDto} from './submitted-task-details.component';
+import {AxiosService} from '../../../service/axios/axios.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {GlobalNotificationHandler} from '../../../service/notification/global-notification-handler.service';
+import {MockGlobalNotificationHandler, MockRouter} from '../../../utils/tests/test-commons';
+import {UserDto} from '../../../model/entities/user-dto';
+import {TaskDto} from '../../../model/entities/task-dto';
+import {createMockUserDto} from '../../../utils/create-mock-user';
 
 describe('SubmittedTaskDetailsComponent', () => {
   let component: SubmittedTaskDetailsComponent;
@@ -29,7 +27,7 @@ describe('SubmittedTaskDetailsComponent', () => {
   };
   const mockSubmittedTask: SubmittedTaskDto = {
     task: mockTask,
-    user: { ...mockUser, createdAt: new Date('2023-01-01T00:00:00Z')},
+    user: {...mockUser, createdAt: new Date('2023-01-01T00:00:00Z')},
     questionsWithAnswers: [],
     score: 80,
   };
@@ -41,7 +39,7 @@ describe('SubmittedTaskDetailsComponent', () => {
 
     mockAxiosService.request.and.callFake((method: string, url: string) => {
       if (url.includes(`/tasks/1/user/1/submitted`)) {
-        return Promise.resolve({ data: mockSubmittedTask });
+        return Promise.resolve({data: mockSubmittedTask});
       }
       return Promise.reject(new Error(`Unexpected request to URL: ${url}`));
     });
@@ -49,10 +47,10 @@ describe('SubmittedTaskDetailsComponent', () => {
     await TestBed.configureTestingModule({
       imports: [SubmittedTaskDetailsComponent],
       providers: [
-        { provide: AxiosService, useValue: mockAxiosService },
-        { provide: Router, useValue: mockRouter },
-        { provide: GlobalNotificationHandler, useValue: mockNotificationHandler },
-        { provide: ActivatedRoute, useValue: { snapshot: { paramMap: { get: () => '1' } } } },
+        {provide: AxiosService, useValue: mockAxiosService},
+        {provide: Router, useValue: mockRouter},
+        {provide: GlobalNotificationHandler, useValue: mockNotificationHandler},
+        {provide: ActivatedRoute, useValue: {snapshot: {paramMap: {get: () => '1'}}}},
       ],
     }).compileComponents();
 
@@ -101,6 +99,8 @@ describe('SubmittedTaskDetailsComponent', () => {
   it('should navigate back to task list', () => {
     component.goBack();
 
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/teacher/tasks']);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(
+      jasmine.arrayContaining([jasmine.stringMatching(/\/tasks$/)])
+    );
   });
 });

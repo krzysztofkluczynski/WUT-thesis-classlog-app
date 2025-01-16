@@ -1,15 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {CommonModule, NgForOf} from '@angular/common';
-import { FormsModule } from '@angular/forms'; // Import FormsModule
-import { HeaderComponent } from "../../../shared/header/header.component";
-import { AxiosService } from "../../../../service/axios/axios.service";
-import { AuthService } from "../../../../service/auth/auth.service";
+import {NgForOf} from '@angular/common';
+import {FormsModule} from '@angular/forms'; // Import FormsModule
+import {HeaderComponent} from "../../../shared/header/header.component";
+import {AxiosService} from "../../../../service/axios/axios.service";
+import {AuthService} from "../../../../service/auth/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import { GlobalNotificationHandler } from "../../../../service/notification/global-notification-handler.service";
-import { UserDto } from "../../../../model/entities/user-dto";
+import {GlobalNotificationHandler} from "../../../../service/notification/global-notification-handler.service";
+import {UserDto} from "../../../../model/entities/user-dto";
 import {parseDate} from "../../../../utils/date-utils";
-import {consumerMarkDirty} from "@angular/core/primitives/signals";
-import {ClassDto} from "../../../../model/entities/class-dto";
 import {LessonDto} from "../../../../model/entities/lesson.dto";
 
 export interface UserDtoWithPresence extends UserDto {
@@ -51,7 +49,8 @@ export class LessonCreatorComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private globalNotificationHandler: GlobalNotificationHandler
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.classId = Number(this.route.snapshot.paramMap.get('classId'));
@@ -69,17 +68,14 @@ export class LessonCreatorComponent implements OnInit {
         }));
         this.filterStudents();
 
-        // If in edit mode, fetch students who are present
         if (this.editMode) {
           this.axiosService.request('GET', `/lessons/${lessonId}`, {}).then(
             (lessonResponse: { data: LessonDto }) => {
-              console.log('Fetched lesson:', lessonResponse.data);
               this.editModeLessonDto = {
                 ...lessonResponse.data,
                 lessonDate: parseDate(lessonResponse.data.lessonDate),
               };
 
-              console.log('Edit mode lesson:', this.editModeLessonDto);
 
               const fullDate = new Date(this.editModeLessonDto.lessonDate || '');
               this.lessonDate = fullDate.toISOString().slice(0, 10);
@@ -87,7 +83,6 @@ export class LessonCreatorComponent implements OnInit {
               this.lessonSubject = this.editModeLessonDto.subject || '';
               this.lessonNotes = this.editModeLessonDto.content || '';
 
-              // Fetch present students for the lesson
               this.axiosService.request('GET', `/presence/students/${this.editModeLessonDto.lessonId}`, {}).then(
                 (presenceResponse: { data: UserDto[] }) => {
                   this.editModePresentStudents = presenceResponse.data.map(student => ({
@@ -133,10 +128,9 @@ export class LessonCreatorComponent implements OnInit {
   createLesson() {
     const [hours, minutes] = this.lessonTime.split(':').map(Number);
     const date = new Date(this.lessonDate);
-    date.setHours(hours+1, minutes, 0, 0);
+    date.setHours(hours + 1, minutes, 0, 0);
 
     const formattedDateTime = date.toISOString().slice(0, -1);
-    console.log('Formatted date:', formattedDateTime);
 
 
     if (!this.editMode) {
@@ -158,7 +152,7 @@ export class LessonCreatorComponent implements OnInit {
 
           this.presentStudents = this.studentListFromOneClass
             .filter(student => student.isPresent)
-            .map(({ isPresent, ...rest }) => rest);
+            .map(({isPresent, ...rest}) => rest);
 
           if (!this.createdLesson?.lessonId) {
             return;
@@ -178,7 +172,7 @@ export class LessonCreatorComponent implements OnInit {
         .catch((error: any) => {
           this.globalNotificationHandler.handleError(error);
         });
-      } else {
+    } else {
 
       const lessonPayload = {
         lessonId: this.editModeLessonDto?.lessonId,
@@ -191,20 +185,19 @@ export class LessonCreatorComponent implements OnInit {
 
       this.axiosService.request('PUT', '/lessons/update', lessonPayload)
         .then((response: { data: string }) => {
-        this.globalNotificationHandler.handleMessage(response.data);
-
-
-        this.axiosService.request('PUT', `/presence/update/${this.editModeLessonDto?.lessonId}`,
-          this.studentListFromOneClass
-            .filter(student => student.isPresent)
-            .map(student => student.id)
-        ).then((response: { data: string }) => {
           this.globalNotificationHandler.handleMessage(response.data);
+
+
+          this.axiosService.request('PUT', `/presence/update/${this.editModeLessonDto?.lessonId}`,
+            this.studentListFromOneClass
+              .filter(student => student.isPresent)
+              .map(student => student.id)
+          ).then((response: { data: string }) => {
+            this.globalNotificationHandler.handleMessage(response.data);
+          }).catch((error: any) => {
+            this.globalNotificationHandler.handleError(error);
+          });
         }).catch((error: any) => {
-          console.error('Failed to update presence list');
-          this.globalNotificationHandler.handleError(error);
-        });
-      }).catch((error: any) => {
         console.error('Failed to update lesson');
         this.globalNotificationHandler.handleError(error);
       });
