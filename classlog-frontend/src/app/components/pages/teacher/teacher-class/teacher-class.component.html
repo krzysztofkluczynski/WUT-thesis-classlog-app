@@ -5,7 +5,8 @@
 
     <div class="big-tile">
       <div class="group-header">
-        <h2>Beginners Group</h2>
+        <h2 *ngIf="classDto">{{ classDto.name }}</h2>
+        <h2 *ngIf="!classDto">Loading...</h2>
         <div class="buttons-container">
           <button class="yellow-button" (click)="navigateToLessonCreation()">Create Lesson</button>
           <button class="yellow-button" (click)="toggleAddUserModal()">Add User</button>

@@ -37,5 +37,4 @@ public class SecurityConfig {
             .anyRequest().hasAnyRole("Teacher", "Student", "Admin"));
     return http.build();
   }
-
 }

@@ -9,10 +9,8 @@ import org.mapstruct.Mapping;
 public interface PostMapper {
 
   @Mapping(target = "user", source = "entity.user")
-    // Map the user field using UserMapper
   PostDto toPostDto(Post entity);
 
   @Mapping(target = "user", source = "postDto.user")
-    // Map the user field using UserMapper
   Post toEntity(PostDto postDto);
 }

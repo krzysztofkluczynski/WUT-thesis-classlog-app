@@ -8,7 +8,8 @@
         <div class="buttons-container">
           <button class="yellow-button" (click)="navigateToFiles()">Files</button>
         </div>
-        <h2>Beginners group</h2>
+        <h2 *ngIf="classDto">{{ classDto.name }}</h2>
+        <h2 *ngIf="!classDto">Loading...</h2>
       </div>
 
       <div class="posts-section">
@@ -63,7 +64,8 @@
     <div class="small-tiles-container">
       <div class="attendance-list">
         <h3>Lesson History</h3>
-        <div *ngFor="let lesson of lessons" class="lesson-tile" (click)="toggleLessonWindow(lesson.lessonId, lesson.lessonClass.id)">
+        <div *ngFor="let lesson of lessons" class="lesson-tile"
+             (click)="toggleLessonWindow(lesson.lessonId, lesson.lessonClass.id)">
           <div class="lesson-title">{{ lesson.subject }}</div>
           <div class="lesson-date">{{ lesson.lessonDate | date: 'dd.MM.yyyy HH:mm' }}</div>
         </div>

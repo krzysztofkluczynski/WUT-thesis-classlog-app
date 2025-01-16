@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { UserDto } from '../../model/entities/user-dto';
+import {Injectable} from '@angular/core';
+import {UserDto} from '../../model/entities/user-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -48,13 +48,13 @@ export class AuthService {
   }
 
   logout(): void {
-    this.setUser(null);
+    this.setUser(null)
   }
 
   getUserWithoutToken(): Omit<UserDto, 'token'> | null {
     const user = this.getUser();
     if (user) {
-      const { token, ...userWithoutToken } = user;
+      const {token, ...userWithoutToken} = user;
       return userWithoutToken;
     }
     return null;

@@ -19,9 +19,7 @@ export const authGuard: CanActivateFn = (route, state) => {
 
   if (expectedRole && userRole !== expectedRole) {
     globalNotificationHandler.handleError('Unauthorized access');
-    throw new ErrorResponse(403, 'Unauthorized access', {requiredRole: expectedRole});
+    throw new ErrorResponse(403, 'Unauthorized access, requires role', {requiredRole: expectedRole});
   }
-
-
   return true;
 };

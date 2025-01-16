@@ -9,11 +9,10 @@ import org.mapstruct.Mapping;
 public interface TaskMapper {
 
     // Map Task entity to TaskDto
-    @Mapping(target = "createdBy", source = "entity.createdBy") // Use UserMapper to map User to UserDto
-    @Mapping(target = "createdAt", source = "entity.createdAt", dateFormat = "yyyy-MM-dd HH:mm:ss") // Format creation date
+    @Mapping(target = "createdBy", source = "entity.createdBy")
+    @Mapping(target = "createdAt", source = "entity.createdAt", dateFormat = "yyyy-MM-dd HH:mm:ss")
     TaskDto toTaskDto(Task entity);
 
-    // Map TaskDto to Task entity
-    @Mapping(target = "createdBy", source = "taskDto.createdBy") // Use UserMapper to map UserDto to User
+    @Mapping(target = "createdBy", source = "taskDto.createdBy")
     Task toEntity(TaskDto taskDto);
 }
