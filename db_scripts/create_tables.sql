@@ -38,7 +38,6 @@ CREATE TABLE user_class (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Creating the FILE table
 CREATE TABLE file (
     file_id BIGSERIAL PRIMARY KEY,
     class_id BIGINT REFERENCES class(class_id),
@@ -68,7 +67,6 @@ CREATE TABLE comment (
 );
 
 
--- Creating the QUESTION_TYPE table
 CREATE TABLE question_type (
     question_type_id BIGSERIAL PRIMARY KEY,
     type_name VARCHAR(255) NOT NULL
@@ -98,25 +96,23 @@ CREATE TABLE task (
 
 CREATE TABLE question (
     question_id BIGSERIAL PRIMARY KEY,
-    question_type_id BIGINT REFERENCES question_type(question_type_id) ON DELETE SET NULL, -- Retain questions with null type
+    question_type_id BIGINT REFERENCES question_type(question_type_id) ON DELETE SET NULL, 
     edited_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     points INT NOT NULL,
     content TEXT NOT NULL,
-    file_id BIGINT REFERENCES file(file_id) ON DELETE SET NULL -- If the file is deleted, retain the question but set file_id to NULL
+    file_id BIGINT REFERENCES file(file_id) ON DELETE SET NULL 
 );
 
 
--- Recreate the TASK_QUESTION table
 CREATE TABLE task_question (
     task_question_id BIGSERIAL PRIMARY KEY,
-    task_id BIGINT REFERENCES task(task_id) ON DELETE CASCADE, -- If the task is deleted, remove associated task-question links
-    question_id BIGINT REFERENCES question(question_id) ON DELETE CASCADE -- If the question is deleted, remove associated task-question links
+    task_id BIGINT REFERENCES task(task_id) ON DELETE CASCADE, 
+    question_id BIGINT REFERENCES question(question_id) ON DELETE CASCADE 
 );
 
--- Recreate the ANSWER table
 CREATE TABLE answer (
     answer_id BIGSERIAL PRIMARY KEY,
-    question_id BIGINT REFERENCES question(question_id) ON DELETE CASCADE, -- If the question is deleted, remove its answers
+    question_id BIGINT REFERENCES question(question_id) ON DELETE CASCADE, 
     is_correct BOOLEAN,
     content TEXT NOT NULL
 );
@@ -131,10 +127,10 @@ CREATE TABLE submitted_answer (
 
 
 CREATE TABLE user_task (
-    user_task_id BIGSERIAL PRIMARY KEY, -- Surrogate primary key for unique identification
-    task_id BIGINT NOT NULL REFERENCES task(task_id) ON DELETE CASCADE, -- Task is required
-    user_id BIGINT NOT NULL REFERENCES classlog_user(user_id) ON DELETE CASCADE, -- User is required
-    score INT DEFAULT NULL -- Score can remain NULL if not yet assigned
+    user_task_id BIGSERIAL PRIMARY KEY, 
+    task_id BIGINT NOT NULL REFERENCES task(task_id) ON DELETE CASCADE, 
+    user_id BIGINT NOT NULL REFERENCES classlog_user(user_id) ON DELETE CASCADE, 
+    score INT DEFAULT NULL 
 );
 
 

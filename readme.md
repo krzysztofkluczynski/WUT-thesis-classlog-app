@@ -33,7 +33,7 @@ cd <REPOSITORY_NAME>
 
 ### Step 2: Configure the Environment
 
-Adjust the .env file as needed. By default, it is preconfigured for local development. You only need to provide credentials for the first user in the system.
+Adjust the .env file from deployment directory as needed. By default, it is preconfigured for local development. You only need to provide credentials for the first user in the system.
 
 ### Step 3: Build and Run the Containers
 
