@@ -64,7 +64,7 @@ public class QuestionService {
           List<Answer> answers = questionWithAnswersDto.getAnswers().stream()
               .map(answerDto -> {
                 Answer answer = answerMapper.toEntity(answerDto);
-                answer.setQuestion(savedQuestion); // Associate the answer with the saved question
+                answer.setQuestion(savedQuestion);
                 return answer;
               })
               .collect(Collectors.toList());
@@ -73,8 +73,8 @@ public class QuestionService {
 
           // Create and save the TaskQuestion record
           TaskQuestion taskQuestion = TaskQuestion.builder()
-              .task(Task.builder().id(taskId).build()) // Create a task reference with taskId
-              .question(savedQuestion) // Associate with the saved question
+              .task(Task.builder().id(taskId).build())
+              .question(savedQuestion)
               .build();
 
           taskQuestionRepository.save(taskQuestion);
@@ -82,48 +82,40 @@ public class QuestionService {
           // Return the saved question as a DTO
           return questionMapper.toQuestionDto(savedQuestion);
         })
-        .collect(Collectors.toList()); // Collect all saved QuestionDtos into a list
+        .collect(Collectors.toList());
   }
 
 
   public List<QuestionDto> assignQuestionsToTask(List<Long> questionIds, long taskId) {
-    // Fetch the Task entity using the provided taskId
     Task task = Task.builder().id(taskId).build();
 
-    // Fetch the questions by their IDs
     List<Question> questions = questionRepository.findAllById(questionIds);
 
     // Map each question to a TaskQuestion and save
     List<TaskQuestion> taskQuestions = questions.stream()
         .map(question -> TaskQuestion.builder()
-            .task(task) // Associate with the given task
-            .question(question) // Associate with the question
+            .task(task)
+            .question(question)
             .build())
         .collect(Collectors.toList());
 
-    taskQuestionRepository.saveAll(taskQuestions); // Batch save all TaskQuestion entities
+    taskQuestionRepository.saveAll(taskQuestions);
 
-    // Return the questions as a list of QuestionDto
     return questions.stream()
         .map(questionMapper::toQuestionDto)
         .collect(Collectors.toList());
   }
 
   public List<QuestionWithAnswersDto> getQuestionsWithAnswers(long taskId) {
-    // Fetch all TaskQuestion entities associated with the given taskId
     List<TaskQuestion> taskQuestions = taskQuestionRepository.findAllByTaskId(taskId);
 
-    // Map each TaskQuestion to a QuestionWithAnswersDto
     return taskQuestions.stream()
         .map(taskQuestion -> {
-          // Fetch the question associated with the TaskQuestion
           Question question = taskQuestion.getQuestion();
 
-          // Fetch all answers associated with the question
           List<Answer> answers = answerRepository.findAllByQuestion_QuestionId(
               question.getQuestionId());
 
-          // Map the question and answers to a QuestionWithAnswersDto
           return QuestionWithAnswersDto.builder()
               .question(questionMapper.toQuestionDto(question))
               .answers(answers.stream()

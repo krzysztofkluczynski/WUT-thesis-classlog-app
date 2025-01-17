@@ -1,12 +1,19 @@
 package com.example.classlog.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -22,7 +29,7 @@ public class Task {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "created_by", nullable = true) // Allows NULL if the creator is deleted
+    @JoinColumn(name = "created_by", nullable = true)
     private User createdBy;
 
     @Column(name = "task_name", nullable = false, length = 255)

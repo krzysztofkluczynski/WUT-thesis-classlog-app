@@ -9,9 +9,9 @@ import org.mapstruct.Mapping;
 public interface UserTaskMapper {
 
 
-    @Mapping(target = "userTaskId", source = "id") // Map the primary key
-    UserTaskDto toDto(UserTask userTask);
+  @Mapping(target = "userTaskId", source = "id")
+  UserTaskDto toDto(UserTask userTask);
 
-    @Mapping(target = "id", source = "userTaskId") // Map the primary key
-    UserTask toEntity(UserTaskDto userTaskDto);
+  @Mapping(target = "id", source = "userTaskId")
+  UserTask toEntity(UserTaskDto userTaskDto);
 }

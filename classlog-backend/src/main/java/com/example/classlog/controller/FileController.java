@@ -38,26 +38,17 @@ public class FileController {
       @RequestParam("file") MultipartFile file, // Handles the file part
       @RequestPart("fileDto") FileDto fileDto   // Handles the JSON part
   ) throws IOException {
-    // Log to confirm request handling
-    System.out.println("Received File: " + file.getOriginalFilename());
-    System.out.println("Received FileDto: " + fileDto);
 
     FileDto createdFile = fileService.saveFile(fileDto, file);
 
     return ResponseEntity.ok(createdFile);
   }
 
-  /**
-   * Get metadata of all files for a specific class.
-   */
   @GetMapping("/class/{classId}")
   public List<FileDto> getFilesByClassId(@PathVariable Long classId) {
     return fileService.getFilesByClassId(classId);
   }
 
-  /**
-   * Get metadata of a specific file by ID.
-   */
   @GetMapping("/{fileId}")
   public FileDto getFileById(@PathVariable Long fileId) {
     return fileService.getFileById(fileId);
@@ -80,9 +71,6 @@ public class FileController {
   }
 
 
-  /**
-   * Download a file by ID.
-   */
   @GetMapping("/download/{fileId}")
   public ResponseEntity<Resource> downloadFile(@PathVariable Long fileId) throws IOException {
     // Retrieve file metadata
@@ -102,7 +90,6 @@ public class FileController {
           HttpStatus.BAD_REQUEST);
     }
 
-    // Determine file content type
     String contentType = Files.probeContentType(filePath); // Automatically detect MIME type
     if (contentType == null) {
       contentType = "application/octet-stream"; // Fallback content type

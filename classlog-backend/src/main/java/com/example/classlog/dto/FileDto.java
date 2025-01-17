@@ -1,16 +1,16 @@
 package com.example.classlog.dto;
 
+import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Data;
-
-import java.time.LocalDateTime;
 
 @Data
 @Builder
 public class FileDto {
+
     private Long fileId;
     private String filePath;
-    private ClassDto assignedClass;   // Full Class object
-    private UserDto uploadedBy;       // Full User object for the uploader
+    private ClassDto assignedClass;
+    private UserDto uploadedBy;
     private LocalDateTime createdAt;
 }

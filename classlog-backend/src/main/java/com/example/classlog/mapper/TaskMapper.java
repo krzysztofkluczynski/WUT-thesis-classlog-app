@@ -8,11 +8,10 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring", uses = {UserMapper.class})
 public interface TaskMapper {
 
-    // Map Task entity to TaskDto
-    @Mapping(target = "createdBy", source = "entity.createdBy")
-    @Mapping(target = "createdAt", source = "entity.createdAt", dateFormat = "yyyy-MM-dd HH:mm:ss")
-    TaskDto toTaskDto(Task entity);
+  @Mapping(target = "createdBy", source = "entity.createdBy")
+  @Mapping(target = "createdAt", source = "entity.createdAt", dateFormat = "yyyy-MM-dd HH:mm:ss")
+  TaskDto toTaskDto(Task entity);
 
-    @Mapping(target = "createdBy", source = "taskDto.createdBy")
-    Task toEntity(TaskDto taskDto);
+  @Mapping(target = "createdBy", source = "taskDto.createdBy")
+  Task toEntity(TaskDto taskDto);
 }

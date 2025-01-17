@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class TaskQuestionDto {
+
     private Long taskQuestionId;
-    private TaskDto task; // Reference to TaskDto
-    private QuestionDto question; // Reference to QuestionDto
+    private TaskDto task;
+    private QuestionDto question;
 }

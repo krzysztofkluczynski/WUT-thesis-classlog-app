@@ -8,7 +8,6 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring", uses = {FileMapper.class})
 public interface QuestionMapper {
 
-  // Map Question entity to QuestionDto
   @Mapping(target = "questionType", source = "questionType")
   @Mapping(target = "file", source = "file")
   @Mapping(target = "content", source = "content")
