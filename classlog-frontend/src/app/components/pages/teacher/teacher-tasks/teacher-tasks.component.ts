@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {HeaderComponent} from "../../../shared/header/header.component";
 import {FormsModule} from "@angular/forms";
 import {DatePipe, NgClass, NgForOf} from "@angular/common";
@@ -6,7 +6,6 @@ import {AxiosService} from "../../../../service/axios/axios.service";
 import {AuthService} from "../../../../service/auth/auth.service";
 import {Router} from "@angular/router";
 import {GlobalNotificationHandler} from "../../../../service/notification/global-notification-handler.service";
-import {GradeDto} from "../../../../model/entities/grade-dto";
 import {parseDate} from "../../../../utils/date-utils";
 import {TaskDto} from "../../../../model/entities/task-dto";
 import {UserDto} from "../../../../model/entities/user-dto";
@@ -47,7 +46,8 @@ export class TeacherTasksComponent {
     private authService: AuthService,
     private router: Router,
     private globalNotificationHandler: GlobalNotificationHandler
-  ) {}
+  ) {
+  }
 
   createTask() {
     this.router.navigate(['/teacher/taskCreator']);
@@ -135,6 +135,10 @@ export class TeacherTasksComponent {
     this.axiosService.request('DELETE', `/tasks/${task.id}`, {}).then(
       (response: any) => {
         this.globalNotificationHandler.handleMessage(`Task deleted successfully`);
+        this.createdTasks = this.createdTasks.filter((t) => t.id !== task.id);
+        this.overdueTasks = this.overdueTasks.filter((t) => t.task.id !== task.id);
+        this.submittedTasks = this.submittedTasks.filter((t) => t.task.id !== task.id);
+        this.notSubmittedTasks = this.notSubmittedTasks.filter((t) => t.task.id !== task.id);
       }
     ).catch((error: any) => {
       this.globalNotificationHandler.handleError(error);

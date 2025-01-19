@@ -89,6 +89,32 @@ export class TaskCreatorComponent implements OnInit {
   }
 
   createTask() {
+    if (
+      !this.closedQuestions.length &&
+      !this.openQuestions.length &&
+      !this.ReadyClosedQuestionsFromTheBase.length &&
+      !this.ReadyOpenQuestionsFromTheBase.length
+    ) {
+      this.globalNotificationHandler.handleMessage('Error: At least one question must be added.');
+      return;
+    }
+
+    if (!this.taskName.trim() || !this.taskTime.trim() || !this.taskDate.trim()) {
+      this.globalNotificationHandler.handleMessage('Task name, date, and time must be filled in.');
+      return;
+    }
+
+    if (this.classList.length === 0) {
+      this.globalNotificationHandler.handleMessage('No classes available for assignment.');
+      return;
+    }
+
+    const isAnyClassSelected = this.classList.some((classItem) => classItem.selected);
+    if (!isAnyClassSelected) {
+      this.globalNotificationHandler.handleMessage('At least one class must be selected.');
+      return;
+    }
+
 
     let score: number = this.calculateScore();
 

@@ -126,6 +126,11 @@ export class LessonCreatorComponent implements OnInit {
   }
 
   createLesson() {
+    if (this.lessonSubject === '') {
+      this.globalNotificationHandler.handleMessage('Please enter a subject for the lesson.');
+      return;
+    }
+
     const [hours, minutes] = this.lessonTime.split(':').map(Number);
     const date = new Date(this.lessonDate);
     date.setHours(hours + 1, minutes, 0, 0);
@@ -166,11 +171,12 @@ export class LessonCreatorComponent implements OnInit {
           }).catch((error: any) => {
             this.globalNotificationHandler.handleError('Failed to add users to class. Please try again.');
           });
-
-
         })
         .catch((error: any) => {
           this.globalNotificationHandler.handleError(error);
+        })
+        .finally(() => {
+          this.router.navigate(['/teacher/class/' + this.classId]);
         });
     } else {
 
@@ -200,10 +206,11 @@ export class LessonCreatorComponent implements OnInit {
         }).catch((error: any) => {
         console.error('Failed to update lesson');
         this.globalNotificationHandler.handleError(error);
-      });
-
+      })
+        .finally(() => {
+          this.router.navigate(['/teacher/class/' + this.classId]);
+        });
     }
-    this.router.navigate(['/teacher/class/' + this.classId]);
   }
 
   returnToDashboard() {

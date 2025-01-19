@@ -30,12 +30,12 @@ export class CreateClassWindowComponent {
     private authService: AuthService,
     private router: Router,
     private globalNotificationHandler: GlobalNotificationHandler
-  ) {}
+  ) {
+  }
 
   closeWindow() {
     this.close.emit();
   }
-
 
 
   confirmSelection() {
@@ -48,11 +48,11 @@ export class CreateClassWindowComponent {
       errors.push("Class name must not exceed 250 characters.");
     }
 
-    if (!this.classDescription || this.classDescription.trim().length === 0) {
-      errors.push("Class description cannot be empty.");
-    } else if (this.classDescription.length > 800) {
-      errors.push("Class description must not exceed 800 characters.");
-    }
+    // if (!this.classDescription || this.classDescription.trim().length === 0) {
+    //   errors.push("Class description cannot be empty.");
+    // } else if (this.classDescription.length > 800) {
+    //   errors.push("Class description must not exceed 800 characters.");
+    // }
 
     if (errors.length > 0) {
       this.globalNotificationHandler.handleError(errors.join(" "));
@@ -61,9 +61,9 @@ export class CreateClassWindowComponent {
 
 
     const classPayload = {
-        name: this.className,
-        description: this.classDescription
-      };
+      name: this.className,
+      description: this.classDescription
+    };
 
 
     const requestPayload = {

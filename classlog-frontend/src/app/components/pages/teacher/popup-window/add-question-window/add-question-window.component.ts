@@ -51,7 +51,16 @@ export class AddQuestionWindowComponent {
   }
 
   onFileSelected(event: any, type: 'open' | 'close'): void {
-    this.selectedFile = event.target.files[0];
+    const file: File = event.target.files[0];
+
+    if (file && file.type !== 'audio/mpeg') {
+      this.globalNotificationHandler.handleMessage('Only MP3 files are allowed.');
+      this.selectedFile = null;
+      event.target.value = '';
+      return;
+    }
+
+    this.selectedFile = file;
   }
 
   addCloseOption(): void {
@@ -67,6 +76,16 @@ export class AddQuestionWindowComponent {
   confirmSelection(): void {
     if ((this.points === null || this.points <= 0) && this.activeTab !== 'ready') {
       this.globalNotificationHandler.handleMessage('Please enter a valid points value.');
+      return;
+    }
+
+    if (((this.activeTab === 'open') && (this.openQuestionText === '')) || (this.activeTab === 'close' && (this.closeQuestionText === ''))) {
+      this.globalNotificationHandler.handleMessage('Please enter a valid question.');
+      return;
+    }
+
+    if (((this.activeTab === 'open') && (this.openAnswer === '')) || (this.activeTab === 'close' && (this.correctOption === null)) && (this.closeOptions.length === 0)) {
+      this.globalNotificationHandler.handleMessage('Please enter a valid answer.');
       return;
     }
 

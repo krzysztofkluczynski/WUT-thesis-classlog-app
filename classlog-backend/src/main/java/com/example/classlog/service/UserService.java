@@ -34,7 +34,7 @@ public class UserService {
 
   private final UserMapper userMapper;
 
-  @Value("${admin.email}")
+  @Value("${admin.email:default-admin@example.com}")
   private String adminEmail;
 
   public UserDto login(CredentialsDto credentialsDto) {
@@ -114,6 +114,14 @@ public class UserService {
   public UserDto updateUser(Long userId, UserDto userDto) {
     User user = userRepository.findById(userId)
         .orElseThrow(() -> new AppException("User not found", HttpStatus.NOT_FOUND));
+
+    String emailRegex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
+    Pattern pattern = Pattern.compile(emailRegex);
+
+    // Check if the email matches the pattern
+    if (!pattern.matcher(userDto.getEmail()).matches()) {
+      throw new AppException("Invalid email format", HttpStatus.BAD_REQUEST);
+    }
 
     user.setName(userDto.getName());
     user.setSurname(userDto.getSurname());

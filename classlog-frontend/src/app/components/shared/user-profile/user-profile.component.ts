@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
-import { DatePipe, NgIf } from "@angular/common";
-import { UserDto } from "../../../model/entities/user-dto";
-import { AuthService } from "../../../service/auth/auth.service";
-import { AxiosService } from "../../../service/axios/axios.service";
-import { parseDate } from "../../../utils/date-utils";
-import { HeaderComponent } from "../header/header.component";
-import { FormsModule } from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
+import {DatePipe, NgIf} from "@angular/common";
+import {UserDto} from "../../../model/entities/user-dto";
+import {AuthService} from "../../../service/auth/auth.service";
+import {AxiosService} from "../../../service/axios/axios.service";
+import {parseDate} from "../../../utils/date-utils";
+import {HeaderComponent} from "../header/header.component";
+import {FormsModule} from '@angular/forms';
 import {GlobalNotificationHandler} from "../../../service/notification/global-notification-handler.service";
 import {Role} from "../../../model/entities/role";
 import {ChangePasswordDto} from "../../../model/change-password-dto";
@@ -36,7 +36,7 @@ export class UserProfileComponent implements OnInit {
     name: '',
     surname: '',
     email: '',
-    role: { id: 0, roleName: 'Unknown' },
+    role: {id: 0, roleName: 'Unknown'},
     createdAt: new Date(),
     token: '',
   };
@@ -47,7 +47,8 @@ export class UserProfileComponent implements OnInit {
     private axiosService: AxiosService,
     private router: Router,
     private globalNotificationHandler: GlobalNotificationHandler
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.userId = +this.route.snapshot.paramMap.get('id')!;
@@ -74,10 +75,10 @@ export class UserProfileComponent implements OnInit {
 
   saveChanges(): void {
     const roleMapping: { [key: string]: Role } = {
-      Teacher: { id: 1, roleName: 'Teacher' },
-      Student: { id: 2, roleName: 'Student' },
-      Admin: { id: 3, roleName: 'Admin' },
-      Unknown: { id: 4, roleName: 'Unknown' },
+      Teacher: {id: 1, roleName: 'Teacher'},
+      Student: {id: 2, roleName: 'Student'},
+      Admin: {id: 3, roleName: 'Admin'},
+      Unknown: {id: 4, roleName: 'Unknown'},
     };
 
     const selectedRole = roleMapping[this.userDto.role.roleName];
@@ -87,12 +88,18 @@ export class UserProfileComponent implements OnInit {
       role: selectedRole,
     };
 
+    if (updatedUser.name === '' || updatedUser.surname === '' || updatedUser.email === '') {
+      this.globalNotificationHandler.handleError('Invalid user data.');
+      return;
+    }
+
     if (this.changePasswordClicked && this.currentPassword !== '' && this.newPassword !== '' && this.confirmNewPassword !== '') {
       if (this.newPassword !== this.confirmNewPassword) {
         this.globalNotificationHandler.handleError('Passwords do not match.');
         this.cancelChanges()
         return;
       }
+
 
       const changePasswordDto: ChangePasswordDto = {
         userId: this.userDto.id,
@@ -126,6 +133,8 @@ export class UserProfileComponent implements OnInit {
     this.axiosService.request('DELETE', `/users/${this.userId}`, {}).then(
       (response: any) => {
         this.globalNotificationHandler.handleMessage(`User deleted successfully`);
+        this.authService.logout();
+        this.router.navigate(['/login']);
       }
     ).catch((error: any) => {
       this.globalNotificationHandler.handleError(error);
