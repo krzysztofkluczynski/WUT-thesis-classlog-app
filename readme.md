@@ -2,7 +2,7 @@
 
 ClassLog is an application designed specifically for language schools to enhance course organization and support language learning. Built with a robust 3-tier architecture, which combines simplicity with scalability.
 
-## Technologies
+## Technology stack
 
 - **Backend**: Spring Boot
 - **Frontend**: Angular
