@@ -35,7 +35,8 @@ export class RegisterFormComponent {
     private authService: AuthService,
     private router: Router,
     private globalNotificationHandler: GlobalNotificationHandler,
-) {}
+  ) {
+  }
 
   onSubmitRegister(): void {
     if (this.passwordMismatch) {
@@ -58,12 +59,16 @@ export class RegisterFormComponent {
       }).then((response: { data: UserDto }) => {
         const user: UserDto = response.data;
         this.authService.setUser(user);
-        this.router.navigate(['/unknown']);
+        if (this.authService.getUserRole() === 'Admin') {
+          this.router.navigate(['/admin/students']);
+        } else {
+          this.router.navigate(['/unknown']);
+        }
 
-    }).catch((error: any) => {
+      }).catch((error: any) => {
         this.globalNotificationHandler.handleError('Registration failed. Please try again.');
+      });
     });
-  });
   }
 
   navigateToLogin(event: Event): void {

@@ -26,6 +26,8 @@ spring:
     url: jdbc:postgresql://localhost:5432/classlog
     username: classlog
     password: classlog
+  admin:
+    email: ${ADMIN_EMAIL}
 custom:
   cors:
     allowed-origin: http://localhost:4200
@@ -39,6 +41,8 @@ spring:
     url: ${DB_URL}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
+  admin:
+    email: ${ADMIN_EMAIL}
 custom:
   cors:
     allowed-origin: ${SPRING_ALLOWED_ORIGIN:*}

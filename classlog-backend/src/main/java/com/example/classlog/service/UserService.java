@@ -12,10 +12,12 @@ import com.example.classlog.repository.RoleRepository;
 import com.example.classlog.repository.UserRepository;
 import java.nio.CharBuffer;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,9 @@ public class UserService {
   private final PasswordEncoder passwordEncoder;
 
   private final UserMapper userMapper;
+
+  @Value("${admin.email}")
+  private String adminEmail;
 
   public UserDto login(CredentialsDto credentialsDto) {
     User user = userRepository.findByEmail(credentialsDto.email())
@@ -60,8 +65,14 @@ public class UserService {
     User user = userMapper.signUpToUser(userDto);
     user.setPassword(passwordEncoder.encode(CharBuffer.wrap(userDto.password())));
 
-    Role role = roleRepository.findById(4L)
-        .orElseThrow(() -> new RuntimeException("Role with ID 4 not found"));
+    Role role;
+    if (Objects.equals(adminEmail, user.getEmail())) {
+      role = roleRepository.findById(3L)
+          .orElseThrow(() -> new RuntimeException("Role with ID 1 not found"));
+    } else {
+      role = roleRepository.findById(4L)
+          .orElseThrow(() -> new RuntimeException("Role with ID 2 not found"));
+    }
     user.setRole(role);
 
     User savedUser = userRepository.save(user);

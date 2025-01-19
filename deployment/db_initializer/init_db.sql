@@ -166,16 +166,16 @@ VALUES
     ('Open Question')
 ON CONFLICT (type_name) DO NOTHING;
 
--- Insert or update admin user
-DO $$
-BEGIN
-    IF NOT EXISTS (SELECT 1 FROM classlog_user WHERE email = '${ADMIN_EMAIL}') THEN
-        INSERT INTO classlog_user (name, surname, email, password, role_id)
-        VALUES ('Admin', 'User', '${ADMIN_EMAIL}', '${ADMIN_PASSWORD_ENCODED}', 
-                (SELECT role_id FROM role WHERE role_name = 'Admin'));
-    ELSE
-        UPDATE classlog_user
-        SET password = '${ADMIN_PASSWORD_ENCODED}'
-        WHERE email = '${ADMIN_EMAIL}';
-    END IF;
-END $$;
+-- -- Insert or update admin user
+-- DO $$
+-- BEGIN
+--     IF NOT EXISTS (SELECT 1 FROM classlog_user WHERE email = '${ADMIN_EMAIL}') THEN
+--         INSERT INTO classlog_user (name, surname, email, password, role_id)
+--         VALUES ('Admin', 'User', '${ADMIN_EMAIL}', '${ADMIN_PASSWORD_ENCODED}', 
+--                 (SELECT role_id FROM role WHERE role_name = 'Admin'));
+--     ELSE
+--         UPDATE classlog_user
+--         SET password = '${ADMIN_PASSWORD_ENCODED}'
+--         WHERE email = '${ADMIN_EMAIL}';
+--     END IF;
+-- END $$;

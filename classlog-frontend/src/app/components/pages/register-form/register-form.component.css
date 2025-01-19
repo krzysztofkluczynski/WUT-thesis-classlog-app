@@ -2,13 +2,12 @@
   border: 4px solid #FFD900;
   border-radius: 50px;
   background-color: #FFFFFF;
-  /*padding: 8px; */
 }
 
 .app-logo {
   max-width: 30%;
   height: auto;
-  margin:  auto;
+  margin: auto;
   display: block;
 }
 
