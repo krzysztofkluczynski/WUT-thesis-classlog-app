@@ -23,7 +23,7 @@ CREATE TABLE class (
 
 CREATE TABLE user_class (
     class_id BIGINT REFERENCES class(class_id) ON DELETE CASCADE,
-    user_id BIGINT REFERENCES classlog_user(user_id),
+    user_id BIGINT REFERENCES classlog_user(user_id) ON DELETE CASCADE,
     PRIMARY KEY (class_id, user_id)
 );
 

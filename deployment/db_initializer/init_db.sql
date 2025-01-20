@@ -23,15 +23,15 @@ CREATE TABLE IF NOT EXISTS class (
 
 CREATE TABLE IF NOT EXISTS user_class (
     class_id BIGINT REFERENCES class(class_id) ON DELETE CASCADE,
-    user_id BIGINT REFERENCES classlog_user(user_id),
+    user_id BIGINT REFERENCES classlog_user(user_id) ON DELETE CASCADE,
     PRIMARY KEY (class_id, user_id)
 );
 
  CREATE TABLE IF NOT EXISTS grade (
     grade_id BIGSERIAL PRIMARY KEY,
-    class_id BIGINT REFERENCES class(class_id) NOT NULL ,
-    student_id BIGINT REFERENCES classlog_user(user_id) NOT NULL ,
-    teacher_id BIGINT REFERENCES classlog_user(user_id) NOT NULL ,
+    class_id BIGINT NOT NULL REFERENCES class(class_id) ON DELETE CASCADE,
+    student_id BIGINT NOT NULL REFERENCES classlog_user(user_id) ON DELETE CASCADE,
+    teacher_id BIGINT NOT NULL REFERENCES classlog_user(user_id) ON DELETE CASCADE,
     grade INT NOT NULL,
     wage INT NOT NULL,
     description TEXT,
@@ -40,8 +40,8 @@ CREATE TABLE IF NOT EXISTS user_class (
 
 CREATE TABLE IF NOT EXISTS file (
     file_id BIGSERIAL PRIMARY KEY,
-    class_id BIGINT REFERENCES class(class_id),
-    user_id BIGINT REFERENCES classlog_user(user_id),
+    class_id BIGINT REFERENCES class(class_id) ON DELETE CASCADE,
+    user_id BIGINT REFERENCES classlog_user(user_id) ON DELETE CASCADE,
     file_path VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS question_type (
 
 CREATE TABLE IF NOT EXISTS lesson (
     lesson_id BIGSERIAL PRIMARY KEY,
-    created_by BIGINT NOT NULL REFERENCES classlog_user(user_id),
+    created_by BIGINT NOT NULL REFERENCES classlog_user(user_id) ON DELETE CASCADE,
     class_id BIGINT NOT NULL REFERENCES class(class_id) ON DELETE CASCADE,
     lesson_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     subject VARCHAR(255) NOT NULL,
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS lesson (
 
 CREATE TABLE IF NOT EXISTS task (
     task_id BIGSERIAL PRIMARY KEY,
-    created_by BIGINT REFERENCES classlog_user(user_id) ON DELETE SET NULL,
+    created_by BIGINT NOT NULL REFERENCES classlog_user(user_id) ON DELETE CASCADE,
     task_name VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     due_date TIMESTAMP,
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS task (
 
 CREATE TABLE IF NOT EXISTS question (
     question_id BIGSERIAL PRIMARY KEY,
-    question_type_id BIGINT REFERENCES question_type(question_type_id) ON DELETE SET NULL, 
+    question_type_id BIGINT REFERENCES question_type(question_type_id) ON DELETE RESTRICT, 
     edited_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     points INT NOT NULL,
     content TEXT NOT NULL,
@@ -165,17 +165,3 @@ VALUES
     ('Closed Question'),
     ('Open Question')
 ON CONFLICT (type_name) DO NOTHING;
-
--- -- Insert or update admin user
--- DO $$
--- BEGIN
---     IF NOT EXISTS (SELECT 1 FROM classlog_user WHERE email = '${ADMIN_EMAIL}') THEN
---         INSERT INTO classlog_user (name, surname, email, password, role_id)
---         VALUES ('Admin', 'User', '${ADMIN_EMAIL}', '${ADMIN_PASSWORD_ENCODED}', 
---                 (SELECT role_id FROM role WHERE role_name = 'Admin'));
---     ELSE
---         UPDATE classlog_user
---         SET password = '${ADMIN_PASSWORD_ENCODED}'
---         WHERE email = '${ADMIN_EMAIL}';
---     END IF;
--- END $$;
