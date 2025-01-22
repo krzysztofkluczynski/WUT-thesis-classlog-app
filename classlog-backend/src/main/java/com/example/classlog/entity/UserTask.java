@@ -35,5 +35,5 @@ public class UserTask {
   private User user;
 
   @Column(name = "score", nullable = true)
-  private Integer score = null; // Default score is 0
+  private Integer score = null;
 }

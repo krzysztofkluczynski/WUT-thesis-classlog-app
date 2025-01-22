@@ -152,6 +152,9 @@ export class TeacherClassComponent implements OnInit {
 
   toggleShowClassCodeModal() {
     this.showClassCodeModal = !this.showClassCodeModal;
+    if (!this.showClassCodeModal) {
+      window.location.reload();
+    }
   }
 
   sendPost(): void {
@@ -249,7 +252,7 @@ export class TeacherClassComponent implements OnInit {
     this.axiosService.request('DELETE', `/comments/${comment.id}`, {}).then(
       (response: any) => {
         this.globalNotificationHandler.handleMessagewithType(`Comment deleted successfully.`, 'success');
-        const postId = comment.post.id; // Ensure we use the correct post ID
+        const postId = comment.post.id;
         const updatedComments = (this.postCommentsMap.get(postId) || []).filter(c => c.id !== comment.id);
         this.postCommentsMap.set(postId, updatedComments);
       }

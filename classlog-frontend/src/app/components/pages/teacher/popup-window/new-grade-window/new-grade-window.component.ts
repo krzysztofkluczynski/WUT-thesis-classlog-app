@@ -96,6 +96,5 @@ export class NewGradeWindowComponent implements OnInit {
     } else {
       this.globalNotificationHandler.handleMessage('Please make sure all the fields are properly fullfilled.');
     }
-    this.closeWindow();
   }
 }

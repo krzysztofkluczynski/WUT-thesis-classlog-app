@@ -1,12 +1,12 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { UserProfileComponent } from './user-profile.component';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AxiosService } from '../../../service/axios/axios.service';
-import { AuthService } from '../../../service/auth/auth.service';
-import { GlobalNotificationHandler } from '../../../service/notification/global-notification-handler.service';
-import { MockRouter, MockGlobalNotificationHandler, MockAuthService } from '../../../utils/tests/test-commons';
-import { UserDto } from '../../../model/entities/user-dto';
-import { of } from 'rxjs';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {UserProfileComponent} from './user-profile.component';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AxiosService} from '../../../service/axios/axios.service';
+import {AuthService} from '../../../service/auth/auth.service';
+import {GlobalNotificationHandler} from '../../../service/notification/global-notification-handler.service';
+import {MockAuthService, MockGlobalNotificationHandler, MockRouter} from '../../../utils/tests/test-commons';
+import {UserDto} from '../../../model/entities/user-dto';
+import {of} from 'rxjs';
 
 describe('UserProfileComponent', () => {
   let component: UserProfileComponent;
@@ -21,7 +21,7 @@ describe('UserProfileComponent', () => {
     name: 'John',
     surname: 'Doe',
     email: 'john.doe@example.com',
-    role: { id: 2, roleName: 'Student' },
+    role: {id: 2, roleName: 'Student'},
     token: '',
     createdAt: new Date('2023-01-01T10:00:00'),
   };
@@ -34,16 +34,16 @@ describe('UserProfileComponent', () => {
 
     mockAxiosService.request.and.callFake((method: string, url: string, payload?: any) => {
       if (url.includes(`/users/1`) && method === 'GET') {
-        return Promise.resolve({ data: mockUser });
+        return Promise.resolve({data: mockUser});
       }
       if (url.includes(`/users/1`) && method === 'PUT') {
-        return Promise.resolve({ data: { ...mockUser, ...payload } });
+        return Promise.resolve({data: {...mockUser, ...payload}});
       }
       if (url.includes(`/users/1`) && method === 'DELETE') {
-        return Promise.resolve({ data: 'User deleted successfully' });
+        return Promise.resolve({data: 'User deleted successfully'});
       }
       if (url.includes('/users/change-password') && method === 'POST') {
-        return Promise.resolve({ data: 'Password changed successfully' });
+        return Promise.resolve({data: 'Password changed successfully'});
       }
       return Promise.reject(new Error(`Unexpected request to URL: ${url}`));
     });
@@ -51,11 +51,14 @@ describe('UserProfileComponent', () => {
     await TestBed.configureTestingModule({
       imports: [UserProfileComponent],
       providers: [
-        { provide: AxiosService, useValue: mockAxiosService },
-        { provide: AuthService, useValue: mockAuthService },
-        { provide: Router, useValue: mockRouter },
-        { provide: GlobalNotificationHandler, useValue: mockNotificationHandler },
-        { provide: ActivatedRoute, useValue: { snapshot: { paramMap: { get: () => '1' } }, queryParams: of({ editMode: 'false' }) } },
+        {provide: AxiosService, useValue: mockAxiosService},
+        {provide: AuthService, useValue: mockAuthService},
+        {provide: Router, useValue: mockRouter},
+        {provide: GlobalNotificationHandler, useValue: mockNotificationHandler},
+        {
+          provide: ActivatedRoute,
+          useValue: {snapshot: {paramMap: {get: () => '1'}}, queryParams: of({editMode: 'false'})}
+        },
       ],
     }).compileComponents();
 
@@ -107,6 +110,7 @@ describe('UserProfileComponent', () => {
     component.newPassword = 'new-password';
     component.confirmNewPassword = 'mismatch-password';
     component.changePasswordClicked = true;
+    component.userDto = mockUser;
 
     component.saveChanges();
 

@@ -1,11 +1,11 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CreateClassWindowComponent } from './create-class-window.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AxiosService } from '../../../../../service/axios/axios.service';
-import { AuthService } from '../../../../../service/auth/auth.service';
-import { GlobalNotificationHandler } from '../../../../../service/notification/global-notification-handler.service';
-import { Router } from '@angular/router';
-import { ClassDto } from '../../../../../model/entities/class-dto';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {CreateClassWindowComponent} from './create-class-window.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {AxiosService} from '../../../../../service/axios/axios.service';
+import {AuthService} from '../../../../../service/auth/auth.service';
+import {GlobalNotificationHandler} from '../../../../../service/notification/global-notification-handler.service';
+import {Router} from '@angular/router';
+import {ClassDto} from '../../../../../model/entities/class-dto';
 import {MockAxiosService, MockGlobalNotificationHandler} from "../../../../../utils/tests/test-commons";
 import {createMockUserDto} from "../../../../../utils/create-mock-user";
 
@@ -26,10 +26,10 @@ describe('CreateClassWindowComponent', () => {
     await TestBed.configureTestingModule({
       imports: [CreateClassWindowComponent, FormsModule, ReactiveFormsModule],
       providers: [
-        { provide: AxiosService, useValue: mockAxiosService },
-        { provide: AuthService, useValue: mockAuthService },
-        { provide: GlobalNotificationHandler, useValue: mockNotificationHandler },
-        { provide: Router, useValue: mockRouter },
+        {provide: AxiosService, useValue: mockAxiosService},
+        {provide: AuthService, useValue: mockAuthService},
+        {provide: GlobalNotificationHandler, useValue: mockNotificationHandler},
+        {provide: Router, useValue: mockRouter},
       ],
     }).compileComponents();
 
@@ -57,16 +57,16 @@ describe('CreateClassWindowComponent', () => {
     component.confirmSelection();
 
     expect(mockNotificationHandler.handleError).toHaveBeenCalledWith(
-      'Class name cannot be empty. Class description cannot be empty.'
+      'Class name cannot be empty.'
     );
   });
 
   it('should create a class and emit the created class object', async () => {
     spyOn(component.classCreated, 'emit');
-    const mockClass: ClassDto = { id: 1, name: 'Test Class', description: 'Test Description' };
+    const mockClass: ClassDto = {id: 1, name: 'Test Class', description: 'Test Description'};
 
     mockAuthService.getUserWithoutToken.and.returnValue(createMockUserDto(1, 'Admin', 'admin'));
-    mockAxiosService.request.and.returnValue(Promise.resolve({ data: mockClass }));
+    mockAxiosService.request.and.returnValue(Promise.resolve({data: mockClass}));
 
     component.className = 'Test Class';
     component.classDescription = 'Test Description';

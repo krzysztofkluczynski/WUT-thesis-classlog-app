@@ -12,6 +12,7 @@ services:
       - "${DB_PORT}:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
+      - ./db_initializer/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
     networks:
       - classlog-network
     env_file:
@@ -21,25 +22,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    
-  initializer:
-    build:
-      context: ./db_initializer
-      dockerfile: Dockerfile
-    container_name: classlog-initializer
-    environment:
-      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
-      ADMIN_EMAIL: ${ADMIN_EMAIL}
-      POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_NAME}
-    depends_on:
-      - db
-    networks:
-      - classlog-network
-    env_file:
-      - .env
-
+  
   backend:
     build:
       context: ../classlog-backend
@@ -47,9 +30,10 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: custom
       SPRING_ALLOWED_ORIGIN: http://${FRONTEND_ADDRESS}:${FRONTEND_PORT}
-      DB_URL: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}                              
+      DB_URL: jdbc:postgresql://${DB_ADDRESS}:${DB_PORT}/${DB_NAME}                              
       DB_USERNAME: ${DB_USERNAME}                      
-      DB_PASSWORD: ${DB_PASSWORD}                     
+      DB_PASSWORD: ${DB_PASSWORD}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}                     
     ports:
       - "${BACKEND_PORT}:8080" 
     depends_on:
