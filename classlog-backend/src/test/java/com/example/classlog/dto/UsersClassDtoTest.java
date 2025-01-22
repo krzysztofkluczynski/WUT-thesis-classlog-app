@@ -6,12 +6,12 @@ import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-class LessonPresenceRequestTest {
+class UsersClassDtoTest {
 
   @Test
-  void shouldCreateLessonPresenceRequestUsingBuilder() {
+  void shouldCreateManageUserClassRequestDtoUsingBuilder() {
     // Given
-    long lessonId = 1L;
+    Long classId = 1L;
     UserDto user1 = UserDto.builder()
         .id(1L)
         .name("John")
@@ -27,23 +27,24 @@ class LessonPresenceRequestTest {
     List<UserDto> users = Arrays.asList(user1, user2);
 
     // When
-    LessonPresenceRequest lessonPresenceRequest = LessonPresenceRequest.builder()
-        .lessonId(lessonId)
+    UsersClassDto usersClassDto = UsersClassDto.builder()
+        .classId(classId)
         .users(users)
         .build();
 
     // Then
-    assertThat(lessonPresenceRequest.getLessonId()).isEqualTo(lessonId);
-    assertThat(lessonPresenceRequest.getUsers()).isEqualTo(users);
+    assertThat(usersClassDto.getClassId()).isEqualTo(classId);
+    assertThat(usersClassDto.getUsers()).isEqualTo(users);
   }
 
   @Test
   void shouldTestGettersAndSetters() {
     // Given
-    LessonPresenceRequest lessonPresenceRequest = LessonPresenceRequest.builder().build();
+    UsersClassDto usersClassDto = UsersClassDto.builder()
+        .build();
 
     // When
-    long lessonId = 1L;
+    Long classId = 1L;
     UserDto user1 = UserDto.builder()
         .id(1L)
         .name("John")
@@ -58,12 +59,12 @@ class LessonPresenceRequestTest {
         .build();
     List<UserDto> users = Arrays.asList(user1, user2);
 
-    lessonPresenceRequest.setLessonId(lessonId);
-    lessonPresenceRequest.setUsers(users);
+    usersClassDto.setClassId(classId);
+    usersClassDto.setUsers(users);
 
     // Then
-    assertThat(lessonPresenceRequest.getLessonId()).isEqualTo(lessonId);
-    assertThat(lessonPresenceRequest.getUsers()).isEqualTo(users);
+    assertThat(usersClassDto.getClassId()).isEqualTo(classId);
+    assertThat(usersClassDto.getUsers()).isEqualTo(users);
   }
 
   @Test
@@ -82,14 +83,14 @@ class LessonPresenceRequestTest {
         .email("jane.smith@example.com")
         .build();
     List<UserDto> users1 = Arrays.asList(user1, user2);
-    LessonPresenceRequest request1 = LessonPresenceRequest.builder()
-        .lessonId(1L)
+    UsersClassDto request1 = UsersClassDto.builder()
+        .classId(1L)
         .users(users1)
         .build();
 
     List<UserDto> users2 = Arrays.asList(user1, user2);
-    LessonPresenceRequest request2 = LessonPresenceRequest.builder()
-        .lessonId(1L)
+    UsersClassDto request2 = UsersClassDto.builder()
+        .classId(1L)
         .users(users2)
         .build();
 
@@ -115,24 +116,18 @@ class LessonPresenceRequestTest {
         .build();
     List<UserDto> users = Arrays.asList(user1, user2);
 
-    LessonPresenceRequest lessonPresenceRequest = LessonPresenceRequest.builder()
-        .lessonId(1L)
+    UsersClassDto usersClassDto = UsersClassDto.builder()
+        .classId(1L)
         .users(users)
         .build();
 
     // When & Then
-    String toString = lessonPresenceRequest.toString();
-    // Simplified toString, focusing on key fields
-    assertThat(toString).contains("lessonId=1");
+    String toString = usersClassDto.toString();
+
+    // Check for key fields, but omit the external classes (UserDto) details
+    assertThat(toString).contains(
+        "classId=1"
+    );
   }
 
-  @Test
-  void shouldHandleNullValuesForConstructor() {
-    // Given
-    LessonPresenceRequest lessonPresenceRequest = LessonPresenceRequest.builder().build();
-
-    // When & Then
-    assertThat(lessonPresenceRequest.getLessonId()).isEqualTo(0);  // default value for long
-    assertThat(lessonPresenceRequest.getUsers()).isNull();
-  }
 }

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import {HeaderComponent} from "../../shared/header/header.component";
+import {Component} from '@angular/core';
+import {HeaderComponent} from "../header/header.component";
 import {NgForOf} from "@angular/common";
 
 @Component({

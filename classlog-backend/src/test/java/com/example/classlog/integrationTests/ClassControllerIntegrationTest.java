@@ -10,8 +10,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.example.classlog.config.UserAuthenticationProvider;
 import com.example.classlog.dto.ClassDto;
 import com.example.classlog.dto.CreateClassDto;
-import com.example.classlog.dto.ManageUserClassRequestDto;
-import com.example.classlog.dto.ManageUserClassWithCodeDto;
+import com.example.classlog.dto.UserClassWithCodeDto;
+import com.example.classlog.dto.UsersClassDto;
 import com.example.classlog.entity.Class;
 import com.example.classlog.entity.Role;
 import com.example.classlog.entity.User;
@@ -124,7 +124,7 @@ public class ClassControllerIntegrationTest {
 
   @Test
   void shouldAddUserToClassByCode() throws Exception {
-    ManageUserClassWithCodeDto requestDto = ManageUserClassWithCodeDto.builder()
+    UserClassWithCodeDto requestDto = UserClassWithCodeDto.builder()
         .classCode("MATH123")
         .user(userMapper.toUserDto(testUser))
         .build();
@@ -156,7 +156,7 @@ public class ClassControllerIntegrationTest {
 
     secondUser = userRepository.save(secondUser);
 
-    ManageUserClassRequestDto requestDto = ManageUserClassRequestDto.builder()
+    UsersClassDto requestDto = UsersClassDto.builder()
         .classId(testClass.getId())
         .users(List.of(
             userMapper.toUserDto(testUser),

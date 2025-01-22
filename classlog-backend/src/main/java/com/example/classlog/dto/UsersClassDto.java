@@ -1,6 +1,6 @@
 package com.example.classlog.dto;
 
-
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ManageUserClassWithCodeDto {
+public class UsersClassDto {
 
-  private String classCode;
-  private UserDto user;
+  private Long classId;
+  private List<UserDto> users;
 }

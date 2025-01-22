@@ -5,7 +5,7 @@ import com.example.classlog.config.exceptions.AppException;
 import com.example.classlog.dto.AnswerDto;
 import com.example.classlog.dto.ClassDto;
 import com.example.classlog.dto.QuestionDto;
-import com.example.classlog.dto.QuestionWithAnswersAndUserAnswerDto;
+import com.example.classlog.dto.QuestionWithUserAnswerDto;
 import com.example.classlog.dto.SubmittedTaskDto;
 import com.example.classlog.dto.TaskDto;
 import com.example.classlog.dto.UserTaskDto;
@@ -193,7 +193,7 @@ public class TaskService {
     int totalScore = 0;
 
     // Iterate through the questions and evaluate answers
-    for (QuestionWithAnswersAndUserAnswerDto questionWithUserAnswer : submittedTaskDto.getQuestionsWithAnswers()) {
+    for (QuestionWithUserAnswerDto questionWithUserAnswer : submittedTaskDto.getQuestionsWithAnswers()) {
       QuestionDto questionDto = questionWithUserAnswer.getQuestion();
       String userAnswer = questionWithUserAnswer.getUserAnswer();
 
@@ -237,8 +237,8 @@ public class TaskService {
     List<SubmittedAnswer> submittedAnswers = submittedAnswerRepository.findByTaskQuestion_Task_IdAndUser_Id(
         taskId, userId);
 
-    // Map submitted answers to QuestionWithAnswersAndUserAnswerDto
-    List<QuestionWithAnswersAndUserAnswerDto> questionsWithAnswers = submittedAnswers.stream()
+    // Map submitted answers to QuestionWithUserAnswerDto
+    List<QuestionWithUserAnswerDto> questionsWithAnswers = submittedAnswers.stream()
         .map(submittedAnswer -> {
           TaskQuestion taskQuestion = submittedAnswer.getTaskQuestion();
 
@@ -253,7 +253,7 @@ public class TaskService {
                   taskQuestion.getQuestion().getQuestionId())
               .orElseThrow(() -> new AppException("Question not found", HttpStatus.NOT_FOUND));
 
-          return QuestionWithAnswersAndUserAnswerDto.builder()
+          return QuestionWithUserAnswerDto.builder()
               .question(questionMapper.toQuestionDto(question))
               .answers(answerDtos)
               .userAnswer(submittedAnswer.getContent())

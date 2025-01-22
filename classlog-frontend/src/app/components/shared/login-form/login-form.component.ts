@@ -5,7 +5,7 @@ import {Router} from '@angular/router';
 import {UserDto} from "../../../model/entities/user-dto";
 import {AxiosService} from "../../../service/axios/axios.service";
 import {AuthService} from "../../../service/auth/auth.service";
-import {HeaderComponent} from "../../shared/header/header.component";
+import {HeaderComponent} from "../header/header.component";
 import {GlobalNotificationHandler} from "../../../service/notification/global-notification-handler.service";
 
 @Component({

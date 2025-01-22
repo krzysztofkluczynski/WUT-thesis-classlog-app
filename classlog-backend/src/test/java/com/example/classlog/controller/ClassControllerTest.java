@@ -5,9 +5,9 @@ import static org.mockito.ArgumentMatchers.any;
 
 import com.example.classlog.dto.ClassDto;
 import com.example.classlog.dto.CreateClassDto;
-import com.example.classlog.dto.ManageUserClassRequestDto;
-import com.example.classlog.dto.ManageUserClassWithCodeDto;
+import com.example.classlog.dto.UserClassWithCodeDto;
 import com.example.classlog.dto.UserDto;
+import com.example.classlog.dto.UsersClassDto;
 import com.example.classlog.service.ClassService;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -34,8 +34,8 @@ class ClassControllerTest {
 
   private ClassDto classDto;
   private CreateClassDto createClassDto;
-  private ManageUserClassRequestDto manageUserClassRequestDto;
-  private ManageUserClassWithCodeDto manageUserClassWithCodeDto;
+  private UsersClassDto usersClassDto;
+  private UserClassWithCodeDto userClassWithCodeDto;
 
   @BeforeEach
   void setUp() {
@@ -54,7 +54,7 @@ class ClassControllerTest {
         .classDto(classDto)
         .build();
 
-    manageUserClassRequestDto = ManageUserClassRequestDto.builder()
+    usersClassDto = UsersClassDto.builder()
         .classId(1L)
         .users(Arrays.asList(
             UserDto.builder().id(1L).email("user1@example.com").build(),
@@ -62,7 +62,7 @@ class ClassControllerTest {
         ))
         .build();
 
-    manageUserClassWithCodeDto = ManageUserClassWithCodeDto.builder()
+    userClassWithCodeDto = UserClassWithCodeDto.builder()
         .classCode("CODE123")
         .user(UserDto.builder().id(1L).email("user@example.com").build())
         .build();
@@ -112,7 +112,7 @@ class ClassControllerTest {
   void deleteUsersFromClass() {
     // When
     ResponseEntity<String> response = classController.deleteUsersFromClass(
-        manageUserClassRequestDto);
+        usersClassDto);
 
     // Then
     assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -122,7 +122,7 @@ class ClassControllerTest {
   @Test
   void addUsersToClass() {
     // When
-    ResponseEntity<String> response = classController.addUsersToClass(manageUserClassRequestDto);
+    ResponseEntity<String> response = classController.addUsersToClass(usersClassDto);
 
     // Then
     assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -132,7 +132,7 @@ class ClassControllerTest {
   @Test
   void addUsersToClassByCode() {
     // When
-    ResponseEntity<String> response = classController.addUsersToClass(manageUserClassWithCodeDto);
+    ResponseEntity<String> response = classController.addUsersToClass(userClassWithCodeDto);
 
     // Then
     assertEquals(HttpStatus.OK, response.getStatusCode());

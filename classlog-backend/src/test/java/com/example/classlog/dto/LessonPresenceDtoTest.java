@@ -6,12 +6,12 @@ import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-class ManageUserClassRequestDtoTest {
+class LessonPresenceDtoTest {
 
   @Test
-  void shouldCreateManageUserClassRequestDtoUsingBuilder() {
+  void shouldCreateLessonPresenceRequestUsingBuilder() {
     // Given
-    Long classId = 1L;
+    long lessonId = 1L;
     UserDto user1 = UserDto.builder()
         .id(1L)
         .name("John")
@@ -27,24 +27,23 @@ class ManageUserClassRequestDtoTest {
     List<UserDto> users = Arrays.asList(user1, user2);
 
     // When
-    ManageUserClassRequestDto manageUserClassRequestDto = ManageUserClassRequestDto.builder()
-        .classId(classId)
+    LessonPresenceDto lessonPresenceDto = LessonPresenceDto.builder()
+        .lessonId(lessonId)
         .users(users)
         .build();
 
     // Then
-    assertThat(manageUserClassRequestDto.getClassId()).isEqualTo(classId);
-    assertThat(manageUserClassRequestDto.getUsers()).isEqualTo(users);
+    assertThat(lessonPresenceDto.getLessonId()).isEqualTo(lessonId);
+    assertThat(lessonPresenceDto.getUsers()).isEqualTo(users);
   }
 
   @Test
   void shouldTestGettersAndSetters() {
     // Given
-    ManageUserClassRequestDto manageUserClassRequestDto = ManageUserClassRequestDto.builder()
-        .build();
+    LessonPresenceDto lessonPresenceDto = LessonPresenceDto.builder().build();
 
     // When
-    Long classId = 1L;
+    long lessonId = 1L;
     UserDto user1 = UserDto.builder()
         .id(1L)
         .name("John")
@@ -59,12 +58,12 @@ class ManageUserClassRequestDtoTest {
         .build();
     List<UserDto> users = Arrays.asList(user1, user2);
 
-    manageUserClassRequestDto.setClassId(classId);
-    manageUserClassRequestDto.setUsers(users);
+    lessonPresenceDto.setLessonId(lessonId);
+    lessonPresenceDto.setUsers(users);
 
     // Then
-    assertThat(manageUserClassRequestDto.getClassId()).isEqualTo(classId);
-    assertThat(manageUserClassRequestDto.getUsers()).isEqualTo(users);
+    assertThat(lessonPresenceDto.getLessonId()).isEqualTo(lessonId);
+    assertThat(lessonPresenceDto.getUsers()).isEqualTo(users);
   }
 
   @Test
@@ -83,14 +82,14 @@ class ManageUserClassRequestDtoTest {
         .email("jane.smith@example.com")
         .build();
     List<UserDto> users1 = Arrays.asList(user1, user2);
-    ManageUserClassRequestDto request1 = ManageUserClassRequestDto.builder()
-        .classId(1L)
+    LessonPresenceDto request1 = LessonPresenceDto.builder()
+        .lessonId(1L)
         .users(users1)
         .build();
 
     List<UserDto> users2 = Arrays.asList(user1, user2);
-    ManageUserClassRequestDto request2 = ManageUserClassRequestDto.builder()
-        .classId(1L)
+    LessonPresenceDto request2 = LessonPresenceDto.builder()
+        .lessonId(1L)
         .users(users2)
         .build();
 
@@ -116,18 +115,24 @@ class ManageUserClassRequestDtoTest {
         .build();
     List<UserDto> users = Arrays.asList(user1, user2);
 
-    ManageUserClassRequestDto manageUserClassRequestDto = ManageUserClassRequestDto.builder()
-        .classId(1L)
+    LessonPresenceDto lessonPresenceDto = LessonPresenceDto.builder()
+        .lessonId(1L)
         .users(users)
         .build();
 
     // When & Then
-    String toString = manageUserClassRequestDto.toString();
-
-    // Check for key fields, but omit the external classes (UserDto) details
-    assertThat(toString).contains(
-        "classId=1"
-    );
+    String toString = lessonPresenceDto.toString();
+    // Simplified toString, focusing on key fields
+    assertThat(toString).contains("lessonId=1");
   }
-  
+
+  @Test
+  void shouldHandleNullValuesForConstructor() {
+    // Given
+    LessonPresenceDto lessonPresenceDto = LessonPresenceDto.builder().build();
+
+    // When & Then
+    assertThat(lessonPresenceDto.getLessonId()).isEqualTo(0);  // default value for long
+    assertThat(lessonPresenceDto.getUsers()).isNull();
+  }
 }

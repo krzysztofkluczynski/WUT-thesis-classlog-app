@@ -12,7 +12,7 @@ class SubmittedTaskDtoTest {
   private SubmittedTaskDto submittedTaskDto;
   private TaskDto taskDto;
   private UserDto userDto;
-  private QuestionWithAnswersAndUserAnswerDto questionWithAnswersAndUserAnswerDto;
+  private QuestionWithUserAnswerDto questionWithUserAnswerDto;
 
   @BeforeEach
   void setUp() {
@@ -36,7 +36,7 @@ class SubmittedTaskDtoTest {
         .token("dummyToken")
         .build();
 
-    questionWithAnswersAndUserAnswerDto = QuestionWithAnswersAndUserAnswerDto.builder()
+    questionWithUserAnswerDto = QuestionWithUserAnswerDto.builder()
         .question(QuestionDto.builder()
             .questionId(1L)
             .content("What is 2+2?")
@@ -53,7 +53,7 @@ class SubmittedTaskDtoTest {
     submittedTaskDto = SubmittedTaskDto.builder()
         .task(taskDto)
         .user(userDto)
-        .questionsWithAnswers(List.of(questionWithAnswersAndUserAnswerDto))
+        .questionsWithAnswers(List.of(questionWithUserAnswerDto))
         .score(10)
         .build();
   }
@@ -87,10 +87,10 @@ class SubmittedTaskDtoTest {
 
   @Test
   void shouldReturnQuestionsWithAnswers() {
-    List<QuestionWithAnswersAndUserAnswerDto> questions = submittedTaskDto.getQuestionsWithAnswers();
+    List<QuestionWithUserAnswerDto> questions = submittedTaskDto.getQuestionsWithAnswers();
     assertThat(questions).hasSize(1);
 
-    QuestionWithAnswersAndUserAnswerDto questionWithAnswers = questions.get(0);
+    QuestionWithUserAnswerDto questionWithAnswers = questions.get(0);
     assertThat(questionWithAnswers.getQuestion().getContent()).isEqualTo("What is 2+2?");
     assertThat(questionWithAnswers.getAnswers()).hasSize(2);
     assertThat(questionWithAnswers.getUserAnswer()).isEqualTo("4");
@@ -135,14 +135,14 @@ class SubmittedTaskDtoTest {
     SubmittedTaskDto dto1 = SubmittedTaskDto.builder()
         .task(taskDto)
         .user(userDto)
-        .questionsWithAnswers(List.of(questionWithAnswersAndUserAnswerDto))
+        .questionsWithAnswers(List.of(questionWithUserAnswerDto))
         .score(10)
         .build();
 
     SubmittedTaskDto dto2 = SubmittedTaskDto.builder()
         .task(taskDto)
         .user(userDto)
-        .questionsWithAnswers(List.of(questionWithAnswersAndUserAnswerDto))
+        .questionsWithAnswers(List.of(questionWithUserAnswerDto))
         .score(10)
         .build();
 

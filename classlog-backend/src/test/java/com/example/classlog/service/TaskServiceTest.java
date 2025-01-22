@@ -10,7 +10,7 @@ import static org.mockito.Mockito.when;
 import com.example.classlog.dto.AnswerDto;
 import com.example.classlog.dto.ClassDto;
 import com.example.classlog.dto.QuestionDto;
-import com.example.classlog.dto.QuestionWithAnswersAndUserAnswerDto;
+import com.example.classlog.dto.QuestionWithUserAnswerDto;
 import com.example.classlog.dto.SubmittedTaskDto;
 import com.example.classlog.dto.TaskDto;
 import com.example.classlog.dto.UserDto;
@@ -168,7 +168,7 @@ class TaskServiceTest {
     submittedTaskDto = SubmittedTaskDto.builder()
         .task(taskDto)
         .user(userDto)
-        .questionsWithAnswers(List.of(QuestionWithAnswersAndUserAnswerDto.builder()
+        .questionsWithAnswers(List.of(QuestionWithUserAnswerDto.builder()
             .question(questionDto)
             .answers(List.of(answerDto))
             .userAnswer("Correct Answer")

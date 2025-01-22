@@ -1,14 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { HeaderComponent } from "../../../shared/header/header.component";
-import { LoginFormComponent } from "../../login-form/login-form.component";
-import { UserDto } from "../../../../model/entities/user-dto";
-import { AuthService } from "../../../../service/auth/auth.service";
-import { AxiosService } from "../../../../service/axios/axios.service";
-import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { parseDate } from '../../../../utils/date-utils';
-import { GlobalNotificationHandler } from "../../../../service/notification/global-notification-handler.service";
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {HeaderComponent} from "../../../shared/header/header.component";
+import {LoginFormComponent} from "../../../shared/login-form/login-form.component";
+import {UserDto} from "../../../../model/entities/user-dto";
+import {AuthService} from "../../../../service/auth/auth.service";
+import {AxiosService} from "../../../../service/axios/axios.service";
+import {CommonModule} from '@angular/common';
+import {parseDate} from '../../../../utils/date-utils';
+import {GlobalNotificationHandler} from "../../../../service/notification/global-notification-handler.service";
 
 @Component({
   selector: 'app-admin-components',
@@ -32,7 +31,8 @@ export class AdminDashboardComponent implements OnInit {
     private router: Router,
     private globalNotificationHandler: GlobalNotificationHandler,
     private route: ActivatedRoute
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.user = this.authService.getUser();
@@ -62,7 +62,7 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   goToUserProfile(userId: number): void {
-    this.router.navigate(['/profile', userId], { queryParams: { editMode: true } });
+    this.router.navigate(['/profile', userId], {queryParams: {editMode: true}});
   }
 
   loadUsers(userId: number): void {
@@ -79,7 +79,6 @@ export class AdminDashboardComponent implements OnInit {
   }
 
 
-
   deleteUser(userId: number): void {
     this.axiosService.request('DELETE', `/users/${userId}`, {}).then(
       (response: any) => {
@@ -88,6 +87,7 @@ export class AdminDashboardComponent implements OnInit {
       }
     ).catch((error: any) => {
       this.globalNotificationHandler.handleError(error);
-    });  }
+    });
+  }
 
 }

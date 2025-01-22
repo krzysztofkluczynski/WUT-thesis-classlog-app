@@ -10,8 +10,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ManageUserClassRequestDto {
+public class QuestionWithUserAnswerDto {
 
-  private Long classId;
-  private List<UserDto> users;
+  QuestionDto question;
+  List<AnswerDto> answers;
+  String userAnswer;
+  Integer score;
 }

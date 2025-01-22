@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {NgClass, NgIf} from "@angular/common";
 import {Router} from '@angular/router';
-import {HeaderComponent} from "../../shared/header/header.component";
+import {HeaderComponent} from "../header/header.component";
 import {UserDto} from "../../../model/entities/user-dto";
 import {AxiosService} from "../../../service/axios/axios.service";
 import {AuthService} from "../../../service/auth/auth.service";

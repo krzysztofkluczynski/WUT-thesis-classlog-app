@@ -2,7 +2,7 @@ package com.example.classlog.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.example.classlog.dto.LessonPresenceRequest;
+import com.example.classlog.dto.LessonPresenceDto;
 import com.example.classlog.dto.UserDto;
 import com.example.classlog.service.PresenceService;
 import java.util.Arrays;
@@ -27,7 +27,7 @@ class PresenceControllerTest {
   @InjectMocks
   private PresenceController presenceController;
 
-  private LessonPresenceRequest lessonPresenceRequest;
+  private LessonPresenceDto lessonPresenceDto;
   private UserDto user1;
   private UserDto user2;
 
@@ -45,7 +45,7 @@ class PresenceControllerTest {
         .email("user2@example.com")
         .build();
 
-    lessonPresenceRequest = LessonPresenceRequest.builder()
+    lessonPresenceDto = LessonPresenceDto.builder()
         .lessonId(1L)
         .users(Arrays.asList(user1, user2))
         .build();
@@ -54,7 +54,7 @@ class PresenceControllerTest {
   @Test
   void addUsersToClass() {
     // When
-    ResponseEntity<String> response = presenceController.addUsersToClass(lessonPresenceRequest);
+    ResponseEntity<String> response = presenceController.addUsersToClass(lessonPresenceDto);
 
     // Then
     assertEquals(HttpStatus.OK, response.getStatusCode());

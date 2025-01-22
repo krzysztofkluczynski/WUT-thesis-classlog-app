@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-class ManageUserClassWithCodeDtoTest {
+class UserClassWithCodeDtoTest {
 
   @Test
   void shouldCreateManageUserClassWithCodeDtoUsingBuilder() {
@@ -18,20 +18,20 @@ class ManageUserClassWithCodeDtoTest {
         .build();
 
     // When
-    ManageUserClassWithCodeDto manageUserClassWithCodeDto = ManageUserClassWithCodeDto.builder()
+    UserClassWithCodeDto userClassWithCodeDto = UserClassWithCodeDto.builder()
         .classCode(classCode)
         .user(user)
         .build();
 
     // Then
-    assertThat(manageUserClassWithCodeDto.getClassCode()).isEqualTo(classCode);
-    assertThat(manageUserClassWithCodeDto.getUser()).isEqualTo(user);
+    assertThat(userClassWithCodeDto.getClassCode()).isEqualTo(classCode);
+    assertThat(userClassWithCodeDto.getUser()).isEqualTo(user);
   }
 
   @Test
   void shouldTestGettersAndSetters() {
     // Given
-    ManageUserClassWithCodeDto manageUserClassWithCodeDto = ManageUserClassWithCodeDto.builder()
+    UserClassWithCodeDto userClassWithCodeDto = UserClassWithCodeDto.builder()
         .build();
 
     // When
@@ -43,12 +43,12 @@ class ManageUserClassWithCodeDtoTest {
         .email("john.doe@example.com")
         .build();
 
-    manageUserClassWithCodeDto.setClassCode(classCode);
-    manageUserClassWithCodeDto.setUser(user);
+    userClassWithCodeDto.setClassCode(classCode);
+    userClassWithCodeDto.setUser(user);
 
     // Then
-    assertThat(manageUserClassWithCodeDto.getClassCode()).isEqualTo(classCode);
-    assertThat(manageUserClassWithCodeDto.getUser()).isEqualTo(user);
+    assertThat(userClassWithCodeDto.getClassCode()).isEqualTo(classCode);
+    assertThat(userClassWithCodeDto.getUser()).isEqualTo(user);
   }
 
   @Test
@@ -60,7 +60,7 @@ class ManageUserClassWithCodeDtoTest {
         .surname("Doe")
         .email("john.doe@example.com")
         .build();
-    ManageUserClassWithCodeDto dto1 = ManageUserClassWithCodeDto.builder()
+    UserClassWithCodeDto dto1 = UserClassWithCodeDto.builder()
         .classCode("MATH101")
         .user(user1)
         .build();
@@ -71,7 +71,7 @@ class ManageUserClassWithCodeDtoTest {
         .surname("Doe")
         .email("john.doe@example.com")
         .build();
-    ManageUserClassWithCodeDto dto2 = ManageUserClassWithCodeDto.builder()
+    UserClassWithCodeDto dto2 = UserClassWithCodeDto.builder()
         .classCode("MATH101")
         .user(user2)
         .build();
@@ -91,13 +91,13 @@ class ManageUserClassWithCodeDtoTest {
         .surname("Doe")
         .email("john.doe@example.com")
         .build();
-    ManageUserClassWithCodeDto manageUserClassWithCodeDto = ManageUserClassWithCodeDto.builder()
+    UserClassWithCodeDto userClassWithCodeDto = UserClassWithCodeDto.builder()
         .classCode(classCode)
         .user(user)
         .build();
 
     // When & Then
-    String toString = manageUserClassWithCodeDto.toString();
+    String toString = userClassWithCodeDto.toString();
 
     // Simplified toString, omitting the UserDto details
     assertThat(toString).contains(
@@ -108,11 +108,11 @@ class ManageUserClassWithCodeDtoTest {
   @Test
   void shouldHandleNullValuesForConstructor() {
     // Given
-    ManageUserClassWithCodeDto manageUserClassWithCodeDto = ManageUserClassWithCodeDto.builder()
+    UserClassWithCodeDto userClassWithCodeDto = UserClassWithCodeDto.builder()
         .build();
 
     // When & Then
-    assertThat(manageUserClassWithCodeDto.getClassCode()).isNull();
-    assertThat(manageUserClassWithCodeDto.getUser()).isNull();
+    assertThat(userClassWithCodeDto.getClassCode()).isNull();
+    assertThat(userClassWithCodeDto.getUser()).isNull();
   }
 }

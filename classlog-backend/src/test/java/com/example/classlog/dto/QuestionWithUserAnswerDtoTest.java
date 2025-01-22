@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
-class QuestionWithAnswersAndUserAnswerDtoTest {
+class QuestionWithUserAnswerDtoTest {
 
   @Test
   void shouldCreateQuestionWithAnswersAndUserAnswerDtoUsingBuilder() {
@@ -29,7 +29,7 @@ class QuestionWithAnswersAndUserAnswerDtoTest {
     Integer score = 5;
 
     // When
-    QuestionWithAnswersAndUserAnswerDto dto = QuestionWithAnswersAndUserAnswerDto.builder()
+    QuestionWithUserAnswerDto dto = QuestionWithUserAnswerDto.builder()
         .question(question)
         .answers(Arrays.asList(answer1, answer2))
         .userAnswer(userAnswer)
@@ -46,7 +46,7 @@ class QuestionWithAnswersAndUserAnswerDtoTest {
   @Test
   void shouldTestGettersAndSetters() {
     // Given
-    QuestionWithAnswersAndUserAnswerDto dto = QuestionWithAnswersAndUserAnswerDto.builder().build();
+    QuestionWithUserAnswerDto dto = QuestionWithUserAnswerDto.builder().build();
 
     // When
     QuestionDto question = QuestionDto.builder()
@@ -100,7 +100,7 @@ class QuestionWithAnswersAndUserAnswerDtoTest {
     String userAnswer1 = "4";
     Integer score1 = 5;
 
-    QuestionWithAnswersAndUserAnswerDto dto1 = QuestionWithAnswersAndUserAnswerDto.builder()
+    QuestionWithUserAnswerDto dto1 = QuestionWithUserAnswerDto.builder()
         .question(question1)
         .answers(Arrays.asList(answer1, answer2))
         .userAnswer(userAnswer1)
@@ -125,7 +125,7 @@ class QuestionWithAnswersAndUserAnswerDtoTest {
     String userAnswer2 = "4";
     Integer score2 = 5;
 
-    QuestionWithAnswersAndUserAnswerDto dto2 = QuestionWithAnswersAndUserAnswerDto.builder()
+    QuestionWithUserAnswerDto dto2 = QuestionWithUserAnswerDto.builder()
         .question(question2)
         .answers(Arrays.asList(answer3, answer4))
         .userAnswer(userAnswer2)
@@ -158,7 +158,7 @@ class QuestionWithAnswersAndUserAnswerDtoTest {
     String userAnswer = "4";
     Integer score = 5;
 
-    QuestionWithAnswersAndUserAnswerDto dto = QuestionWithAnswersAndUserAnswerDto.builder()
+    QuestionWithUserAnswerDto dto = QuestionWithUserAnswerDto.builder()
         .question(question)
         .answers(Arrays.asList(answer1, answer2))
         .userAnswer(userAnswer)
@@ -178,7 +178,7 @@ class QuestionWithAnswersAndUserAnswerDtoTest {
   @Test
   void shouldHandleNullValuesForConstructor() {
     // Given
-    QuestionWithAnswersAndUserAnswerDto dto = QuestionWithAnswersAndUserAnswerDto.builder().build();
+    QuestionWithUserAnswerDto dto = QuestionWithUserAnswerDto.builder().build();
 
     // When & Then
     assertThat(dto.getQuestion()).isNull();
