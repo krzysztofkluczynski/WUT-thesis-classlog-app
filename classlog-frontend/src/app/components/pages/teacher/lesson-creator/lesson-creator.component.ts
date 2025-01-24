@@ -214,7 +214,7 @@ export class LessonCreatorComponent implements OnInit {
   }
 
   returnToDashboard() {
-    this.router.navigate(['/teacher/dashboard']);
+    this.router.navigate(['/teacher/class/' + this.classId]);
   }
 
   toggleCheckAll() {
