@@ -84,7 +84,9 @@ export class AddQuestionWindowComponent {
       return;
     }
 
-    if (((this.activeTab === 'open') && (this.openAnswer === '')) || (this.activeTab === 'close' && (this.correctOption === null)) && (this.closeOptions.length === 0)) {
+    if (
+      ((this.activeTab === 'open') && (this.openAnswer === null || this.openAnswer === '')) ||
+      ((this.activeTab === 'close') && ((this.correctOption === null) || (this.closeOptions.length === 0) || (this.closeOptions.some(option => option === ''))))) {
       this.globalNotificationHandler.handleMessage('Please enter a valid answer.');
       return;
     }

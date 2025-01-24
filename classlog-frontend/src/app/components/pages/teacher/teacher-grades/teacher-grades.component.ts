@@ -97,6 +97,7 @@ export class TeacherGradesComponent implements OnInit {
 
     if (this.selectedClassId === null) {
       this.studentListFromOneClass = [];
+      this.gradesFromOneClass$.next([]); // Clear the grades list
       return;
     }
 

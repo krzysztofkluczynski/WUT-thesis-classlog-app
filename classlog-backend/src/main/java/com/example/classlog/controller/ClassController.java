@@ -9,6 +9,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -59,6 +60,12 @@ public class ClassController {
   public ResponseEntity<String> addUsersToClass(@RequestBody UserClassWithCodeDto request) {
     classService.addUserToClassByCode(request.getClassCode(), request.getUser());
     return ResponseEntity.ok("Users successfully added to the class.");
+  }
+
+  @DeleteMapping("/{classId}")
+  public ResponseEntity<String> deleteClass(@PathVariable Long classId) {
+    classService.deleteClass(classId);
+    return ResponseEntity.ok("Class successfully deleted.");
   }
 
 }

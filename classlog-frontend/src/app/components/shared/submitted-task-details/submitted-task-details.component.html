@@ -18,7 +18,7 @@
       <!-- User Information -->
       <div class="user-info-tile">
         <h3>User Information</h3>
-        <p><strong>Name:</strong> {{ submittedTask.user.name }}</p>
+        <p><strong>Name:</strong> {{ submittedTask.user.name }} {{ submittedTask.user.surname }}</p>
         <p><strong>Email:</strong> {{ submittedTask.user.email }}</p>
         <p *ngIf="!isEditingScore"><strong>Score:</strong> {{ submittedTask.score }}</p>
 
@@ -33,7 +33,9 @@
         </div>
 
         <!-- Edit Score Button -->
-        <button *ngIf="!isEditingScore && authService.getUserRole() === 'Teacher'" class="yellow-button edit-score-button" (click)="editScore()">Edit Score</button>
+        <button *ngIf="!isEditingScore && authService.getUserRole() === 'Teacher'"
+                class="yellow-button edit-score-button" (click)="editScore()">Edit Score
+        </button>
       </div>
 
       <!-- Separator -->
@@ -48,7 +50,7 @@
 
             <div *ngIf="question.fileUrl" class="audio-container">
               <audio controls>
-                <source [src]="question.fileUrl" type="audio/mpeg" />
+                <source [src]="question.fileUrl" type="audio/mpeg"/>
                 Your browser does not support the audio element.
               </audio>
             </div>
