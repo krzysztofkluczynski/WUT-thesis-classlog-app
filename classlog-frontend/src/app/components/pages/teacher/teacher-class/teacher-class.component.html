@@ -35,6 +35,12 @@
             [isOpen]="showMembersModal"
             (close)="toggleShowMembersModal()">
           </app-show-members-window>
+          <button class="yellow-button" (click)="toggleDeleteClassModal()">Delete Class</button>
+          <app-delete-class-window
+            *ngIf="showDeleteClassModal"
+            [isOpen]="showDeleteClassModal"
+            (close)="toggleDeleteClassModal()">
+          </app-delete-class-window>
         </div>
       </div>
 
@@ -118,3 +124,5 @@
 
   </div>
 </div>
+
+

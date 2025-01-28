@@ -22,6 +22,7 @@ import {CreateClassWindowComponent} from "../popup-window/create-class-window/cr
 import {ShowClassCodeWindowComponent} from "../popup-window/show-class-code-window/show-class-code-window.component";
 import {LessonInfoWindowComponent} from "../../../shared/lesson-info-window/lesson-info-window.component";
 import {ShowMembersWindowComponent} from "../popup-window/show-members-window/show-members-window.component";
+import {DeleteClassWindowComponent} from "../popup-window/delete-class-window/delete-class-window.component";
 
 @Component({
   selector: 'app-teacher-class',
@@ -38,7 +39,8 @@ import {ShowMembersWindowComponent} from "../popup-window/show-members-window/sh
     CreateClassWindowComponent,
     ShowClassCodeWindowComponent,
     LessonInfoWindowComponent,
-    ShowMembersWindowComponent
+    ShowMembersWindowComponent,
+    DeleteClassWindowComponent
   ],
   templateUrl: './teacher-class.component.html',
   styleUrl: './teacher-class.component.css'
@@ -59,6 +61,7 @@ export class TeacherClassComponent implements OnInit {
   topic: string = '';
   message: string = '';
   classIdForSelectedLesson: number | null = null;
+  showDeleteClassModal: boolean = false;
 
 
   commentDrafts: { [postId: number]: string } = {};
@@ -277,5 +280,9 @@ export class TeacherClassComponent implements OnInit {
 
   toggleShowMembersModal() {
     this.showMembersModal = !this.showMembersModal;
+  }
+
+  toggleDeleteClassModal(): void {
+    this.showDeleteClassModal = !this.showDeleteClassModal;
   }
 }
